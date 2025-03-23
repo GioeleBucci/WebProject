@@ -1,0 +1,39 @@
+<?php require_once 'bootstrap.php'; ?>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="<?php echo Settings::BASE_PATH; ?>" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link href="<?php echo Settings::STYLESHEET_DIR ?>" rel="stylesheet">
+</head>
+
+<header>
+    <!-- TODO -->
+</header>
+
+<main>
+    <?php
+    if (isset($templateParams["page"])) {
+        require($templateParams["page"]);
+    }
+    ?>
+</main>
+
+<footer>
+    <!-- TODO -->
+</footer>
+
+<body>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>
