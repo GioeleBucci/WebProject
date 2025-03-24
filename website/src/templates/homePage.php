@@ -1,8 +1,16 @@
 <div class="container mt-5">
     <!-- Header -->
-    <div class="text-center">
-        <h1>Welcome to Our Online Shop</h1>
-        <p class="lead">Find the best products at unbeatable prices!</p>
+    <div class="d-flex justify-content-between align-items-center py-3">
+        <div>
+            <i class="bi bi-bell fs-4 mx-2"></i>
+        </div>
+        <div>
+            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid" style="height: 50px;">
+        </div>
+        <div>
+            <i class="bi bi-cart fs-4 mx-3"></i>
+            <i class="bi bi-person fs-4 mx-3"></i>
+        </div>
     </div>
 
     <!-- Carousel -->
@@ -11,22 +19,25 @@
             <div class="carousel-item active">
                 <img src="<?php echo Settings::UPLOAD_DIR . "1.png" ?>" class="d-block w-100 img-fluid carousel-image" alt="Product 1">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Product 1</h5>
+                    <h1>Product 1</h1>
                     <p>High-quality and affordable.</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="<?php echo Settings::UPLOAD_DIR . "2.png" ?>" class="d-block w-100 img-fluid carousel-image" alt="Product 2">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Product 2</h5>
+                    <h1>Product 2</h1>
                     <p>Perfect for your needs.</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="<?php echo Settings::UPLOAD_DIR . "3.png" ?>" class="d-block w-100 img-fluid carousel-image" alt="Product 3">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Product 3</h5>
+                    <h1>Product 3</h1>
                     <p>Top-rated by our customers.</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
                 </div>
             </div>
         </div>
@@ -38,5 +49,14 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
+    </div>
+
+    <!-- Featured products -->
+    <div class="row mt-4 g-2">
+        <?php for ($i = 1; $i <= 9; $i++): ?>
+            <div class="col-6 col-md-4">
+                <img src="<?php echo Settings::UPLOAD_DIR . $i % 3 + 1 . '.png'; ?>" class="img-thumbnail" alt="Image <?php echo $i; ?>">
+            </div>
+        <?php endfor; ?>
     </div>
 </div>
