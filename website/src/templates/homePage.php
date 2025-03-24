@@ -1,6 +1,6 @@
 <!-- Carousel -->
-<div class="container-fluid px-0 mt-1">
-    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+<div class="container-fluid px-0">
+    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="<?php echo Settings::UPLOAD_DIR . "1.png" ?>" class="d-block w-100 img-fluid carousel-image" alt="Product 1">
