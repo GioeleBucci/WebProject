@@ -1,20 +1,6 @@
-<div class="container mt-5">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center py-3">
-        <div>
-            <i class="bi bi-bell fs-4 mx-2"></i>
-        </div>
-        <div>
-            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid" style="height: 50px;">
-        </div>
-        <div>
-            <i class="bi bi-cart fs-4 mx-3"></i>
-            <i class="bi bi-person fs-4 mx-3"></i>
-        </div>
-    </div>
-
-    <!-- Carousel -->
-    <div id="productCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
+<!-- Carousel -->
+<div class="container-fluid px-0">
+    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="<?php echo Settings::UPLOAD_DIR . "1.png" ?>" class="d-block w-100 img-fluid carousel-image" alt="Product 1">
@@ -50,7 +36,9 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+</div>
 
+<div class="container mt-5">
     <!-- Featured products -->
     <div class="row mt-4 g-2">
         <?php for ($i = 1; $i <= 9; $i++): ?>

@@ -17,7 +17,22 @@
 </head>
 
 <header>
-    <!-- TODO -->
+    <div class="container mt-1">
+        <!-- Header -->
+        <!-- TODO change icons depending on wether or not the user is logged -->
+        <div class="d-flex justify-content-between align-items-center py-3">
+            <div>
+                <i class="bi bi-bell fs-4 mx-2"></i>
+            </div>
+            <div>
+                <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid" style="height: 50px;">
+            </div>
+            <div>
+                <i class="bi bi-cart fs-4 mx-2"></i>
+                <i class="bi bi-person fs-4 mx-2"></i>
+            </div>
+        </div>
+    </div>
 </header>
 
 <main>
@@ -29,7 +44,19 @@
 </main>
 
 <footer>
-    <!-- TODO -->
+    <div class="container mt-4">
+        <!-- Footer -->
+        <div class="d-flex justify-content-between align-items-center py-3 border-top">
+            <div>
+                <p class="mb-0">&copy; <?php echo date("Y"); ?> Company Name</p>
+            </div>
+            <div>
+                <a href="#" class="text-decoration-underline text-dark mx-2">Privacy Policy</a>
+                <a href="#" class="text-decoration-underline text-dark mx-2">Terms of Service</a>
+                <a href="#" class="text-decoration-underline text-dark mx-2">Cookies</a>
+            </div>
+        </div>
+    </div>
 </footer>
 
 <body>
