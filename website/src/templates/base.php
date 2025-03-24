@@ -17,16 +17,23 @@
 </head>
 
 <header>
-    <div class="container mt-1">
+    <div class="container">
         <!-- Header -->
-        <!-- TODO change icons depending on wether or not the user is logged -->
-        <div class="d-flex justify-content-between align-items-center py-3">
+        <div class="d-flex justify-content-between py-3">
+            <!-- Logo -->
             <div>
-                <i class="bi bi-bell fs-4 mx-2"></i>
+                <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid">
             </div>
-            <div>
-                <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid" style="height: 50px;">
+            <!-- Search bar -->
+            <div class="flex-grow-1 mx-3">
+                <form class="d-flex" action="#" method="get">
+                    <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search" name="q">
+                    <button class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
             </div>
+            <!-- Icons -->
             <div>
                 <i class="bi bi-cart fs-4 mx-2"></i>
                 <i class="bi bi-person fs-4 mx-2"></i>
@@ -44,16 +51,16 @@
 </main>
 
 <footer>
-    <div class="container mt-4">
+    <div class="container mt-5">
         <!-- Footer -->
-        <div class="d-flex justify-content-between align-items-center py-3 border-top">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center py-3 border-top">
             <div>
                 <p class="mb-0">&copy; <?php echo date("Y"); ?> Company Name</p>
             </div>
-            <div>
-                <a href="#" class="text-decoration-underline text-dark mx-2">Privacy Policy</a>
-                <a href="#" class="text-decoration-underline text-dark mx-2">Terms of Service</a>
-                <a href="#" class="text-decoration-underline text-dark mx-2">Cookies</a>
+            <div class="d-flex flex-column flex-md-row text-center text-md-start">
+                <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Privacy Policy</a>
+                <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Terms of Service</a>
+                <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Cookies</a>
             </div>
         </div>
     </div>
