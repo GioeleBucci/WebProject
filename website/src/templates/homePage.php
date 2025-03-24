@@ -1,5 +1,5 @@
 <!-- Carousel -->
-<div class="container-fluid px-0">
+<div class="container-fluid px-0 mt-1">
     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">

@@ -15,17 +15,21 @@
     <!-- Custom CSS -->
     <link href="<?php echo Settings::STYLESHEET_DIR ?>" rel="stylesheet">
 </head>
-
 <header>
-    <div class="container">
+    <div class="container mt-3">
         <!-- Header -->
-        <div class="d-flex justify-content-between py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between py-3 gap-2 gap-md-0">
             <!-- Logo -->
-            <div>
+            <div class="d-flex justify-content-between align-items-center">
                 <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid">
+                <!-- Icons (mobile) -->
+                <div class="d-md-none">
+                    <i class="bi bi-cart fs-4 mx-2"></i>
+                    <i class="bi bi-person fs-4 mx-2"></i>
+                </div>
             </div>
             <!-- Search bar -->
-            <div class="flex-grow-1 mx-3">
+            <div class="flex-grow-1 my-3 my-md-0 mx-md-3">
                 <form class="d-flex" action="#" method="get">
                     <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search" name="q">
                     <button class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" type="submit">
@@ -33,8 +37,8 @@
                     </button>
                 </form>
             </div>
-            <!-- Icons -->
-            <div>
+            <!-- Icons (desktop) -->
+            <div class="d-none d-md-block">
                 <i class="bi bi-cart fs-4 mx-2"></i>
                 <i class="bi bi-person fs-4 mx-2"></i>
             </div>
