@@ -16,64 +16,66 @@
     <link href="<?php echo Settings::STYLESHEET_DIR ?>" rel="stylesheet">
 </head>
 
-<header>
-    <div class="container mt-4 mb-4">
-        <!-- Header -->
-        <div class="d-flex flex-column flex-md-row justify-content-between py-3 gap-2 gap-md-0">
-            <!-- Logo -->
-            <div class="d-flex justify-content-between align-items-center">
-                <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid">
-                <!-- Icons (mobile) -->
-                <div class="d-md-none">
-                    <i class="bi bi-cart fs-4 mx-2"></i>
-                    <i class="bi bi-person fs-4 mx-2"></i>
+<body>
+    <div class="page-wrapper">
+        <header>
+            <div class="container mt-4 mb-4">
+                <!-- Header -->
+                <div class="d-flex flex-column flex-md-row justify-content-between py-3 gap-2 gap-md-0">
+                    <!-- Logo -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid">
+                        <!-- Icons (mobile) -->
+                        <div class="d-md-none">
+                            <i class="bi bi-cart fs-4 mx-2"></i>
+                            <i class="bi bi-person fs-4 mx-2"></i>
+                        </div>
+                    </div>
+                    <!-- Search bar -->
+                    <div class="flex-grow-1 my-3 my-md-0 mx-md-3">
+                        <form class="d-flex" action="#" method="get">
+                            <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search" name="q">
+                            <button class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Icons (desktop) -->
+                    <div class="d-none d-md-block">
+                        <i class="bi bi-cart fs-4 mx-2"></i>
+                        <i class="bi bi-person fs-4 mx-2"></i>
+                    </div>
                 </div>
             </div>
-            <!-- Search bar -->
-            <div class="flex-grow-1 my-3 my-md-0 mx-md-3">
-                <form class="d-flex" action="#" method="get">
-                    <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search" name="q">
-                    <button class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </form>
+        </header>
+
+        <main style="flex-grow: 1;">
+            <?php
+            if (isset($templateParams["page"])) {
+                require($templateParams["page"]);
+            }
+            ?>
+        </main>
+
+        <footer>
+            <div class="container mt-5">
+                <!-- Footer -->
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center py-3 border-top">
+                    <div>
+                        <p class="mb-0">&copy; <?php echo date("Y"); ?> Company Name</p>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row text-center text-md-start">
+                        <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Privacy Policy</a>
+                        <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Terms of Service</a>
+                        <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Cookies</a>
+                    </div>
+                </div>
             </div>
-            <!-- Icons (desktop) -->
-            <div class="d-none d-md-block">
-                <i class="bi bi-cart fs-4 mx-2"></i>
-                <i class="bi bi-person fs-4 mx-2"></i>
-            </div>
-        </div>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </div>
-</header>
-
-<main>
-    <?php
-    if (isset($templateParams["page"])) {
-        require($templateParams["page"]);
-    }
-    ?>
-</main>
-
-<footer>
-    <div class="container mt-5">
-        <!-- Footer -->
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center py-3 border-top">
-            <div>
-                <p class="mb-0">&copy; <?php echo date("Y"); ?> Company Name</p>
-            </div>
-            <div class="d-flex flex-column flex-md-row text-center text-md-start">
-                <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Privacy Policy</a>
-                <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Terms of Service</a>
-                <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Cookies</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<body>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" defer integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
