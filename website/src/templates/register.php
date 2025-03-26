@@ -27,7 +27,7 @@
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <small>Already have an account? <a href="<?php echo Settings::BASE_PATH . "templates/login.php" ?>">Login here</a></small>
+                    <small>Already have an account? <a href="<?php echo Links::LOGIN ?>">Login here</a></small>
                 </div>
             </div>
         </div>

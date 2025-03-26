@@ -1,5 +1,3 @@
-<?php require_once 'bootstrap.php'; ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -24,11 +22,15 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between py-3 gap-2 gap-md-0">
                     <!-- Logo -->
                     <div class="d-flex justify-content-between align-items-center">
-                        <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid">
+                        <a href="<?php echo Links::HOME ?>">
+                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid">
+                        </a>
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
                             <i class="bi bi-cart fs-4 mx-2"></i>
-                            <i class="bi bi-person fs-4 mx-2"></i>
+                            <a href="<?php echo Links::LOGIN ?>">
+                                <i class="bi bi-person fs-4 mx-2"></i>
+                            </a>
                         </div>
                     </div>
                     <!-- Search bar -->
@@ -43,7 +45,9 @@
                     <!-- Icons (desktop) -->
                     <div class="d-none d-md-block">
                         <i class="bi bi-cart fs-4 mx-2"></i>
-                        <i class="bi bi-person fs-4 mx-2"></i>
+                        <a href="<?php echo Links::LOGIN ?>">
+                            <i class="bi bi-person fs-4 mx-2"></i>
+                        </a>
                     </div>
                 </div>
             </div>

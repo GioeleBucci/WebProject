@@ -19,7 +19,7 @@
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <small>Don't have an account? <a href="<?php echo Settings::BASE_PATH . "templates/register.php" ?>">Register here</a></small>
+                    <small>Don't have an account? <a href=<?php echo Links::REGISTER ?>>Register here</a></small>
                 </div>
             </div>
         </div>
