@@ -7,12 +7,12 @@
     bottom: 30%;
 }
 
-.img-thumbnail {
+.card-wrapper {
     transition: transform 0.3s ease;
 }
 
-.img-thumbnail:hover {
-    transform: scale(1.1);
+.card-wrapper:hover {
+    transform: scale(1.05);
 }
 
 .form-control {
