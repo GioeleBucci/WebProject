@@ -40,12 +40,31 @@
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-2 mt-md-4">
     <!-- Featured products -->
-    <div class="row mt-4 g-2">
+    <div class="row mt-3 g-3">
         <?php for ($i = 1; $i <= 9; $i++): ?>
-            <div class="col-6 col-md-4">
-                <img src="<?php echo Settings::UPLOAD_DIR . $i % 3 + 1 . '.png'; ?>" class="img-thumbnail" alt="Image <?php echo $i; ?>">
+            <div class="col-6 col-md-3">
+                <div class="card-wrapper">
+                    <div class="card h-100">
+                        <!-- rotate(0) prevents the stretched link from affecting other elements -->
+                        <div style="transform: rotate(0);">
+                            <a href="TODO" class="stretched-link text-decoration-none mb-0">
+                                <img src="<?php echo Settings::UPLOAD_DIR . $i % 3 + 1 . '.png'; ?>" class="card-img-top" alt="Image <?php echo $i; ?>">
+                            </a>
+                            <div class="card-body">
+                                <h6 class="card-text mb-0">Product Name</h6>
+                                <p class="card-text mb-1"><small class="text-muted">Product details</small></p>
+                                <h5 class="card-text mb-0"><small>€</small>999</h5>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <button type="button" class="btn btn-primary add-to-cart-btn" onclick="changeAddToCartIcon.call(this)">
+                                <i class="bi bi-cart-plus-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         <?php endfor; ?>
     </div>
