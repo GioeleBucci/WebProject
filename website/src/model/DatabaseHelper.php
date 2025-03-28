@@ -29,7 +29,22 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getOrders($customer_id)
+    public function getProducts(int $amount)
+    {
+        $stmt = $this->db->prepare(
+            "SELECT name, description, size 
+             FROM ARTICLE 
+             LIMIT ?;"
+        );
+        $stmt->bind_param("i", $amount);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
+    public function getOrders(int $customer_id)
     {
         $stmt = $this->db->prepare("SELECT * FROM ORDER WHERE email=?");
         $stmt->bind_param("i", $customer_id);
@@ -39,7 +54,7 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPendingOrders($customer_id)
+    public function getPendingOrders(int $customer_id)
     {
         $stmt = $this->db->prepare("SELECT * FROM ORDER WHERE email=? AND status NOT IN ('Completato','Annullato')");
         $stmt->bind_param("i", $customer_id);
@@ -49,7 +64,7 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getTrackingStatus($order_id)
+    public function getTrackingStatus(int $order_id)
     {
         $stmt = $this->db->prepare("SELECT departure, arrival, lastPosition FROM DELIVERY WHERE orderId=?");
         $stmt->bind_param("i", $order_id);
@@ -59,22 +74,22 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function checkLogin($email, $password)
+    public function checkLogin(string $email, string $password)
     {
         $query = "SELECT email, name, isSeller FROM USERS WHERE email = ? AND password = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss',$email, $password);
+        $stmt->bind_param('ss', $email, $password);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function checkUserType($email)
+    public function checkUserType(string $email)
     {
         $query = "SELECT isSeller FROM USER WHERE email = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$email);
+        $stmt->bind_param('i', $email);
         $stmt->execute();
         $result = $stmt->get_result();
 

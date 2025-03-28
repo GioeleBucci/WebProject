@@ -43,7 +43,7 @@
 <div class="container mt-2 mt-md-4">
     <!-- Featured products -->
     <div class="row mt-3 g-3">
-        <?php for ($i = 1; $i <= 12; $i++): ?>
+        <?php foreach (DatabaseHelper::getInstance()->getProducts(50) as $prod): ?>
             <div class="col-6 col-md-3">
                 <div class="card-wrapper">
                     <div class="card h-100">
@@ -52,11 +52,11 @@
                             onmouseenter="underlineProductName.call(this, true)"
                             onmouseleave="underlineProductName.call(this, false)">
                             <a href="TODO" class="stretched-link text-decoration-none mb-0">
-                                <img src="<?php echo Settings::UPLOAD_DIR . $i % 3 + 1 . '.png'; ?>" class="card-img-top" alt="Image <?php echo $i; ?>">
+                                <img src="<?php echo Settings::UPLOAD_DIR . '1.png'; ?>" class="card-img-top" alt="Product Image">
                             </a>
                             <div class="card-body">
-                                <h6 class="card-text mb-0 product-name">Product Name</h6>
-                                <p class="card-text mb-1"><small class="text-muted">Product details</small></p>
+                                <h6 class="card-text mb-0 product-name"><?php echo $prod["name"] ?></h6>
+                                <p class="card-text mb-1"><small class="text-muted"><?php echo $prod["description"] . ", " . $prod["size"] ?></small></p>
                                 <h5 class="card-text mb-0"><small>€</small>999</h5>
                             </div>
                         </div>
@@ -68,6 +68,6 @@
                     </div>
                 </div>
             </div>
-        <?php endfor; ?>
+        <?php endforeach; ?>
     </div>
 </div>
