@@ -43,17 +43,23 @@ create table PAYMENT_METHOD (
      primary key (paymentMethodId)
 );
 
-create table CUSTOMER (
+create table USERS (
      email char(32) not null,
      password char(16) null,
+     isSeller boolean null,
      address char(64) null,
      phoneNumber char(16) null,
      name char(16) null,
      surname char(16) null,
-     birthDate date null,
+     birthDate date null
+);
+
+create table CUSTOMER (
+     email char(32) not null,
      paymentMethodId int not null,
      primary key (email),
-     constraint FK_CustomerPaymentMethod foreign key (paymentMethodId) references PAYMENT_METHOD(paymentMethodId)
+     constraint FK_CustomerKey foreign key (email) references USERS(email),
+     constraint FK_CustomerPaymentMethod foreign key (paymentMethodId) references PAYMENT_METHOD(paymentMethodId)  
 );
 
 create table ORDERS (
@@ -85,12 +91,9 @@ create table DELIVERY (
 
 create table SELLER (
      email char(32) not null,
-     password char(16) null,
-     address char(64) null,
-     phoneNumber char(16) null,
-     name char(32) null,
      deliveredOrders int null,
-     primary key (email)
+     primary key (email),
+     constraint FK_SellerKey foreign key (email) references USER(email)
 );
 
 

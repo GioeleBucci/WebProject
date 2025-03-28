@@ -20,6 +20,67 @@ class DatabaseHelper
         return self::$instance;
     }
 
+    public function getCategories()
+    {
+        $stmt = $this->db->prepare("SELECT * FROM CATEGORY");
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getOrders($customer_id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM ORDER WHERE email=?");
+        $stmt->bind_param("i", $customer_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getPendingOrders($customer_id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM ORDER WHERE email=? AND status NOT IN ('Completato','Annullato')");
+        $stmt->bind_param("i", $customer_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getTrackingStatus($order_id)
+    {
+        $stmt = $this->db->prepare("SELECT departure, arrival, lastPosition FROM DELIVERY WHERE orderId=?");
+        $stmt->bind_param("i", $order_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function checkLogin($email, $password)
+    {
+        $query = "SELECT email, name, surname, isSeller FROM USERS WHERE email = ? AND password = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss',$email, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function checkUserType($email)
+    {
+        $query = "SELECT isSeller FROM USER WHERE email = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     private function __clone()
     {
         // Prevent cloning
