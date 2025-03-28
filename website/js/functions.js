@@ -7,3 +7,10 @@ function changeAddToCartIcon() {
         icon.classList.add('bi-cart-plus-fill');
     }, 1500);
 }
+
+function underlineProductName(toggle) {
+    const productName = this.querySelector('.product-name');
+    if (productName) {
+        productName.style.textDecoration = toggle ? 'underline' : 'none';
+    }
+}

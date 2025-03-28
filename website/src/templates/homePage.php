@@ -43,17 +43,19 @@
 <div class="container mt-2 mt-md-4">
     <!-- Featured products -->
     <div class="row mt-3 g-3">
-        <?php for ($i = 1; $i <= 9; $i++): ?>
+        <?php for ($i = 1; $i <= 12; $i++): ?>
             <div class="col-6 col-md-3">
                 <div class="card-wrapper">
                     <div class="card h-100">
                         <!-- rotate(0) prevents the stretched link from affecting other elements -->
-                        <div style="transform: rotate(0);">
+                        <div class="card-top" style="transform: rotate(0);"
+                            onmouseenter="underlineProductName.call(this, true)"
+                            onmouseleave="underlineProductName.call(this, false)">
                             <a href="TODO" class="stretched-link text-decoration-none mb-0">
                                 <img src="<?php echo Settings::UPLOAD_DIR . $i % 3 + 1 . '.png'; ?>" class="card-img-top" alt="Image <?php echo $i; ?>">
                             </a>
                             <div class="card-body">
-                                <h6 class="card-text mb-0">Product Name</h6>
+                                <h6 class="card-text mb-0 product-name">Product Name</h6>
                                 <p class="card-text mb-1"><small class="text-muted">Product details</small></p>
                                 <h5 class="card-text mb-0"><small>€</small>999</h5>
                             </div>
