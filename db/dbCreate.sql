@@ -15,6 +15,7 @@ create table if not exists test.ARTICLE (
      material char(255) null,
      weight decimal(6,2) null,
      size char(31) null,
+     image char(255) null,
      categoryId int not null,
      primary key (articleId),
      constraint FK_ArticleCategory foreign key (categoryId) references test.CATEGORY(categoryId)
@@ -60,7 +61,7 @@ create table if not exists test.CUSTOMER (
 )
 engine = InnoDB;
 
-create table if not exists test.ORDER (
+create table if not exists test.CLIENT_ORDER (
      orderId int not null AUTO_INCREMENT,
      email char(31) not null,
      orderDate date null,
@@ -76,7 +77,7 @@ create table if not exists test.ORDER_HAS_ARTICLE (
      count int null,
      primary key (orderId, articleId),
      constraint FK_PresentArticle foreign key (articleId) references test.ARTICLE(articleId),
-     constraint FK_PresentOrder foreign key (orderId) references test.ORDER(orderId)
+     constraint FK_PresentOrder foreign key (orderId) references test.CLIENT_ORDER(orderId)
 )
 engine = InnoDB;
 
@@ -87,7 +88,7 @@ create table if not exists test.DELIVERY (
      arrival date null,
      lastPosition char(255) null,
      primary key (deliveyId),
-     constraint FK_Order foreign key (orderId) references test.ORDER(orderId)
+     constraint FK_Order foreign key (orderId) references test.CLIENT_ORDER(orderId)
 )
 engine = InnoDB;
 
