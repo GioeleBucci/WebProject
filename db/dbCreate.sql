@@ -1,20 +1,14 @@
--- Database Section
--- ________________ 
-
-create database IF NOT EXISTS test;
+create schema if not exists test;
 use test;
 
-
--- Tables Section
--- _____________ 
-
-create table CATEGORY (
+create table if not exists test.CATEGORY (
      categoryId int not null AUTO_INCREMENT,
      name char(16) null,
      primary key (categoryId)
-);
+)
+engine = InnoDB;
 
-create table ARTICLE (
+create table if not exists test.ARTICLE (
      articleId int not null AUTO_INCREMENT,
      name char(32) null,
      description char(128) null,
@@ -23,84 +17,86 @@ create table ARTICLE (
      size char(16) null,
      categoryId int not null,
      primary key (articleId),
-     constraint FK_ArticleCategory foreign key (categoryId)
-     references CATEGORY(categoryId)
-);
+     constraint FK_ArticleCategory foreign key (categoryId) references test.CATEGORY(categoryId)
+)
+engine = InnoDB;
 
-create table ARTICLE_VERSION (
+create table if not exists test.ARTICLE_VERSION (
      versionId int not null AUTO_INCREMENT,
      articleId int not null,
      features char(128) null,
      price int null,
      availability int null,
      primary key (versionId),
-     constraint FK_Article foreign key (articleId) references ARTICLE(articleId)
-);
+     constraint FK_Article foreign key (articleId) references test.ARTICLE(articleId)
+)
+engine = InnoDB;
 
-create table PAYMENT_METHOD (
+create table if not exists test.PAYMENT_METHOD (
      paymentMethodId int not null AUTO_INCREMENT,
      name char(16) null,
      primary key (paymentMethodId)
-);
+)
+engine = InnoDB;
 
-create table USERS (
+create table if not exists test.USER (
      email char(32) not null,
      password char(16) null,
      isSeller boolean null,
      address char(64) null,
      phoneNumber char(16) null,
-     name char(16) null,
-     surname char(16) null,
-     birthDate date null
-);
+     name char(32) null, 
+     birthDate date null,
+     primary key (email)
+)
+engine = InnoDB;
 
-create table CUSTOMER (
+create table if not exists test.CUSTOMER (
      email char(32) not null,
      paymentMethodId int not null,
      primary key (email),
-     constraint FK_CustomerKey foreign key (email) references USERS(email),
-     constraint FK_CustomerPaymentMethod foreign key (paymentMethodId) references PAYMENT_METHOD(paymentMethodId)  
-);
+     constraint FK_CustomerKey foreign key (email) references test.USER(email),
+     constraint FK_CustomerPaymentMethod foreign key (paymentMethodId) references test.PAYMENT_METHOD(paymentMethodId)  
+)
+engine = InnoDB;
 
-create table ORDERS (
+
+create table if not exists test.ORDER (
      orderId int not null AUTO_INCREMENT,
      email char(32) not null,
      orderDate date null,
      notes char(128) null,
      primary key (orderId),
-     constraint FK_OrderIssuer foreign key (email) references CUSTOMER(email) 
-);
+     constraint FK_OrderIssuer foreign key (email) references test.CUSTOMER(email) 
+)
+engine = InnoDB;
 
-create table ORDER_HAS_ARTICLE (
+create table if not exists test.ORDER_HAS_ARTICLE (
      orderId int not null,
      articleId int not null,
      count int null,
-     constraint FK_PresentArticle foreign key (articleId) references ARTICLE(articleId),
-     constraint FK_PresentOrder foreign key (orderId) references ORDERS(orderId)
-);
+     primary key (orderId, articleId),
+     constraint FK_PresentArticle foreign key (articleId) references test.ARTICLE(articleId),
+     constraint FK_PresentOrder foreign key (orderId) references test.ORDER(orderId)
+)
+engine = InnoDB;
 
-create table DELIVERY (
+create table if not exists test.DELIVERY (
      deliveyId int not null AUTO_INCREMENT,
      orderId int not null,
      departure date null,
      arrival date null,
      lastPosition char(16) null,
      primary key (deliveyId),
-     constraint FK_Order foreign key (orderId) references ORDERS(orderId)
-);
+     constraint FK_Order foreign key (orderId) references test.ORDER(orderId)
+)
+engine = InnoDB;
 
-create table SELLER (
+create table if not exists test.SELLER (
      email char(32) not null,
      deliveredOrders int null,
      primary key (email),
-     constraint FK_SellerKey foreign key (email) references USER(email)
-);
-
-
--- Constraints Section
--- ___________________ 
-
-
--- Index Section
--- _____________ 
+     constraint FK_SellerKey foreign key (email) references test.USER(email)
+)
+engine = InnoDB;
 
