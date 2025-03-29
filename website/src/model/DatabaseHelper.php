@@ -32,9 +32,10 @@ class DatabaseHelper
     public function getProducts(int $amount)
     {
         $stmt = $this->db->prepare(
-            "SELECT name, description, size 
+            "SELECT name, description, size, image 
              FROM ARTICLE 
-             LIMIT ?;"
+             ORDER BY RAND()
+             LIMIT ?"
         );
         $stmt->bind_param("i", $amount);
         $stmt->execute();
