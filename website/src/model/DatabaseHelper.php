@@ -32,7 +32,7 @@ class DatabaseHelper
     public function getProducts(int $amount)
     {
         $stmt = $this->db->prepare(
-            "SELECT name, description, size, image 
+            "SELECT name, description, size, basePrice, image 
              FROM ARTICLE 
              ORDER BY RAND()
              LIMIT ?"
