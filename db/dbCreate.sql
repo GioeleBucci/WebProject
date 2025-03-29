@@ -3,7 +3,7 @@ use test;
 
 create table if not exists test.CATEGORY (
      categoryId int not null AUTO_INCREMENT,
-     name char(127) null,
+     name char(31) null,
      primary key (categoryId)
 )
 engine = InnoDB;
@@ -12,7 +12,8 @@ create table if not exists test.ARTICLE (
      articleId int not null AUTO_INCREMENT,
      name char(31) null,
      description char(127) null,
-     material char(255) null,
+     details char(1023) null,
+     material char(63) null,
      weight decimal(6,2) null,
      size char(31) null,
      image char(255) null,
@@ -27,7 +28,7 @@ create table if not exists test.ARTICLE_VERSION (
      articleId int not null,
      features char(255) null,
      price int null,
-     availability int null,
+     availability int 0,
      primary key (versionId),
      constraint FK_Article foreign key (articleId) references test.ARTICLE(articleId)
 )
@@ -41,10 +42,10 @@ create table if not exists test.PAYMENT_METHOD (
 engine = InnoDB;
 
 create table if not exists test.USER (
-     email char(31) not null,
+     email char(63) not null,
      password char(31) null,
-     isSeller boolean null,
-     address char(63) null,
+     isSeller boolean false,
+     address char(255) null,
      phoneNumber char(31) null,
      name char(31) null, 
      birthDate date null,
@@ -53,7 +54,7 @@ create table if not exists test.USER (
 engine = InnoDB;
 
 create table if not exists test.CUSTOMER (
-     email char(31) not null,
+     email char(63) not null,
      paymentMethodId int not null,
      primary key (email),
      constraint FK_CustomerKey foreign key (email) references test.USER(email),
@@ -63,7 +64,7 @@ engine = InnoDB;
 
 create table if not exists test.CLIENT_ORDER (
      orderId int not null AUTO_INCREMENT,
-     email char(31) not null,
+     email char(63) not null,
      orderDate date null,
      notes char(127) null,
      primary key (orderId),
@@ -93,7 +94,7 @@ create table if not exists test.DELIVERY (
 engine = InnoDB;
 
 create table if not exists test.SELLER (
-     email char(31) not null,
+     email char(63) not null,
      deliveredOrders int null,
      primary key (email),
      constraint FK_SellerKey foreign key (email) references test.USER(email)
