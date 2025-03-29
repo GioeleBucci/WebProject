@@ -23,18 +23,18 @@
                     <!-- Logo -->
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="<?php echo Links::HOME ?>">
-                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img-fluid">
+                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img" style="height: 60px;">
                         </a>
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
-                            <i class="bi bi-cart fs-4 mx-2"></i>
+                            <i class="bi bi-cart fs-5 mx-2"></i>
                             <a href="<?php echo Links::LOGIN ?>">
-                                <i class="bi bi-person fs-4 mx-2"></i>
+                                <i class="bi bi-person fs-5 mx-2"></i>
                             </a>
                         </div>
                     </div>
                     <!-- Search bar -->
-                    <div class="flex-grow-1 my-3 my-md-0 mx-md-3">
+                    <div class="flex-grow-1 mt-3 mb-3 mb-md-0 mx-md-3">
                         <form class="d-flex" action="#" method="get">
                             <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search" name="q">
                             <button class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" type="submit">
@@ -43,7 +43,7 @@
                         </form>
                     </div>
                     <!-- Icons (desktop) -->
-                    <div class="d-none d-md-block">
+                    <div class="d-none d-md-block mt-3">
                         <i class="bi bi-cart fs-4 mx-2"></i>
                         <a href="<?php echo Links::LOGIN ?>">
                             <i class="bi bi-person fs-4 mx-2"></i>
