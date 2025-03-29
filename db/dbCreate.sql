@@ -74,10 +74,10 @@ engine = InnoDB;
 
 create table if not exists test.ORDER_HAS_ARTICLE (
      orderId int not null,
-     articleId int not null,
+     versionId int not null,
      count int null,
-     primary key (orderId, articleId),
-     constraint FK_PresentArticle foreign key (articleId) references test.ARTICLE(articleId),
+     primary key (orderId, versionId),
+     constraint FK_PresentArticle foreign key (versionId) references test.ARTICLE_VERSION(versionId),
      constraint FK_PresentOrder foreign key (orderId) references test.CLIENT_ORDER(orderId)
 )
 engine = InnoDB;
