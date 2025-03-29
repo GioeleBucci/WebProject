@@ -12,9 +12,10 @@ create table if not exists test.ARTICLE (
      articleId int not null AUTO_INCREMENT,
      name char(31) null,
      description char(127) null,
-     details char(1023) null,
+     details text null,
      material char(63) null,
      weight decimal(6,2) null,
+     basePrice decimal(6,2) null,
      size char(31) null,
      image char(255) null,
      categoryId int not null,
@@ -27,8 +28,8 @@ create table if not exists test.ARTICLE_VERSION (
      versionId int not null AUTO_INCREMENT,
      articleId int not null,
      features char(255) null,
-     price int null,
-     availability int 0,
+     priceVariation decimal(6,2) default 0,
+     availability int default 0,
      primary key (versionId),
      constraint FK_Article foreign key (articleId) references test.ARTICLE(articleId)
 )
@@ -36,7 +37,7 @@ engine = InnoDB;
 
 create table if not exists test.PAYMENT_METHOD (
      paymentMethodId int not null AUTO_INCREMENT,
-     name char(15) null,
+     name char(31) null,
      primary key (paymentMethodId)
 )
 engine = InnoDB;
@@ -44,7 +45,7 @@ engine = InnoDB;
 create table if not exists test.USER (
      email char(63) not null,
      password char(31) null,
-     isSeller boolean false,
+     isSeller boolean default false,
      address char(255) null,
      phoneNumber char(31) null,
      name char(31) null, 
