@@ -105,7 +105,8 @@ create table if not exists `NOTIFICATION` (
      email char(63) not null,
      notificationId int not null,
      content text null,
-     primary key (email, notificationId)
+     isRead boolean default false,
+     primary key (email, notificationId),
      constraint FK_NotifiedUser foreign key (email) references USER(email)
 );
 
