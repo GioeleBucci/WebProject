@@ -75,9 +75,18 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function addUser(string $email, string $password, string $name)
+    {
+        $query = "insert into `test`.`USER` (email, password, name) values (?, ?, ?) except select email, password, name from `test`.`USER`";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sss', $email, $password, $name);
+        $result = $stmt->execute();
+        return $result;
+    }
+
     public function checkLogin(string $email, string $password)
     {
-        $query = "SELECT name FROM USERS WHERE email = ? AND password = ?";
+        $query = "SELECT * FROM USER WHERE email = ? AND password = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss', $email, $password);
         $stmt->execute();
