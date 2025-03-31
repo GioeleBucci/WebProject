@@ -8,7 +8,7 @@
         $templateParams["page"] = $routes[$requestPath];
     } else if(isset($_POST["email"]) && isset($_POST["password"])){
         $login_result = $dbh->checkLogin($_POST["email"], $_POST["password"]);
-        if($login_result==0){
+        if(count($login_result)==0){
             //Login failed
             header("Location: http://localhost".Settings::BASE_PATH.Links::LOGIN);
         }
