@@ -41,12 +41,18 @@ create table if not exists PAYMENT_METHOD (
 create table if not exists USER (
      email char(63) not null,
      password char(31) null,
-     isSeller boolean default false,
      address char(255) null,
      phoneNumber char(31) null,
      name char(31) null, 
      birthDate date null,
      primary key (email)
+);
+
+create table if not exists SELLER (
+     email char(63) not null,
+     deliveredOrders int null,
+     primary key (email),
+     constraint FK_SellerKey foreign key (email) references USER(email)
 );
 
 create table if not exists CLIENT (
@@ -76,6 +82,15 @@ create table if not exists ORDER_HAS_ARTICLE (
      constraint FK_SelectedArticle foreign key (articleId, versionId) references ARTICLE_VERSION(articleId, versionId)
 );
 
+create table if not exists SHOPPING_CART_ITEM (
+     email char(63) not null,
+     articleId int not null,
+     versionId int not null,
+     primary key (email, articleId, versionId),
+     constraint FK_CartOwner foreign key (email) references CLIENT(email),
+     constraint FK_ListedArticle foreign key (articleId, versionId) references ARTICLE_VERSION(articleId, versionId)
+);
+
 create table if not exists DELIVERY (
      deliveyId int not null,
      orderId int not null,
@@ -86,9 +101,11 @@ create table if not exists DELIVERY (
      constraint FK_DeliveryOrder foreign key (orderId) references CLIENT_ORDER(orderId)
 );
 
-create table if not exists SELLER (
+create table if not exists `NOTIFICATION` (
      email char(63) not null,
-     deliveredOrders int null,
-     primary key (email),
-     constraint FK_SellerKey foreign key (email) references USER(email)
+     notificationId int not null,
+     content text null,
+     primary key (email, notificationId)
+     constraint FK_NotifiedUser foreign key (email) references USER(email)
 );
+
