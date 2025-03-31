@@ -2,23 +2,28 @@
     require_once 'bootstrap.php';
     //TODO: explicitly notify the result of the login to the user
 
-    if(isset($_SESSION["sessionID"])){
-        //User is already logged in
-        header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
-        $templateParams["page"] = $routes[$requestPath];
-    } else if(isset($_POST["email"]) && isset($_POST["password"])){
-        $login_result = $dbh->checkLogin($_POST["email"], $_POST["password"]);
-        if(count($login_result)==0){
-            //Login failed
-            header("Location: http://localhost".Settings::BASE_PATH.Links::LOGIN);
-        }
-        else{
-            $_SESSION["sessionID"] = $_POST["email"];
-            $templateParams["page"] = $routes[$requestPath];
+    if(!isset($_POST["logout"])){
+        if(isset($_SESSION["sessionId"])){
+            //User is already logged in
             header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
+        } else if(isset($_POST["email"]) && isset($_POST["password"])){
+            $login_result = $dbh->checkLogin($_POST["email"], $_POST["password"]);
+            if(count($login_result)==0){
+                //Login failed
+                header("Location: http://localhost".Settings::BASE_PATH.Links::LOGIN);
+            }
+            else{
+                $_SESSION["sessionId"] = $_POST["email"];
+                header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
+            }
         }
+    } else {
+        $_SESSION = null;
+        header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
     }
 
+    
+    $templateParams["page"] = $routes[$requestPath];
     require_once 'base.php';
 ?>
 
@@ -41,6 +46,8 @@
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <input type="hidden" id="logout" name="logout" value="logout">
+                        <button>Logout</button>
                     </form>
                 </div>
                 <div class="card-footer text-center">
