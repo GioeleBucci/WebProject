@@ -2,14 +2,14 @@ create schema if not exists test;
 use test;
 
 create table if not exists test.CATEGORY (
-     categoryId int not null AUTO_INCREMENT,
+     categoryId int not null,
      name char(31) null,
      primary key (categoryId)
 )
 engine = InnoDB;
 
 create table if not exists test.ARTICLE (
-     articleId int not null AUTO_INCREMENT,
+     articleId int not null,
      name char(31) null,
      description char(127) null,
      details text null,
@@ -25,18 +25,18 @@ create table if not exists test.ARTICLE (
 engine = InnoDB;
 
 create table if not exists test.ARTICLE_VERSION (
-     versionId int not null AUTO_INCREMENT,
      articleId int not null,
+     versionId int not null,
      features char(255) null,
      priceVariation decimal(6,2) default 0,
      availability int default 0,
-     primary key (versionId),
+     primary key (articleId, versionId),
      constraint FK_Article foreign key (articleId) references test.ARTICLE(articleId)
 )
 engine = InnoDB;
 
 create table if not exists test.PAYMENT_METHOD (
-     paymentMethodId int not null AUTO_INCREMENT,
+     paymentMethodId int not null,
      name char(31) null,
      primary key (paymentMethodId)
 )
@@ -54,7 +54,7 @@ create table if not exists test.USER (
 )
 engine = InnoDB;
 
-create table if not exists test.CUSTOMER (
+create table if not exists test.CLIENT (
      email char(63) not null,
      paymentMethodId int not null,
      primary key (email),
@@ -64,33 +64,34 @@ create table if not exists test.CUSTOMER (
 engine = InnoDB;
 
 create table if not exists test.CLIENT_ORDER (
-     orderId int not null AUTO_INCREMENT,
+     orderId int not null,
      email char(63) not null,
      orderDate date null,
      notes char(127) null,
      primary key (orderId),
-     constraint FK_OrderIssuer foreign key (email) references test.CUSTOMER(email) 
+     constraint FK_OrderIssuer foreign key (email) references test.CLIENT(email) 
 )
 engine = InnoDB;
 
 create table if not exists test.ORDER_HAS_ARTICLE (
      orderId int not null,
+     articleId int not null,
      versionId int not null,
      count int null,
-     primary key (orderId, versionId),
-     constraint FK_PresentArticle foreign key (versionId) references test.ARTICLE_VERSION(versionId),
-     constraint FK_PresentOrder foreign key (orderId) references test.CLIENT_ORDER(orderId)
+     primary key (orderId, articleId, versionId),
+     constraint FK_Order foreign key (orderId) references test.CLIENT_ORDER(orderId),
+     constraint FK_SelectedArticle foreign key (articleId, versionId) references test.ARTICLE_VERSION(articleId, versionId)
 )
 engine = InnoDB;
 
 create table if not exists test.DELIVERY (
-     deliveyId int not null AUTO_INCREMENT,
+     deliveyId int not null,
      orderId int not null,
      departure date null,
      arrival date null,
      lastPosition char(255) null,
      primary key (deliveyId),
-     constraint FK_Order foreign key (orderId) references test.CLIENT_ORDER(orderId)
+     constraint FK_DeliveryOrder foreign key (orderId) references test.CLIENT_ORDER(orderId)
 )
 engine = InnoDB;
 

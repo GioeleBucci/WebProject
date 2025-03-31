@@ -7,4 +7,3 @@ require_once '../src/model/DatabaseHelper.php';
 
 $dbh = DatabaseHelper::getInstance();
 
-require_once 'model/login.php';

@@ -13,6 +13,6 @@ class Pages
 {
     public const HOME = 'homePage.php';
     public const LOGIN = 'loginPage.php';
-    public const REGISTER = 'register.php';
+    public const REGISTER = 'registerPage.php';
     public const NOT_FOUND_404 = 'notFound404.php';
 }
