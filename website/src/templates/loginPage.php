@@ -47,7 +47,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                         <input type="hidden" id="logout" name="logout" value="logout">
-                        <button>Logout</button>
+                        <button type="submit" class="btn btn-primary w-100">Logout</button>
                     </form>
                 </div>
                 <div class="card-footer text-center">
