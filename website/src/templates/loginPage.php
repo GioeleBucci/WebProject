@@ -7,8 +7,8 @@
             //User is already logged in
             header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
         } else if(isset($_POST["email"]) && isset($_POST["password"])){
-            $login_result = $dbh->checkLogin($_POST["email"], $_POST["password"]);
-            if(count($login_result)==0){
+            $login_check = $dbh->isLoginValid($_POST["email"], $_POST["password"]);
+            if($login_check == false){
                 //Login failed
                 header("Location: http://localhost".Settings::BASE_PATH.Links::LOGIN);
             }
@@ -18,7 +18,8 @@
             }
         }
     } else {
-        $_SESSION = null;
+        $_SESSION["sessionId"] = null;
+        $_POST["logout"] = null;
         header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
     }
 

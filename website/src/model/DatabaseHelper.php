@@ -67,33 +67,38 @@ class DatabaseHelper
 
     public function addUser(string $email, string $password, string $name)
     {
-        $query = "insert into `test`.`USER` (email, password, name) values (?, ?, ?) except select email, password, name from `test`.`USER`";
+        $query = "insert into `test`.`USER` (email, password, name) select ?, ?, ? where not exists (select email from `test`.`USER` where email = ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sss', $email, $password, $name);
+        $stmt->bind_param('ssss', $email, $password, $name, $email);
         $result = $stmt->execute();
         return $result;
     }
 
-    public function checkLogin(string $email, string $password)
+    public function isLoginValid(string $email, string $password)
     {
         $query = "SELECT * FROM USER WHERE email = ? AND password = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss', $email, $password);
         $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        if(count($result) == 0){
+            return false;
+        }
+        return true;
     }
 
     public function checkUserType(string $email)
     {
-        $query = "SELECT isSeller FROM USER WHERE email = ?";
+        $query = "SELECT email FROM USER WHERE email in (select email from SELLER)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $email);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        if(count($result) == 0){
+            return "client";
+        }
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return "seller";
     }
 
     private function __clone()

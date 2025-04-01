@@ -1,12 +1,12 @@
 <?php
     require_once 'bootstrap.php';
 
-    if(isset($_SESSION["sessionID"])){
+    if(isset($_SESSION["sessionId"])){
         //Being logged in, a user already exists
         header(Settings::BASE_PATH.Links::HOME);
-    } else if(isset($_POST["name"]) && isset($_POST["password"]) && isset(_POST["name"]) && isset($_POST["confirm_password"])
+    } else if(isset($_POST["email"]) && isset($_POST["password"]) && isset(_POST["name"]) && isset($_POST["confirm_password"])
                 && strcmp($_POST["password"], $_POST["confirm_password"]) == 0){
-        $result = $dbh->addUser($_POST["name"], $_POST["password"], $_POST["name"]);
+        $result = $dbh->addUser($_POST["email"], $_POST["password"], $_POST["name"]);
         if($result == true){
             //Registration successful
             header(Settings::BASE_PATH.Links::HOME);
