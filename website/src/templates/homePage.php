@@ -43,7 +43,7 @@
 <div class="container mt-2 mt-md-4">
     <!-- Featured products -->
     <div class="row mt-3 g-3">
-        <?php foreach (DatabaseHelper::getInstance()->getProducts(50) as $prod): ?>
+        <?php foreach (DatabaseHelper::getInstance()->getArticles(50) as $prod): ?>
             <div class="col-6 col-md-3">
                 <div class="card-wrapper">
                     <div class="card h-100">

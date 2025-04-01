@@ -29,10 +29,10 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getProducts(int $amount)
+    public function getArticles(int $amount)
     {
         $stmt = $this->db->prepare(
-            "SELECT name, description, size, basePrice, image 
+            "SELECT name, details, size, basePrice, image 
              FROM ARTICLE 
              ORDER BY RAND()
              LIMIT ?"
@@ -47,18 +47,8 @@ class DatabaseHelper
 
     public function getOrders(int $customer_id)
     {
-        $stmt = $this->db->prepare("SELECT * FROM ORDER WHERE email=?");
-        $stmt->bind_param("i", $customer_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function getPendingOrders(int $customer_id)
-    {
-        $stmt = $this->db->prepare("SELECT * FROM ORDER WHERE email=? AND status NOT IN ('Completato','Annullato')");
-        $stmt->bind_param("i", $customer_id);
+        $stmt = $this->db->prepare("SELECT * FROM CLIENT_ORDER WHERE email=?");
+        $stmt->bind_param("s", $customer_id);
         $stmt->execute();
         $result = $stmt->get_result();
 

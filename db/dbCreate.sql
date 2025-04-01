@@ -96,7 +96,7 @@ create table if not exists DELIVERY (
      departure date null,
      arrival date null,
      lastPosition char(255) null,
-     primary key (deliveyId),
+     primary key (orderId, deliveyId),
      constraint FK_DeliveryOrder foreign key (orderId) references CLIENT_ORDER(orderId)
 );
 
