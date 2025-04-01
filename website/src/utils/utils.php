@@ -30,13 +30,12 @@ class Utils
     }
 
     /**
-     * Logs out the current user by destroying the session and redirecting to the login page.
+     * Logs out the current user by destroying the session and redirecting to the home page.
      */
     public static function logout(): void
     {
         session_destroy();
-        session_start();
-        self::redirect(Pages::LOGIN);
+        self::redirect(Links::HOME);
     }
 
     /**

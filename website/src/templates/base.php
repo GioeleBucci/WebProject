@@ -28,7 +28,9 @@
                         </a>
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
-                            <i class="bi bi-cart fs-5 mx-2"></i>
+                            <a href="<?php echo Links::CART ?>">
+                                <i class="bi bi-cart fs-5 mx-2"></i>
+                            </a>
                             <a href="<?php echo Links::LOGIN ?>">
                                 <i class="bi bi-person fs-5 mx-2"></i>
                             </a>
@@ -45,7 +47,9 @@
                     </div>
                     <!-- Icons (desktop) -->
                     <div class="d-none d-md-block mt-3">
-                        <i class="bi bi-cart fs-4 mx-2"></i>
+                        <a href="<?php echo Links::CART ?>">
+                            <i class="bi bi-cart fs-4 mx-2"></i>
+                        </a>
                         <a href="<?php echo Links::LOGIN ?>">
                             <i class="bi bi-person fs-4 mx-2"></i>
                         </a>

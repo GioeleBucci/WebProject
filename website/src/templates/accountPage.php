@@ -1,4 +1,10 @@
-<?php Utils::requireLoggedUser(); ?>
+<?php
+Utils::requireLoggedUser();
+
+if (isset($_POST["logout"])) {
+    Utils::logout();
+}
+?>
 
 <div class="container mt-3">
     <form method="post">

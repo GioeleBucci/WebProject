@@ -7,6 +7,7 @@ class Links
     public const LOGIN = 'login';
     public const REGISTER = 'register';
     public const ACCOUNT = 'account';
+    public const CART = 'cart';
 }
 
 /* Actual filenames the relative links will be resolved to */
@@ -16,5 +17,6 @@ class Pages
     public const LOGIN = 'loginPage.php';
     public const REGISTER = 'registerPage.php';
     public const ACCOUNT = 'accountPage.php';
+    public const CART = 'cartPage.php';
     public const NOT_FOUND_404 = 'notFound404.php';
 }
