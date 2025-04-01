@@ -2,17 +2,16 @@
     require_once 'bootstrap.php';
     //TODO: explicitly notify the result of the login to the user
 
-    if(!isset($_POST["logout"])){
-        if(isset($_SESSION["sessionId"])){
-            //User is already logged in
-            header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
-        } else if(isset($_POST["email"]) && isset($_POST["password"])){
+    if(isset($_POST["logout"]) == false){
+        if(isset($_POST["email"]) && isset($_POST["password"])){
             $login_check = $dbh->isLoginValid($_POST["email"], $_POST["password"]);
-            if($login_check == false){
+            if(isset($_SESSION["sessionId"])){
+                //User is already logged in
+                header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
+            } else if($login_check == false){
                 //Login failed
-                header("Location: http://localhost".Settings::BASE_PATH.Links::LOGIN);
-            }
-            else{
+                header("Location: http://localhost".Settings::BASE_PATH.Links::REGISTER);
+            } else {
                 $_SESSION["sessionId"] = $_POST["email"];
                 header("Location: http://localhost".Settings::BASE_PATH.Links::HOME);
             }
@@ -47,6 +46,8 @@
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <form method="post">
                         <input type="hidden" id="logout" name="logout" value="logout">
                         <button type="submit" class="btn btn-primary w-100">Logout</button>
                     </form>
