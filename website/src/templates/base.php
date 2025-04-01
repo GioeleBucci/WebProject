@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="<?php echo Settings::BASE_PATH; ?>" />
+    <link rel="icon" href="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" type="image/png">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -59,6 +60,8 @@
                 require($templateParams["page"]);
             }
             ?>
+            <!-- Title can be set only after page's specific templateParams are loaded in -->
+            <title> <?php echo "Kiwi" . (isset($templateParams["title"]) ? " - " . $templateParams["title"] : "") ?> </title>
         </main>
 
         <footer>

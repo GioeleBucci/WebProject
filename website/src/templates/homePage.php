@@ -1,3 +1,5 @@
+<?php $templateParams["title"] = "Home" ?>
+
 <!-- Carousel -->
 <div class="container-fluid px-0">
     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" data-bs-touch="true" data-bs-pause="none">
