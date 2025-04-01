@@ -58,7 +58,7 @@
                             </a>
                             <div class="card-body">
                                 <h6 class="card-text mb-0 product-name"><?php echo $prod["name"] ?></h6>
-                                <p class="card-text mb-0 text-truncate"><small class="text-muted"><?php echo $prod["description"] ?></small></p>
+                                <p class="card-text mb-0 text-truncate"><small class="text-muted"><?php echo $prod["details"] ?></small></p>
                                 <p class="card-text mb-1 text-truncate"><small class="text-muted"><?php echo $prod["size"] ?></small></p>
                                 <h5 class="card-text mb-0"><small>€</small><?php echo $prod["basePrice"]?></h5>
                             </div>
