@@ -1,7 +1,6 @@
 <?php $templateParams["title"] = "Login" ?>
 
 <?php
-    require_once 'bootstrap.php';
     //TODO: explicitly notify the result of the login to the user
 
     if(isset($_POST["logout"]) == false){

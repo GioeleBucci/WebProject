@@ -2,7 +2,7 @@
 require_once 'bootstrap.php';
 $home_redirect = 'Location: '.Settings::BASE_PATH;
 
-if(isset($_SESSION["sessionID"])){
+if(isset($_SESSION["sessionId"])){
     header($home_redirect);
     exit();
 } else if(isset($_POST["email"]) && isset($_POST["password"])){
@@ -12,7 +12,7 @@ if(isset($_SESSION["sessionID"])){
         $templateParams["errorelogin"] = "Login fallito - Controlla email e password inserite";
     }
     else{
-        $_SESSION["sessionID"] = $login_result["email"];
+        $_SESSION["sessionId"] = $login_result["email"];
         header($home_redirect);
     }
 }
