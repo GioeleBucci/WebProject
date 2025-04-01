@@ -1,13 +1,4 @@
---
--- Dumping data for table `USER`
---
-
-INSERT INTO `USER` (`email`, `password`, `isSeller`, `address`, `phoneNumber`, `name`, `birthDate`) VALUES
-('emma@example.com', 'password', 0, '123 Oak St, Furnitureville, US', '555-123-4567', 'Emma Johnson', '1985-05-15'),
-('seller1@shop.com', 'password', 1, '200 Retail Blvd, Shopville, US', '555-333-4444', 'Home Elegance', '1982-07-17'),
-('seller2@shop.com', 'password', 1, '100 Commerce Way, Market City, US', '555-111-2222', 'Lux Furniture', '1975-01-10'),
-('michael@example.com', 'password', 0, '456 Maple Ave, Hometown, US', '555-987-6543', 'Michael Brown', '1978-11-22'),
-('olivia@example.com', 'password', 0, '789 Pine Rd, Decor City, US', '555-555-1212', 'Olivia Smith', '1990-08-30');
+use test;
 
 --
 -- Dumping data for table `CATEGORY`
@@ -26,7 +17,7 @@ INSERT INTO `CATEGORY` (`categoryId`, `name`) VALUES
 -- Dumping data for table `ARTICLE`
 --
 
-INSERT INTO `ARTICLE` (`articleId`, `name`, `description`, `material`, `weight`, `basePrice`, `size`, `categoryId`, `image`) VALUES
+INSERT INTO `ARTICLE` (`articleId`, `name`, `details`, `material`, `weight`, `basePrice`, `size`, `categoryId`, `image`) VALUES
 (1, 'FUKREJIV', '3-seater sofa', 'Fabric', 85.00, 499, '240x160x80 cm', 1, 'sofa.png'),
 (2, 'MÅEYE', 'Round glass coffee table', 'Glass/Metal', 250.00, 79, '90x90x45 cm', 1, 'coffeeTable.png'),
 (3, 'KOBNE', 'Tall bookshelf with 5 shelves', 'Oak', 40.00, 199, '180x80x30 cm', 1, 'bookshelf.png'),
@@ -42,28 +33,27 @@ INSERT INTO `ARTICLE` (`articleId`, `name`, `description`, `material`, `weight`,
 -- Dumping data for table `ARTICLE_VERSION`
 --
 
-INSERT INTO `ARTICLE_VERSION` (`versionId`, `articleId`, `features`, `priceVariation`, `availability`) VALUES
+INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `features`, `priceVariation`, `availability`) VALUES
 (1, 1, 'Gray Fabric', 0, 5),
-(2, 1, 'Blue Fabric', 0, 3),
-(3, 1, 'Beige Fabric', 0, 7),
-(4, 2, 'Clear Glass', 0, 10),
-(5, 2, 'Smoked Glass', 5, 6),
-(6, 3, 'Natural Finish', 0, 8),
-(7, 3, 'Dark Finish', 0, 4),
-(8, 4, 'Natural Finish', 0, 3),
-(9, 4, 'Dark Finish', 0, 5),
-(10, 5, 'White', 0, 4),
-(11, 5, 'Cherry Finish', 7.90, 2),
-(12, 6, 'Natural Finish', 0, 3),
-(13, 6, 'Espresso Finish', 9.90, 2),
-(14, 7, 'Gray Fabric', 0, 12),
-(15, 7, 'Beige Fabric', 0, 8),
-(16, 8, 'Natural Finish', 0, 2),
-(17, 8, 'Dark Finish', 0, 3),
-(18, 9, 'Black', 0, 7),
-(19, 9, 'Gray', 0, 5),
-(20, 10, 'Natural Finish', 0, 2);
-
+(1, 2, 'Blue Fabric', 0, 3),
+(1, 3, 'Beige Fabric', 0, 7),
+(2, 1, 'Clear Glass', 0, 10),
+(2, 2, 'Smoked Glass', 5, 6),
+(3, 1, 'Natural Finish', 0, 8),
+(3, 2, 'Dark Finish', 0, 4),
+(4, 1, 'Natural Finish', 0, 3),
+(4, 2, 'Dark Finish', 0, 5),
+(5, 1, 'White', 0, 4),
+(5, 2, 'Cherry Finish', 7.90, 2),
+(6, 1, 'Natural Finish', 0, 3),
+(6, 2, 'Espresso Finish', 9.90, 2),
+(7, 1, 'Gray Fabric', 0, 12),
+(7, 2, 'Beige Fabric', 0, 8),
+(8, 1, 'Natural Finish', 0, 2),
+(8, 2, 'Dark Finish', 0, 3),
+(9, 1, 'Black', 0, 7),
+(9, 2, 'Gray', 0, 5),
+(10, 1, 'Natural Finish', 0, 2);
 
 --
 -- Dumping data for table `PAYMENT_METHOD`
@@ -76,14 +66,16 @@ INSERT INTO `PAYMENT_METHOD` (`paymentMethodId`, `name`) VALUES
 (4, 'Bank Transfer'),
 (5, 'Store Credit');
 
+--
+-- Dumping data for table `USER`
+--
 
---
--- Dumping data for table `CUSTOMER`
---
-INSERT INTO `CUSTOMER` (`email`, `paymentMethodId`) VALUES
-('emma@example.com', 1),
-('olivia@example.com', 2),
-('michael@example.com', 3);
+INSERT INTO `USER` (`email`, `password`, `address`, `phoneNumber`, `name`, `birthDate`) VALUES
+('emma@example.com', 'password', '123 Oak St, Furnitureville, US', '555-123-4567', 'Emma Johnson', '1985-05-15'),
+('seller1@shop.com', 'password', '200 Retail Blvd, Shopville, US', '555-333-4444', 'Home Elegance', '1982-07-17'),
+('seller2@shop.com', 'password', '100 Commerce Way, Market City, US', '555-111-2222', 'Lux Furniture', '1975-01-10'),
+('michael@example.com', 'password', '456 Maple Ave, Hometown, US', '555-987-6543', 'Michael Brown', '1978-11-22'),
+('olivia@example.com', 'password', '789 Pine Rd, Decor City, US', '555-555-1212', 'Olivia Smith', '1990-08-30');
 
 --
 -- Dumping data for table `SELLER`
@@ -92,6 +84,14 @@ INSERT INTO `CUSTOMER` (`email`, `paymentMethodId`) VALUES
 INSERT INTO `SELLER` (`email`, `deliveredOrders`) VALUES
 ('seller1@shop.com', 178),
 ('seller2@shop.com', 205);
+
+--
+-- Dumping data for table `CLIENT`
+--
+INSERT INTO `CLIENT` (`email`, `paymentMethodId`) VALUES
+('emma@example.com', 1),
+('olivia@example.com', 2),
+('michael@example.com', 3);
 
 --
 -- Dumping data for table `CLIENT_ORDER`
@@ -104,6 +104,20 @@ INSERT INTO `CLIENT_ORDER` (`orderId`, `email`, `orderDate`, `notes`) VALUES
 (4, 'emma@example.com', '2025-03-15', 'Assembly service requested');
 
 --
+-- Dumping data for table `ORDER_HAS_ARTICLE`
+--
+
+INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `count`) VALUES
+(1, 1, 1, 1),
+(1, 2, 1, 1),
+(2, 4, 1, 1),
+(2, 5, 1, 1),
+(3, 6, 1, 1),
+(3, 7, 1, 6),
+(4, 8, 1, 1),
+(4, 9, 1, 1);
+
+--
 -- Dumping data for table `DELIVERY`
 --
 
@@ -112,18 +126,4 @@ INSERT INTO `DELIVERY` (`deliveyId`, `orderId`, `departure`, `arrival`, `lastPos
 (2, 2, '2025-02-17', '2025-02-20', 'Delivered'),
 (3, 3, '2025-03-03', NULL, 'In Warehouse'),
 (4, 4, '2025-03-17', NULL, 'Processing');
-
---
--- Dumping data for table `ORDER_HAS_ARTICLE`
---
-
-INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `count`) VALUES
-(1, 1, 1),
-(1, 2, 1),
-(2, 4, 1),
-(2, 5, 1),
-(3, 6, 1),
-(3, 7, 6),
-(4, 8, 1),
-(4, 9, 1);
 

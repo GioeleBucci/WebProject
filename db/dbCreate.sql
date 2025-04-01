@@ -10,14 +10,13 @@ create table if not exists CATEGORY (
 create table if not exists ARTICLE (
      articleId int not null,
      name char(31) null,
-     description char(127) null,
      details text null,
      material char(63) null,
      weight decimal(6,2) null,
      basePrice decimal(6,2) null,
      size char(31) null,
-     image char(255) null,
      categoryId int not null,
+     image char(255) null,
      primary key (articleId),
      constraint FK_ArticleCategory foreign key (categoryId) references CATEGORY(categoryId)
 );
