@@ -13,6 +13,7 @@ $routes = [
     Links::REGISTER => Pages::REGISTER,
     Links::ACCOUNT => Pages::ACCOUNT,
     Links::CART => Pages::CART,
+    Links::CHECKOUT => Pages::CHECKOUT,
 ];
 
 if (array_key_exists($requestPath, $routes)) {
