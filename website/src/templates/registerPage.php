@@ -1,8 +1,6 @@
 <?php $templateParams["title"] = "Register" ?>
 
 <?php
-    require_once 'bootstrap.php';
-
     if(isset($_SESSION["sessionId"])){
         //Being logged in, a user already exists
         header(Settings::BASE_PATH.Links::HOME);

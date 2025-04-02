@@ -91,7 +91,7 @@ class DatabaseHelper
     {
         $query = "SELECT email FROM USER WHERE email in (select email from SELLER)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i', $email);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         if(count($result) == 0){
@@ -99,6 +99,17 @@ class DatabaseHelper
         }
 
         return "seller";
+    }
+
+    public function getNotifications(string $email)
+    {
+        $query = "SELECT content FROM NOTIFICATION WHERE email = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
     }
 
     private function __clone()
