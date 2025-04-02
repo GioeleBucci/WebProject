@@ -2,22 +2,20 @@
 
 <?php
     if(isset($_SESSION["sessionId"])){
-        //Being logged in, a user already exists
-        header(Settings::BASE_PATH.Links::HOME);
-    } else if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["name"]) && isset($_POST["confirm_password"])
-                && strcmp($_POST["password"], $_POST["confirm_password"]) == 0){
+        Utils::redirect(Links::ACCOUNT);
+    }
+    if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["name"]) && isset($_POST["confirm_password"])
+    && strcmp($_POST["password"], $_POST["confirm_password"]) == 0){
         $result = $dbh->addUser($_POST["email"], $_POST["password"], $_POST["name"]);
-        if($result == true){
+        if($result){
             //Registration successful
-            header(Settings::BASE_PATH.Links::HOME);
-        } else {
-            //Registration failed
-            header(Settings::BASE_PATH.Links::REGISTER);
+            Utils::login($_POST["email"]);
+            unset($templateParams["registrationError"]);
+            Utils::redirect(Links::ACCOUNT);
+        } else{
+            $templateParams["registrationError"] = "Registration failed";
         }
     }
-    
-    $templateParams["page"] = $routes[$requestPath];
-    require_once 'base.php';
 ?>
 
 <div class="container mt-3">
@@ -28,7 +26,12 @@
                     <h4 class="mb-0">Register</h4>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form method="post">
+                        <?php if (isset($templateParams["registrationError"])): ?>
+                            <div class="alert alert-warning show mb-1 mt-0" role="alert">
+                                <?php echo $templateParams["loginError"]; ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="mb-3">
                             <label for="name" class="form-label">Full Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>

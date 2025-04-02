@@ -85,6 +85,7 @@ create table if not exists SHOPPING_CART_ITEM (
      email char(63) not null,
      articleId int not null,
      versionId int not null,
+     count int null,
      primary key (email, articleId, versionId),
      constraint FK_CartOwner foreign key (email) references CLIENT(email),
      constraint FK_ListedArticle foreign key (articleId, versionId) references ARTICLE_VERSION(articleId, versionId)
@@ -100,7 +101,7 @@ create table if not exists DELIVERY (
      constraint FK_DeliveryOrder foreign key (orderId) references CLIENT_ORDER(orderId)
 );
 
-create table if not exists `NOTIFICATION` (
+create table if not exists NOTIFICATION (
      email char(63) not null,
      notificationId int not null,
      content text null,
