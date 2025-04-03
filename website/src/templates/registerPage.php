@@ -4,16 +4,19 @@
     if(isset($_SESSION["sessionId"])){
         Utils::redirect(Links::ACCOUNT);
     }
-    if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["name"]) && isset($_POST["confirm_password"])
-    && strcmp($_POST["password"], $_POST["confirm_password"]) == 0){
-        $result = $dbh->addUser($_POST["email"], $_POST["password"], $_POST["name"]);
-        if($result){
-            //Registration successful
-            Utils::login($_POST["email"]);
-            unset($templateParams["registrationError"]);
-            Utils::redirect(Links::ACCOUNT);
+    if(isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm_password"])){
+        if(strcmp($_POST["password"], $_POST["confirm_password"]) != 0){
+            $templateParams["registrationError"] = "The inserted passwords don't match";
         } else{
-            $templateParams["registrationError"] = "Registration failed";
+            $result = $dbh->addUser($_POST["email"], $_POST["password"], $_POST["name"]);
+            if($result){
+                //Registration successful
+                Utils::login($_POST["email"]);
+                unset($templateParams["registrationError"]);
+                Utils::redirect(Links::ACCOUNT);
+            } else{
+                $templateParams["registrationError"] = "Registration failed";
+            }
         }
     }
 ?>
@@ -29,7 +32,7 @@
                     <form method="post">
                         <?php if (isset($templateParams["registrationError"])): ?>
                             <div class="alert alert-warning show mb-1 mt-0" role="alert">
-                                <?php echo $templateParams["loginError"]; ?>
+                                <?php echo $templateParams["registrationError"]; ?>
                             </div>
                         <?php endif; ?>
                         <div class="mb-3">
