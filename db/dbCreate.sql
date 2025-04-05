@@ -39,7 +39,7 @@ create table if not exists PAYMENT_METHOD (
 
 create table if not exists USER (
      userId int not null AUTO_INCREMENT,
-     email char(63) not null,
+     email char(63) not null UNIQUE,
      password char(31) null,
      address char(255) null,
      phoneNumber char(31) null,
