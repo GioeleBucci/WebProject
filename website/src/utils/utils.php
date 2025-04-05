@@ -26,7 +26,8 @@ class Utils
      */
     public static function login(string $email): void
     {
-        $_SESSION['sessionId'] = $email;
+        $userId = dbh->getUserId($email);
+        $_SESSION['sessionId'] = $userId;
     }
 
     /**
