@@ -10,12 +10,13 @@
         } else{
             $result = $dbh->addUser($_POST["email"], $_POST["password"], $_POST["name"]);
             if($result){
-                //Registration successful
                 Utils::login($_POST["email"]);
+                //EXTRA: print actual login date and time
+                dbh->addNotification($_SESSION["sessionId"], "01-01-2001 12:00:00", "Registrazione effettuata");
                 unset($templateParams["registrationError"]);
                 Utils::redirect(Links::ACCOUNT);
             } else{
-                $templateParams["registrationError"] = "Registration failed";
+                $templateParams["registrationError"] = "Registration failed! Make sure the email hasn't already been used for another account";
             }
         }
     }
