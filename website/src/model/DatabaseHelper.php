@@ -31,11 +31,7 @@ class DatabaseHelper
 
     public function getArticles(int $amount)
     {
-        $stmt = $this->db->prepare(
-            "SELECT name, details, size, basePrice, image 
-             FROM ARTICLE 
-             ORDER BY RAND()
-             LIMIT ?"
+        $stmt = $this->db->prepare("SELECT name, details, size, basePrice, image FROM ARTICLE ORDER BY RAND() LIMIT ?"
         );
         $stmt->bind_param("i", $amount);
         $stmt->execute();
@@ -44,6 +40,15 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function addOrder(string $email, string $date, string $notes)
+    {
+        $query = "INSERT INTO `test`.`CLIENT_ORDER` (email, orderDate, notes) VALUES (?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sss', $email, $date, $content);
+        $result = $stmt->execute();
+        $this->db->addNotification($email, $date, "Ordine effettuato");
+        return $result;
+    }
 
     public function getOrders(int $customer_id)
     {
@@ -67,48 +72,65 @@ class DatabaseHelper
 
     public function addUser(string $email, string $password, string $name)
     {
-        $query = "insert into `test`.`USER` (email, password, name) select ?, ?, ? where not exists (select email from `test`.`USER` where email = ?)";
+        $query = "INSERT INTO `test`.`USER` (email, password, name) VALUES (?, ?, ?) WHERE NOT EXISTS (SELECT email FROM `test`.`USER` WHERE email = ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ssss', $email, $password, $name, $email);
         $result = $stmt->execute();
         return $result;
     }
 
+    public function getUserId(string $email)
+    {
+        $query = "SELECT userId FROM `test`.`USER` WHERE email = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $email);
+        $result = $stmt->execute()->get_result()->fetch_all();
+        return $result;
+    }
+
     public function isLoginValid(string $email, string $password)
     {
-        $query = "SELECT * FROM USER WHERE email = ? AND password = ?";
+        $query = "SELECT userId FROM `test`.`USER` WHERE email = ? AND password = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss', $email, $password);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        if(count($result) == 0){
-            return false;
+        if(count($result) == 1){
+            return true;
         }
-        return true;
+        return false;
     }
 
-    public function checkUserType(string $email)
+    public function checkUserType(int $userId)
     {
-        $query = "SELECT email FROM USER WHERE email in (select email from SELLER)";
+        $query = "SELECT userId FROM USER WHERE userId = ? AND userId in (select userId from SELLER)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s', $email);
+        $stmt->bind_param('i', $userId);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        if(count($result) == 0){
-            return "client";
+        if(count($result) == 1){
+            return "seller";
         }
-
-        return "seller";
+        return "client";
     }
 
-    public function getNotifications(string $email)
+    public function getNotifications(int $userId)
     {
-        $query = "SELECT content FROM NOTIFICATION WHERE email = ?";
+        $query = "SELECT content FROM NOTIFICATION WHERE userId = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s', $email);
+        $stmt->bind_param('i', $userId);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
+        return $result;
+    }
+
+    public function addNotification(int $userId, string $content)
+    {
+        $query = "INSERT INTO `test`.`NOTIFICATION` (email, content, isRead) VALUES (?, ?, false)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('is', $userId, $content);
+        $result = $stmt->execute();
         return $result;
     }
 
