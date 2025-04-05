@@ -4,30 +4,30 @@ use test;
 -- Dumping data for table `CATEGORY`
 --
 
-INSERT INTO `CATEGORY` (`categoryId`, `name`) VALUES
-(1, 'Living Room'),
-(2, 'Bedroom'),
-(3, 'Dining Room'),
-(4, 'Office'),
-(5, 'Outdoor'),
-(6, 'Kitchen'),
-(7, 'Bathroom');
+INSERT INTO `CATEGORY` (`name`) VALUES
+('Living Room'),
+('Bedroom'),
+('Dining Room'),
+('Office'),
+('Outdoor'),
+('Kitchen'),
+('Bathroom');
 
 --
 -- Dumping data for table `ARTICLE`
 --
 
-INSERT INTO `ARTICLE` (`articleId`, `name`, `details`, `material`, `weight`, `basePrice`, `size`, `categoryId`, `image`) VALUES
-(1, 'FUKREJIV', '3-seater sofa', 'Fabric', 85.00, 499, '240x160x80 cm', 1, 'sofa.png'),
-(2, 'MÅEYE', 'Round glass coffee table', 'Glass/Metal', 250.00, 79, '90x90x45 cm', 1, 'coffeeTable.png'),
-(3, 'KOBNE', 'Tall bookshelf with 5 shelves', 'Oak', 40.00, 199, '180x80x30 cm', 1, 'bookshelf.png'),
-(4, 'LUUYFO', 'Queen size bed frame', 'Walnut', 70.00, 99.90, '160x200 cm', 2, 'bedFrame.png'),
-(5, 'EDIVPÅSÖ', 'Six-drawer dresser', 'Cherry Wood', 65.00, 299, '120x50x80 cm', 2, 'drawer.png'),
-(6, 'HORJÅ', 'Expandable dining table', 'Maple', 55.00, 129, '180x90x75 cm', 3, 'tableExpandable.png'),
-(7, 'KEPSÖ', 'Upholstered dining chair', 'Oak/Fabric', 80.00, 49.90, '45x55x95 cm', 3, 'chair.png'),
-(8, 'TÖDHIAFJI', 'Office desk with drawers', 'Mahogany', 6.00, 159, '160x80x75 cm', 4, 'desk.png'),
-(9, 'PUPYIDRÅ', 'Ergonomic office chair', 'Mesh/Metal', 15.00, 109.90, '65x65x120 cm', 4, 'chairOffice.png'),
-(10, 'LEPNA', 'Outdoor table with 2 chairs', 'Aluminum', 15.50, 79, '100x100 cm', 5, 'tableOutdoor.png');
+INSERT INTO `ARTICLE` (`name`, `details`, `material`, `weight`, `basePrice`, `size`, `categoryId`, `image`) VALUES
+('FUKREJIV', '3-seater sofa', 'Fabric', 85.00, 499, '240x160x80 cm', 1, 'sofa.png'),
+('MÅEYE', 'Round glass coffee table', 'Glass/Metal', 250.00, 79, '90x90x45 cm', 1, 'coffeeTable.png'),
+('KOBNE', 'Tall bookshelf with 5 shelves', 'Oak', 40.00, 199, '180x80x30 cm', 1, 'bookshelf.png'),
+('LUUYFO', 'Queen size bed frame', 'Walnut', 70.00, 99.90, '160x200 cm', 2, 'bedFrame.png'),
+('EDIVPÅSÖ', 'Six-drawer dresser', 'Cherry Wood', 65.00, 299, '120x50x80 cm', 2, 'drawer.png'),
+('HORJÅ', 'Expandable dining table', 'Maple', 55.00, 129, '180x90x75 cm', 3, 'tableExpandable.png'),
+('KEPSÖ', 'Upholstered dining chair', 'Oak/Fabric', 80.00, 49.90, '45x55x95 cm', 3, 'chair.png'),
+('TÖDHIAFJI', 'Office desk with drawers', 'Mahogany', 6.00, 159, '160x80x75 cm', 4, 'desk.png'),
+('PUPYIDRÅ', 'Ergonomic office chair', 'Mesh/Metal', 15.00, 109.90, '65x65x120 cm', 4, 'chairOffice.png'),
+('LEPNA', 'Outdoor table with 2 chairs', 'Aluminum', 15.50, 79, '100x100 cm', 5, 'tableOutdoor.png');
 
 --
 -- Dumping data for table `ARTICLE_VERSION`
@@ -59,12 +59,12 @@ INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `features`, `priceVaria
 -- Dumping data for table `PAYMENT_METHOD`
 --
 
-INSERT INTO `PAYMENT_METHOD` (`paymentMethodId`, `name`) VALUES
-(1, 'Credit Card'),
-(2, 'PayPal'),
-(3, 'Cash on Delivery'),
-(4, 'Bank Transfer'),
-(5, 'Store Credit');
+INSERT INTO `PAYMENT_METHOD` (`name`) VALUES
+('Credit Card'),
+('PayPal'),
+('Cash on Delivery'),
+('Bank Transfer'),
+('Store Credit');
 
 --
 -- Dumping data for table `USER`
@@ -81,27 +81,27 @@ INSERT INTO `USER` (`email`, `password`, `address`, `phoneNumber`, `name`, `birt
 -- Dumping data for table `SELLER`
 --
 
-INSERT INTO `SELLER` (`email`, `deliveredOrders`) VALUES
-('seller1@shop.com', 178),
-('seller2@shop.com', 205);
+INSERT INTO `SELLER` (`userId`, `deliveredOrders`) VALUES
+(2, 178),
+(3, 205);
 
 --
 -- Dumping data for table `CLIENT`
 --
-INSERT INTO `CLIENT` (`email`, `paymentMethodId`) VALUES
-('emma@example.com', 1),
-('olivia@example.com', 2),
-('michael@example.com', 3);
+INSERT INTO `CLIENT` (`userId`, `paymentMethodId`) VALUES
+(1, 1),
+(4, 2),
+(5, 3);
 
 --
 -- Dumping data for table `CLIENT_ORDER`
 --
 
-INSERT INTO `CLIENT_ORDER` (`orderId`, `email`, `orderDate`, `notes`) VALUES
-(1, 'emma@example.com', '2025-02-10', 'Please deliver on weekend only'),
-(2, 'michael@example.com', '2025-02-15', 'Call before delivery, need to remove old furniture'),
-(3, 'olivia@example.com', '2025-03-01', 'Elevator access available, 3rd floor'),
-(4, 'emma@example.com', '2025-03-15', 'Assembly service requested');
+INSERT INTO `CLIENT_ORDER` (`userId`, `orderTime`, `notes`) VALUES
+(1, '2025-02-10', 'Please deliver on weekend only'),
+(4, '2025-02-15', 'Call before delivery, need to remove old furniture'),
+(5, '2025-03-01', 'Elevator access available, 3rd floor'),
+(1, '2025-03-15', 'Assembly service requested');
 
 --
 -- Dumping data for table `ORDER_HAS_ARTICLE`
@@ -121,9 +121,15 @@ INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `count`) V
 -- Dumping data for table `DELIVERY`
 --
 
-INSERT INTO `DELIVERY` (`deliveyId`, `orderId`, `departure`, `arrival`, `lastPosition`) VALUES
-(1, 1, '2025-02-12', '2025-02-14', 'Delivered'),
-(2, 2, '2025-02-17', '2025-02-20', 'Delivered'),
-(3, 3, '2025-03-03', NULL, 'In Warehouse'),
-(4, 4, '2025-03-17', NULL, 'Processing');
+INSERT INTO `DELIVERY` (`orderId`, `departureTime`, `arrivalTime`, `lastPosition`) VALUES
+(1, '2025-02-12 12:00:00', '2025-02-14 15:00:00', 'Delivered'),
+(2, '2025-02-17 09:00:00', '2025-02-20 16:00:00', 'Delivered'),
+(3, '2025-03-03 13:00:00', NULL, 'In Warehouse'),
+(4, '2025-03-17 07:00:00', NULL, 'Processing');
 
+--
+-- Dumping data for table `NOTIFICATION`
+--
+
+INSERT INTO `NOTIFICATION` (`userId`, `receptionTime`, `content`, `isRead`) VALUES
+(1, '2026-02-12 11:00:00', 'Login effettuato', false);
