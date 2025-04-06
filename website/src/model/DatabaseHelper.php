@@ -133,6 +133,62 @@ class DatabaseHelper
         $result = $stmt->execute();
         return $result;
     }
+    
+    /**
+     * Queries the database for the searched term and/or filters.
+     * The latters must be compiled into a single string,
+     * separated by white space. If absent, returns the entire
+     * database content.
+     *
+     * @return array Returns the result of the query if successful,
+     * and an empty string otherwise.
+     */
+    public function searchBy(string $name, string ...$filters)
+    {
+        $result = [];
+        if($name != "" && !empty($filters)){
+            $query = "SELECT * FROM ARTICLE";
+            $stmt = $this->db->prepare($query);
+            $result = $stmt->execute()->get_result()->fetch_all(MYSQLI_ASSOC);
+        }
+        if($name != ""){
+            $nameQuery = searchByName($name);
+            $result = array_merge($result, $nameQuery);
+        }
+        if(!empty($filters)){
+            $filtersQuery = searchByFilters($filters);
+            $result = array_merge($result, $filtersQuery);
+        }
+        return $result;
+    }
+    
+    private function searchByName($name)
+    {
+        $query = "SELECT * FROM ARTICLE WHERE name = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s', $name);
+        $success = $stmt->execute();
+        if($success){
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        }
+        else{
+            $result = [];
+        }
+        return $result;
+    }
+    
+    private function searchByFilters($filters)
+    {
+        $query = "SELECT * FROM ARTICLE WHERE categoryId IN (SELECT name FROM CATEGORY WHERE name = ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $keyword);
+        $result = [];
+        foreach($filters as $filter){
+            $keyword = $filter;
+            $result = array_merge($result, $stmt->execute()->get_result()->fetch_all(MYSQLI_ASSOC));
+        }
+        return $result;
+    }
 
     private function __clone()
     {
