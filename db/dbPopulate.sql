@@ -17,17 +17,17 @@ INSERT INTO `CATEGORY` (`name`) VALUES
 -- Dumping data for table `ARTICLE`
 --
 
-INSERT INTO `ARTICLE` (`name`, `details`, `material`, `weight`, `basePrice`, `size`, `categoryId`, `image`) VALUES
-('FUKREJIV', '3-seater sofa', 'Fabric', 85.00, 499, '240x160x80 cm', 1, 'sofa.png'),
-('MÅEYE', 'Round glass coffee table', 'Glass/Metal', 250.00, 79, '90x90x45 cm', 1, 'coffeeTable.png'),
-('KOBNE', 'Tall bookshelf with 5 shelves', 'Oak', 40.00, 199, '180x80x30 cm', 1, 'bookshelf.png'),
-('LUUYFO', 'Queen size bed frame', 'Walnut', 70.00, 99.90, '160x200 cm', 2, 'bedFrame.png'),
-('EDIVPÅSÖ', 'Six-drawer dresser', 'Cherry Wood', 65.00, 299, '120x50x80 cm', 2, 'drawer.png'),
-('HORJÅ', 'Expandable dining table', 'Maple', 55.00, 129, '180x90x75 cm', 3, 'tableExpandable.png'),
-('KEPSÖ', 'Upholstered dining chair', 'Oak/Fabric', 80.00, 49.90, '45x55x95 cm', 3, 'chair.png'),
-('TÖDHIAFJI', 'Office desk with drawers', 'Mahogany', 6.00, 159, '160x80x75 cm', 4, 'desk.png'),
-('PUPYIDRÅ', 'Ergonomic office chair', 'Mesh/Metal', 15.00, 109.90, '65x65x120 cm', 4, 'chairOffice.png'),
-('LEPNA', 'Outdoor table with 2 chairs', 'Aluminum', 15.50, 79, '100x100 cm', 5, 'tableOutdoor.png');
+INSERT INTO `ARTICLE` (`name`, `details`, `material`, `weight`, `basePrice`, `size`, `categoryId`, `image`, `longDescription`) VALUES
+('FUKREJIV', '3-seater sofa', 'Fabric', 85.00, 499, '240x160x80 cm', 1, 'sofa.png', 'A comfortable 3-seater sofa with durable fabric upholstery, perfect for relaxing in your living room. Its modern design and sturdy construction make it a great addition to any home.'),
+('MÅEYE', 'Round glass coffee table', 'Glass/Metal', 250.00, 79, '90x90x45 cm', 1, 'coffeeTable.png', 'A sleek round coffee table with a tempered glass top and sturdy metal frame, ideal for modern spaces. Its minimalist design complements a variety of interior styles.'),
+('KOBNE', 'Tall bookshelf with 5 shelves', 'Oak', 40.00, 199, '180x80x30 cm', 1, 'bookshelf.png', 'A tall oak bookshelf with five spacious shelves, perfect for organizing books and decor items. Its elegant finish adds a touch of sophistication to any room.'),
+('LUUYFO', 'Queen size bed frame', 'Walnut', 70.00, 99.90, '160x200 cm', 2, 'bedFrame.png', 'A sturdy queen-size bed frame made of walnut wood, offering both durability and elegance. Its timeless design ensures it blends seamlessly with any bedroom decor.'),
+('EDIVPÅSÖ', 'Six-drawer dresser', 'Cherry Wood', 65.00, 299, '120x50x80 cm', 2, 'drawer.png', 'A stylish six-drawer dresser crafted from cherry wood, providing ample storage for your bedroom. Its smooth finish and classic design make it a standout piece.'),
+('HORJÅ', 'Expandable dining table', 'Maple', 55.00, 129, '180x90x75 cm', 3, 'tableExpandable.png', 'A versatile dining table made of maple wood, expandable to accommodate more guests with ease. Its robust construction and elegant design make it perfect for family gatherings.'),
+('KEPSÖ', 'Upholstered dining chair', 'Oak/Fabric', 80.00, 49.90, '45x55x95 cm', 3, 'chair.png', 'A comfortable dining chair with oak legs and fabric upholstery, perfect for any dining room. Its ergonomic design ensures long-lasting comfort during meals.'),
+('TÖDHIAFJI', 'Office desk with drawers', 'Mahogany', 6.00, 159, '160x80x75 cm', 4, 'desk.png', 'A spacious office desk with built-in drawers, crafted from mahogany for a professional look. Its ample workspace and storage options make it ideal for productivity.'),
+('PUPYIDRÅ', 'Ergonomic office chair', 'Mesh/Metal', 15.00, 109.90, '65x65x120 cm', 4, 'chairOffice.png', 'An ergonomic office chair with breathable mesh and adjustable features for all-day comfort. Its sleek design and sturdy build make it a must-have for any workspace.'),
+('LEPNA', 'Outdoor table with 2 chairs', 'Aluminum', 15.50, 79, '100x100 cm', 5, 'tableOutdoor.png', 'A durable outdoor table set with two aluminum chairs, perfect for enjoying meals in your garden or patio. Its weather-resistant materials ensure long-lasting use in any outdoor setting.');
 
 --
 -- Dumping data for table `ARTICLE_VERSION`

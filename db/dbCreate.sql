@@ -11,6 +11,7 @@ create table if not exists ARTICLE (
      articleId int not null AUTO_INCREMENT,
      name char(31) null,
      details text null,
+     longDescription text null,
      material char(63) null,
      weight decimal(6,2) null,
      basePrice decimal(6,2) null,
