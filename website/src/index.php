@@ -15,6 +15,7 @@ $routes = [
     Links::CART => Pages::CART,
     Links::CHECKOUT => Pages::CHECKOUT,
     Links::SEARCH => Pages::SEARCH,
+    Links::ARTICLE => Pages::ARTICLE,
 ];
 
 if (array_key_exists($requestPath, $routes)) {

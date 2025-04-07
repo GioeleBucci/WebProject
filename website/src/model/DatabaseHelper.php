@@ -31,13 +31,23 @@ class DatabaseHelper
 
     public function getArticles(int $amount)
     {
-        $stmt = $this->db->prepare("SELECT name, details, size, basePrice, image FROM ARTICLE ORDER BY RAND() LIMIT ?"
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE ORDER BY RAND() LIMIT ?"
         );
         $stmt->bind_param("i", $amount);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getArticle(int $articleId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId=?");
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc();
     }
 
     public function addOrder(string $email, string $date, string $notes)
