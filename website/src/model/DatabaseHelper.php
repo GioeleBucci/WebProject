@@ -46,7 +46,7 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sss', $email, $date, $content);
         $result = $stmt->execute();
-        $this->db->addNotification($email, $date, "Ordine effettuato");
+        $this->addNotification($email, "Ordine effettuato");
         return $result;
     }
 
@@ -84,7 +84,12 @@ class DatabaseHelper
         $query = "SELECT userId FROM `test`.`USER` WHERE email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
-        $result = $stmt->execute()->get_result()->fetch_all();
+        $success = $stmt->execute();
+        if ($success) {
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } else {
+            $result = [];
+        }
         return $result;
     }
 
@@ -149,14 +154,19 @@ class DatabaseHelper
         if($name != "" && !empty($filters)){
             $query = "SELECT * FROM ARTICLE";
             $stmt = $this->db->prepare($query);
-            $result = $stmt->execute()->get_result()->fetch_all(MYSQLI_ASSOC);
+            $success = $stmt->execute();
+            if ($success) {
+                $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            } else {
+                $result = [];
+            }
         }
         if($name != ""){
-            $nameQuery = searchByName($name);
+            $nameQuery = $this->searchByName($name);
             $result = array_merge($result, $nameQuery);
         }
         if(!empty($filters)){
-            $filtersQuery = searchByFilters($filters);
+            $filtersQuery = $this->searchByFilters($filters);
             $result = array_merge($result, $filtersQuery);
         }
         return $result;
@@ -185,7 +195,9 @@ class DatabaseHelper
         $result = [];
         foreach($filters as $filter){
             $keyword = $filter;
-            $result = array_merge($result, $stmt->execute()->get_result()->fetch_all(MYSQLI_ASSOC));
+            if ($stmt->execute()) {
+                $result = array_merge($result, $stmt->get_result()->fetch_all(MYSQLI_ASSOC));
+            }
         }
         return $result;
     }

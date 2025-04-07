@@ -26,7 +26,7 @@ class Utils
      */
     public static function login(string $email): void
     {
-        $userId = dbh->getUserId($email);
+        $userId = DatabaseHelper::getInstance()->getUserId($email);
         $_SESSION['sessionId'] = $userId;
     }
 

@@ -10,7 +10,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     if ($dbh->isLoginValid($_POST["email"], $_POST["password"])) {
         Utils::login($_POST["email"]);
         //EXTRA: print actual login date and time
-        dbh->addNotification($_SESSION["sessionId"], "01-01-2001 12:00:00", "Login effettuato");
+        $dbh->addNotification($_SESSION["sessionId"], "01-01-2001 12:00:00", "Login effettuato");
         unset($templateParams["loginError"]);
         Utils::redirect(Links::ACCOUNT);
     } else {
