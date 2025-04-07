@@ -11,7 +11,7 @@ if (!empty($searchQuery) || !empty($filters)) {
 }
 ?>
 
-<div class="container mt-lg-3">
+<div class="container mt-md-3">
     <div class="row">
         <!-- Sidebar for filters -->
         <div class="col-md-3">

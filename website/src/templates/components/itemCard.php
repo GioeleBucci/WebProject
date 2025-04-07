@@ -4,7 +4,7 @@
         <div class="card-top" style="transform: rotate(0);"
             onmouseenter="underlineProductName.call(this, true)"
             onmouseleave="underlineProductName.call(this, false)">
-            <a href="TODO" class="stretched-link text-decoration-none mb-0">
+            <a href="article?id=<?php echo $prod['articleId']; ?>" class="stretched-link text-decoration-none mb-0">
                 <div class="image-fluid overflow-hidden d-flex justify-content-center align-items-center" style="height: 200px;">
                     <img src="<?php echo Settings::UPLOAD_DIR . $prod['image']; ?>"
                         class="card-img-top"

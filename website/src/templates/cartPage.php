@@ -1,12 +1,12 @@
 <?php Utils::requireLoggedUser() ?>
 
-<div class="container mt-lg-2">
+<div class="container mt-md-2">
     <div class="text-center">
         <h2>Your Cart</h2>
     </div>
 
     <div class="row g-5">
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <!-- TODO this is just for display purposes and shall be removed, we'll use a PHP foreach cycle to avoid duplicating code -->
             <div class="row align-items-center border-bottom py-3">
                 <div class="col-3 col-md-2">
@@ -97,7 +97,7 @@
 
         </div>
 
-        <div class="col-lg-4 mt-2 mt-lg-5">
+        <div class="col-md-4 mt-2 mt-md-5">
             <div class="p-3">
                 <h4 class="mb-4">Order Summary</h4>
 

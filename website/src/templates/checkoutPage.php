@@ -1,12 +1,12 @@
 <?php Utils::requireLoggedUser() ?>
 
-<div class="container mt-lg-2">
+<div class="container mt-md-2">
     <div class="text-center">
         <h2>Checkout</h2>
     </div>
 
     <div class="row g-5">
-        <div class="col-md-5 col-lg-4 order-md-last">
+        <div class="col-md-5 col-md-4 order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-primary">Your cart</span>
                 <span class="badge bg-primary rounded-pill">3</span>
@@ -40,7 +40,7 @@
             </ul>
         </div>
 
-        <div class="col-md-7 col-lg-8">
+        <div class="col-md-7 col-md-8">
             <h4 class="mb-3">Shipping details</h4>
             <form class="needs-validation" novalidate>
                 <div class="row g-3">
@@ -128,7 +128,7 @@
 
                 <hr class="my-4">
 
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Pay</button>
+                <button class="w-100 btn btn-primary btn-md" type="submit">Pay</button>
             </form>
         </div>
     </div>
