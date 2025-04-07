@@ -39,7 +39,7 @@
                     <!-- Search bar -->
                     <div class="flex-grow-1 mt-3 mb-3 mb-md-0 mx-md-3">
                         <form class="d-flex" action="search" method="get">
-                            <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search" name="q">
+                            <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search" name="q" value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES, 'UTF-8') : ''; ?>">
                             <button class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" type="submit">
                                 <i class="bi bi-search"></i>
                             </button>
