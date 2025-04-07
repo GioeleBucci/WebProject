@@ -54,15 +54,17 @@
                             onmouseenter="underlineProductName.call(this, true)"
                             onmouseleave="underlineProductName.call(this, false)">
                             <a href="TODO" class="stretched-link text-decoration-none mb-0">
-                                <div class="img-container" style="height: 200px; overflow: hidden;">
-                                    <img src="<?php echo Settings::UPLOAD_DIR . $prod["image"]; ?>" class="card-img-top" alt="Product Image" style="object-fit: contain; width: 100%; height: 100%;">
+                                <div class="image-fluid overflow-hidden d-flex justify-content-center align-items-center" style="height: 200px;">
+                                    <img src="<?php echo Settings::UPLOAD_DIR . $prod['image']; ?>"
+                                        class="card-img-top"
+                                        alt="Product Image">
                                 </div>
                             </a>
                             <div class="card-body">
                                 <h6 class="card-text mb-0 product-name"><?php echo $prod["name"] ?></h6>
                                 <p class="card-text mb-0 text-truncate"><small class="text-muted"><?php echo $prod["details"] ?></small></p>
                                 <p class="card-text mb-1 text-truncate"><small class="text-muted"><?php echo $prod["size"] ?></small></p>
-                                <h5 class="card-text mb-0"><small>€</small><?php echo $prod["basePrice"]?></h5>
+                                <h5 class="card-text mb-0"><small>€</small><?php echo $prod["basePrice"] ?></h5>
                             </div>
                         </div>
                         <div class="card-body pt-0">
