@@ -84,11 +84,10 @@ class DatabaseHelper
         $query = "SELECT userId FROM `test`.`USER` WHERE email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
-        $success = $stmt->execute();
-        if ($success) {
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        if ($stmt->execute()) {
+            $result = $stmt->get_result()->fetch_assoc()['userId'];
         } else {
-            $result = [];
+            $result = null;
         }
         return $result;
     }

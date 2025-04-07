@@ -12,7 +12,7 @@
             if($result){
                 Utils::login($_POST["email"]);
                 //EXTRA: print actual login date and time
-                dbh->addNotification($_SESSION["sessionId"], "01-01-2001 12:00:00", "Registrazione effettuata");
+                $dbh->addNotification($_SESSION["sessionId"], "01-01-2001 12:00:00", "Registrazione effettuata");
                 unset($templateParams["registrationError"]);
                 Utils::redirect(Links::ACCOUNT);
             } else{

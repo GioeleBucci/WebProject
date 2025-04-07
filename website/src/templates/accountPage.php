@@ -5,11 +5,11 @@ if (isset($_POST["logout"])) {
     Utils::logout();
 }
 
-if(isset($_POST["readNotifications"])){
+if (isset($_POST["readNotifications"])) {
     // Load previously read notifications
 }
 
-if(isset($_POST["markAsRead"])){
+if (isset($_POST["markAsRead"])) {
     // Mark selected notification as read
 }
 ?>
@@ -21,7 +21,7 @@ if(isset($_POST["markAsRead"])){
                 <div class="card-header text-center">
                     <h4 class="mb-0">Notifications</h4>
                 </div>
-                <?php foreach($dbh->getNotifications($_SESSION["sessionId"]) as $notification): ?>
+                <?php foreach ($dbh->getNotifications($_SESSION["sessionId"]) as $notification): ?>
                     <div class="card-body">
                         <div class="mb-3">
                             <p class="card-text mb-0"><small class="text-muted"><?php echo $notification["content"] ?></small></p>
@@ -36,4 +36,3 @@ if(isset($_POST["markAsRead"])){
         </div>
     </div>
 </div>
-
