@@ -141,7 +141,7 @@ class DatabaseHelper
 
     public function addNotification(int $userId, string $content)
     {
-        $query = "INSERT INTO `test`.`NOTIFICATION` (email, content, isRead) VALUES (?, ?, false)";
+        $query = "INSERT INTO `test`.`NOTIFICATION` (userId, content, isRead) VALUES (?, ?, false)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('is', $userId, $content);
         $result = $stmt->execute();
