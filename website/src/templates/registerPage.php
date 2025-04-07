@@ -10,9 +10,9 @@
         } else{
             $result = $dbh->addUser($_POST["email"], $_POST["password"], $_POST["name"]);
             if($result){
-                Utils::login($_POST["email"]);
+                Utils::login($dbh->getUserId($_POST["email"]));
                 //EXTRA: print actual login date and time
-                $dbh->addNotification($_SESSION["sessionId"], "01-01-2001 12:00:00", "Registrazione effettuata");
+                $dbh->addNotification($_SESSION["sessionId"], date("d-m-Y H:1"), "Registrazione effettuata");
                 unset($templateParams["registrationError"]);
                 Utils::redirect(Links::ACCOUNT);
             } else{

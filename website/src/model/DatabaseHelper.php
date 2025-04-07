@@ -56,7 +56,7 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('sss', $email, $date, $content);
         $result = $stmt->execute();
-        $this->addNotification($email, "Ordine effettuato");
+        $this->addNotification($email, "", "Ordine effettuato");
         return $result;
     }
 
@@ -139,26 +139,44 @@ class DatabaseHelper
         return $result;
     }
 
-    public function addNotification(int $userId, string $content)
+    public function addNotification(int $userId, string $time, string $content)
     {
-        $query = "INSERT INTO `test`.`NOTIFICATION` (email, content, isRead) VALUES (?, ?, false)";
+        $query = "INSERT INTO `test`.`NOTIFICATION` (userId, receptionTime, content, isRead) VALUES (?, ?, ?, false)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('is', $userId, $content);
+        $stmt->bind_param('iss', $userId, $time, $content);
         $result = $stmt->execute();
         return $result;
     }
+
+    private function stringClear(string $string)
+    {
+        $dictionary = array(
+            'áàâãªä' => 'a',
+            'ÁÀÂÃÄ' => 'A',
+            'íìîï' => 'i',
+            'ÍÌÎÏ' => 'I',
+            'éèêë' => 'e',
+            'ÉÈÊË' => 'E',
+            'óòôõºö' => 'o',
+            'ÓÒÔÕÖ' => 'O',
+            'úùûü' => 'u',
+            'ÚÙÛÜ' => 'U',
+            'ç' => 'c',
+            'Ç' => 'C',
+            'ñ' => 'n',
+            'Ñ' => 'N'
+        );
+        return str_replace(array_keys($dictionary), array_values($dictionary), $string);
+    }
     
     /**
-     * Queries the database for the searched term and/or filters.
-     * The latters must be compiled into a single string,
-     * separated by white space. If absent, returns the entire
-     * database content.
-     *
+     * Queries the database for the searched term and/or filter.
      * @return array Returns the result of the query if successful,
      * and an empty string otherwise.
      */
     public function searchBy(string $name, string ...$filters)
     {
+        $name = $this->stringClear($name);
         $result = [];
         if($name != "" && !empty($filters)){
             $query = "SELECT * FROM ARTICLE";
@@ -169,6 +187,7 @@ class DatabaseHelper
             } else {
                 $result = [];
             }
+            return $result;
         }
         if($name != ""){
             $nameQuery = $this->searchByName($name);
