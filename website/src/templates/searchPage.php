@@ -2,8 +2,8 @@
 
 <?php
 $searchResults = [];
-$searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
-$filters = isset($_GET['filters']) && is_array($_GET['filters']) ? $_GET['filters'] : [];
+$searchQuery = isset($_GET["q"]) ? trim($_GET["q"]) : "";
+$filters = isset($_GET["filters"]) && is_array($_GET["filters"]) ? $_GET["filters"] : [];
 $categories = $dbh->getCategories();
 
 if (!empty($searchQuery) || !empty($filters)) {
@@ -24,11 +24,11 @@ if (!empty($searchQuery) || !empty($filters)) {
                             class="form-check-input"
                             type="checkbox"
                             name="filters[]"
-                            value="<?php echo $category; ?>"
-                            id="filter-<?php echo $category ?>"
-                            <?php echo in_array($category, $filters) ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="filter-<?php echo $category; ?>">
-                            <?php echo $category; ?>
+                            value="<?php echo $category["name"]; ?>"
+                            id="filter-<?php echo $category["name"] ?>"
+                            <?php echo in_array($category["name"], $filters) ? "checked" : ""; ?>>
+                        <label class="form-check-label" for="filter-<?php echo $category["name"]; ?>">
+                            <?php echo $category["name"]; ?>
                         </label>
                     </div>
                 <?php endforeach; ?>
