@@ -9,6 +9,7 @@ class Links
     public const ACCOUNT = 'account';
     public const CART = 'cart';
     public const CHECKOUT = 'checkout';
+    public const SEARCH = 'search';
 }
 
 /* Actual filenames the relative links will be resolved to */
@@ -20,5 +21,6 @@ class Pages
     public const ACCOUNT = 'accountPage.php';
     public const CART = 'cartPage.php';
     public const CHECKOUT = 'checkoutPage.php';
+    public const SEARCH = 'searchPage.php';
     public const NOT_FOUND_404 = 'notFound404.php';
 }
