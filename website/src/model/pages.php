@@ -11,6 +11,7 @@ class Links
     public const CHECKOUT = 'checkout';
     public const SEARCH = 'search';
     public const ARTICLE = 'article';
+    public const NOTIFICATIONS = 'notifications';
 }
 
 /* Actual filenames the relative links will be resolved to */
@@ -24,5 +25,6 @@ class Pages
     public const CHECKOUT = 'checkoutPage.php';
     public const SEARCH = 'searchPage.php';
     public const ARTICLE = 'articlePage.php';
+    public const NOTIFICATIONS = 'notificationsPage.php';
     public const NOT_FOUND_404 = 'notFound404.php';
 }

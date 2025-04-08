@@ -34,6 +34,9 @@
                             <a href="<?php echo Links::LOGIN ?>">
                                 <i class="bi bi-person fs-5 mx-2"></i>
                             </a>
+                            <a href="<?php echo Links::NOTIFICATIONS ?>">
+                                <i class="bi bi-bell fs-5 mx-2"></i>
+                            </a>
                         </div>
                     </div>
                     <!-- Search bar -->
@@ -52,6 +55,9 @@
                         </a>
                         <a href="<?php echo Links::LOGIN ?>">
                             <i class="bi bi-person fs-4 mx-2"></i>
+                        </a>
+                        <a href="<?php echo Links::NOTIFICATIONS ?>">
+                            <i class="bi bi-bell fs-4 mx-2"></i>
                         </a>
                     </div>
                 </div>
