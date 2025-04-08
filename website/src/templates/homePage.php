@@ -10,6 +10,19 @@
         $images = array_map(function ($category) {
             return strtolower(str_replace(" ", "", $category["name"]));
         }, $categories);
+        $carouselTexts = [
+            "Create the space you love.",
+            "Design your dream home.",
+            "Affordable style for every room.",
+            "Innovate your living space.",
+            "Comfort meets functionality.",
+            "Transform your home today.",
+            "Inspiration for every corner.",
+            "Style that fits your life.",
+            "Make your house a home.",
+            "Where ideas come to life."
+        ];
+        shuffle($carouselTexts);
         ?>
 
         <div class="carousel-indicators">
@@ -28,7 +41,7 @@
                         <img src="<?php echo $path ?>" class="d-block w-100 img-fluid carousel-image" alt=<?php echo ($image) ?>>
                         <div class="carousel-caption">
                             <h1><?php echo $categories[$index]["name"] ?></h1>
-                            <p>High-quality and affordable.</p>
+                            <p><?php echo $carouselTexts[$index % sizeof($carouselTexts)] ?></p>
                         </div>
                     </a>
                 </div>
