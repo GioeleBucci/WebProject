@@ -38,7 +38,18 @@ if (!empty($searchQuery) || !empty($filters)) {
 
         <!-- Main content -->
         <div class="col-md-9">
-            <h2 class="mb-4">Search Results for "<?php echo htmlspecialchars($searchQuery); ?>"</h2>
+            <h2 class="mb-4">Search results for
+                <?php
+                if (empty($searchQuery)) {
+                    echo "all products";
+                }
+                if (sizeof($filters) > 0) {
+                    echo ' in "' . implode(', ', $filters) . '"';
+                } else if (!empty($searchQuery)) {
+                    echo '"' . $searchQuery . '"';
+                }
+                ?>
+            </h2>
 
             <?php if (empty($searchResults)): ?>
                 <p>No results found. Try refining your search.</p>
