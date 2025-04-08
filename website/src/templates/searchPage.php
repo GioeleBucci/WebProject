@@ -13,9 +13,8 @@ $filters = array_map(function ($filter) {
 
 $categories = $dbh->getCategories();
 
-if (!empty($searchQuery) || !empty($filters)) {
-    $searchResults = $dbh->searchBy($searchQuery, ...$filters);
-}
+$searchResults = $dbh->searchBy($searchQuery, ...$filters);
+
 ?>
 
 <div class="container mt-md-3">
@@ -50,6 +49,8 @@ if (!empty($searchQuery) || !empty($filters)) {
                 echo empty($searchQuery) ? "all products" : '"' . $searchQuery . '"';
                 if (sizeof($filters) > 0) {
                     echo ' in "' . implode(', ', $filters) . '"';
+                } else {
+                    echo ' in all categories';
                 }
                 ?>
             </h2>

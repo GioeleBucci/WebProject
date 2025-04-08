@@ -174,29 +174,42 @@ class DatabaseHelper
      * @return array Returns the result of the query if successful,
      * and an empty string otherwise.
      */
-    public function searchBy(string $name, string ...$filters)
+    public function searchBy(string $name = "", string ...$filters)
     {
         $name = $this->stringClear($name);
         $result = [];
-        if($name != "" && !empty($filters)){
-            $query = "SELECT * FROM ARTICLE";
-            $stmt = $this->db->prepare($query);
-            $success = $stmt->execute();
-            if ($success) {
-                $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            } else {
-                $result = [];
+        $query = "SELECT * FROM ARTICLE";
+        $conditions = [];
+        $params = [];
+        $types = "";
+
+        if ($name !== "") {
+            $conditions[] = "name LIKE ?";
+            $params[] = "%" . $name . "%";
+            $types .= "s";
+        }
+
+        if (!empty($filters)) {
+            $conditions[] = "categoryId IN (SELECT categoryId FROM CATEGORY WHERE name IN (" . implode(",", array_fill(0, count($filters), "?")) . "))";
+            foreach ($filters as $filter) {
+                $params[] = $filter;
+                $types .= "s";
             }
-            return $result;
         }
-        if($name != ""){
-            $nameQuery = $this->searchByName($name);
-            $result = array_merge($result, $nameQuery);
+
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
         }
-        if(!empty($filters)){
-            $filtersQuery = $this->searchByFilters($filters);
-            $result = array_merge($result, $filtersQuery);
+
+        $stmt = $this->db->prepare($query);
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
         }
+
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
         return $result;
     }
     
