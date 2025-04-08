@@ -20,25 +20,27 @@ $searchResults = $dbh->searchBy($searchQuery, ...$filters);
 <div class="container mt-md-3">
     <div class="row">
         <!-- Sidebar for filters -->
-        <div class="col-md-3">
+        <div class="col-md-3 mt-0">
             <h4>Filters</h4>
             <form method="GET" action="search">
                 <input type="hidden" name="q" value="<?php echo $searchQuery; ?>">
-                <?php foreach ($categories as $category): ?>
-                    <div class="form-check">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="filters[]"
-                            value="<?php echo $category["name"]; ?>"
-                            id="filter-<?php echo $category["name"] ?>"
-                            <?php echo in_array($category["name"], $filters) ? "checked" : ""; ?>>
-                        <label class="form-check-label" for="filter-<?php echo $category["name"]; ?>">
-                            <?php echo $category["name"]; ?>
-                        </label>
-                    </div>
-                <?php endforeach; ?>
-                <button type="submit" class="btn btn-primary mt-3">Apply Filters</button>
+                <div class="d-md-block d-flex flex-wrap">
+                    <?php foreach ($categories as $category): ?>
+                        <div class="form-check me-3 mb-1">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="filters[]"
+                                value="<?php echo $category["name"]; ?>"
+                                id="filter-<?php echo $category["name"]; ?>"
+                                <?php echo in_array($category["name"], $filters) ? "checked" : ""; ?>>
+                            <label class="form-check-label" for="filter-<?php echo $category["name"]; ?>">
+                                <?php echo $category["name"]; ?>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <button type="submit" class="btn btn-primary mt-1 mb-4">Apply Filters</button>
             </form>
         </div>
 

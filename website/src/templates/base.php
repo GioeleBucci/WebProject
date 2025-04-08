@@ -18,7 +18,7 @@
 <body>
     <div class="page-wrapper">
         <header>
-            <div class="container mt-4 mb-4">
+            <div class="container mt-4 mb-1 mb-md-4">
                 <!-- Header -->
                 <div class="d-flex flex-column flex-md-row justify-content-between py-3 gap-2 gap-md-0">
                     <!-- Logo -->

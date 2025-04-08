@@ -12,7 +12,7 @@ if (!$product) {
 }
 ?>
 
-<div class="container mt-md-5">
+<div class="container mt-0">
     <div class="row">
         <div class="col-md-6">
             <div class="image-fluid">
