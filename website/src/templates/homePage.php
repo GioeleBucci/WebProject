@@ -3,34 +3,39 @@
 <!-- Carousel -->
 <div class="container-fluid px-0">
     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" data-bs-touch="true" data-bs-pause="none">
+
+        <?php
+        $categories = $dbh->getCategories();
+        shuffle($categories);
+        $images = array_map(function ($category) {
+            return strtolower(str_replace(" ", "", $category["name"]));
+        }, $categories);
+        ?>
+
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <?php foreach ($images as $index => $image): ?>
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
+            <?php endforeach; ?>
         </div>
+
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="<?php echo Settings::UPLOAD_DIR . "1.png" ?>" class="d-block w-100 img-fluid carousel-image" alt="Product 1">
-                <div class="carousel-caption">
-                    <h1>Product 1</h1>
-                    <p>High-quality and affordable.</p>
+            <?php foreach ($images as $index => $image): ?>
+
+                <?php $path = Settings::UPLOAD_DIR . "categories/" . $image . ".png"; ?>
+
+                <div class="carousel-item <?php echo ($index == 0) ? "active" : "" ?>">
+                    <a class="e" href="search?q=&filters[]=<?php echo urlencode($categories[$index]['name']); ?>">
+                        <img src="<?php echo $path ?>" class="d-block w-100 img-fluid carousel-image" alt=<?php echo ($image) ?>>
+                        <div class="carousel-caption">
+                            <h1><?php echo $categories[$index]["name"] ?></h1>
+                            <p>High-quality and affordable.</p>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <img src="<?php echo Settings::UPLOAD_DIR . "2.png" ?>" class="d-block w-100 img-fluid carousel-image" alt="Product 2">
-                <div class="carousel-caption">
-                    <h1>Product 2</h1>
-                    <p>Perfect for your needs.</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="<?php echo Settings::UPLOAD_DIR . "3.png" ?>" class="d-block w-100 img-fluid carousel-image" alt="Product 3">
-                <div class="carousel-caption">
-                    <h1>Product 3</h1>
-                    <p>Top-rated by our customers.</p>
-                </div>
-            </div>
+
+            <?php endforeach; ?>
         </div>
+
         <button class="carousel-control-prev d-none d-md-block" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
