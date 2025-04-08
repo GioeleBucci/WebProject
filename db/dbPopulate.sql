@@ -27,11 +27,11 @@ INSERT INTO `ARTICLE` (`name`, `details`, `material`, `weight`, `basePrice`, `si
 ('KEPSÖ', 'Upholstered dining chair', 'Oak/Fabric', 80.00, 49.90, '45x55x95 cm', 3, 'chair.png', 'A comfortable dining chair with oak legs and fabric upholstery, perfect for any dining room. Its ergonomic design ensures long-lasting comfort during meals.'),
 ('TÖDHIAFJI', 'Office desk with drawers', 'Mahogany', 6.00, 159, '160x80x75 cm', 4, 'desk.png', 'A spacious office desk with built-in drawers, crafted from mahogany for a professional look. Its ample workspace and storage options make it ideal for productivity.'),
 ('PUPYIDRÅ', 'Ergonomic office chair', 'Mesh/Metal', 15.00, 109.90, '65x65x120 cm', 4, 'chairOffice.png', 'An ergonomic office chair with breathable mesh and adjustable features for all-day comfort. Its sleek design and sturdy build make it a must-have for any workspace.'),
-('LEPNA', 'Outdoor table with 2 chairs', 'Aluminum', 15.50, 79, '100x100 cm', 5, 'tableOutdoor.png', 'A durable outdoor table set with two aluminum chairs, perfect for enjoying meals in your garden or patio. Its weather-resistant materials ensure long-lasting use in any outdoor setting.');
-
---
--- Dumping data for table `ARTICLE_VERSION`
---
+('LEPNA', 'Outdoor table with 2 chairs', 'Aluminum', 15.50, 79, '100x100 cm', 5, 'tableOutdoor.png', 'A durable outdoor table set with two aluminum chairs, perfect for enjoying meals in your garden or patio. Its weather-resistant materials ensure long-lasting use in any outdoor setting.'),
+('VEDVÅ', 'Kitchen cabinet with doors and drawer', 'Wood', 50.00, 249, '120x80x90 cm', 6, 'cabinet.png', 'This kitchen unit make it easy to create a practical kitchen catered to your very needs. Can also be fitted with a sink and faucet.'),
+('HELIMVI', 'Stainless steel range hood', 'Stainless Steel', 20.00, 199, '90x50x30 cm', 6, 'rangeHood.png', 'A sleek stainless steel range hood with powerful ventilation, ideal for keeping your kitchen fresh and odor-free.'),
+('LEJLIN', 'Shower enclosure with sliding doors', 'Glass/Aluminum', 70.00, 499, '120x80x200 cm', 7, 'shower.png', 'A modern shower enclosure with tempered glass and smooth sliding doors, perfect for any bathroom renovation.'),
+('UBTUSFAM', 'Bathroom vanity with sink', 'Wood/Stainless Steel', 40.00, 299, '80x50x85 cm', 7, 'sink.png', 'A stylish bathroom vanity with a stainless steel sink and wooden cabinet, functional and elegant.');
 
 INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `features`, `priceVariation`, `availability`) VALUES
 (1, 1, 'Gray Fabric', 0, 5),
