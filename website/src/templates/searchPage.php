@@ -4,6 +4,13 @@
 $searchResults = [];
 $searchQuery = isset($_GET["q"]) ? trim($_GET["q"]) : "";
 $filters = isset($_GET["filters"]) && is_array($_GET["filters"]) ? $_GET["filters"] : [];
+
+// Sanitize search query and filters
+$searchQuery = htmlspecialchars($searchQuery, ENT_QUOTES, 'UTF-8');
+$filters = array_map(function ($filter) {
+    return htmlspecialchars($filter, ENT_QUOTES, 'UTF-8');
+}, $filters);
+
 $categories = $dbh->getCategories();
 
 if (!empty($searchQuery) || !empty($filters)) {
@@ -17,7 +24,7 @@ if (!empty($searchQuery) || !empty($filters)) {
         <div class="col-md-3">
             <h4>Filters</h4>
             <form method="GET" action="search">
-                <input type="hidden" name="q" value="<?php echo htmlspecialchars($searchQuery); ?>">
+                <input type="hidden" name="q" value="<?php echo $searchQuery; ?>">
                 <?php foreach ($categories as $category): ?>
                     <div class="form-check">
                         <input
@@ -40,13 +47,9 @@ if (!empty($searchQuery) || !empty($filters)) {
         <div class="col-md-9">
             <h2 class="mb-4">Search results for
                 <?php
-                if (empty($searchQuery)) {
-                    echo "all products";
-                }
+                echo empty($searchQuery) ? "all products" : '"' . $searchQuery . '"';
                 if (sizeof($filters) > 0) {
                     echo ' in "' . implode(', ', $filters) . '"';
-                } else if (!empty($searchQuery)) {
-                    echo '"' . $searchQuery . '"';
                 }
                 ?>
             </h2>
