@@ -130,7 +130,7 @@ class DatabaseHelper
 
     public function getNotifications(int $userId)
     {
-        $query = "SELECT content FROM NOTIFICATION WHERE userId = ?";
+        $query = "SELECT * FROM NOTIFICATION WHERE userId = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userId);
         $stmt->execute();
