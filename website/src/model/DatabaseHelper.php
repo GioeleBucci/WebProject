@@ -49,6 +49,16 @@ class DatabaseHelper
 
         return $result->fetch_assoc();
     }
+    
+    public function getArticleVersion(int $articleId, int $versionId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=? AND versionId=?");
+        $stmt->bind_param("ii", $articleId, $versionId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $stmt->execute() ? $stmt->get_result()->fetch_assoc() : null;
+    }
 
     public function addOrder(string $email, string $date, string $notes)
     {
@@ -60,14 +70,22 @@ class DatabaseHelper
         return $result;
     }
 
-    public function getOrders(int $customer_id)
+    public function getOrders(int $clientId)
     {
-        $stmt = $this->db->prepare("SELECT * FROM CLIENT_ORDER WHERE email=?");
-        $stmt->bind_param("s", $customer_id);
+        $stmt = $this->db->prepare("SELECT * FROM CLIENT_ORDER WHERE userId=?");
+        $stmt->bind_param("i", $clientId);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    public function getCartItems(int $clientId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM SHOPPING_CART_ITEM WHERE userId=?");
+        $stmt->bind_param("i", $clientId);
+    
+        return $stmt->execute() ? $stmt->get_result()->fetch_all(MYSQLI_ASSOC) : null;
     }
 
     public function getTrackingStatus(int $order_id)
@@ -241,6 +259,21 @@ class DatabaseHelper
             }
         }
         return $result;
+    }
+
+    public function addToCart(int $userId, int $itemId)
+    {
+
+    }
+
+    public function removeFromCart(int $userId, int $itemId)
+    {
+        $query = "DELETE FROM SHOPPING_CART_ITEM WHERE ";
+    }
+
+    public function emptyCart(int $userId)
+    {
+
     }
 
     private function __clone()

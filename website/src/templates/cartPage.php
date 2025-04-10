@@ -1,4 +1,12 @@
-<?php Utils::requireLoggedUser() ?>
+<?php $templateParams["title"] = "Your shopping cart" ?>
+
+<?php
+
+Utils::requireLoggedUser();
+
+$cartItems = $dbh->getCartItems($_SESSION["userId"]);
+
+?>
 
 <div class="container mt-md-2">
     <div class="text-center">
@@ -7,94 +15,13 @@
 
     <div class="row g-5">
         <div class="col-md-8">
-            <!-- TODO this is just for display purposes and shall be removed, we'll use a PHP foreach cycle to avoid duplicating code -->
-            <div class="row align-items-center border-bottom py-3">
-                <div class="col-3 col-md-2">
-                    <img
-                        src="<?php echo Settings::UPLOAD_DIR . "sofa.png" ?>"
-                        alt="ARTICLE NAME"
-                        class="img-fluid" />
-                </div>
-                <div class="col-9 col-md-5">
-                    <h5 class="mb-1">ARTICLE NAME</h5>
-                    <small class="text-muted">Article description</small>
-                </div>
-                <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
-                    <strong>€49.99</strong>
-                </div>
-                <div class="col-3 col-md-2 text-end mt-2 mt-md-0">
-                    <input
-                        type="number"
-                        class="form-control"
-                        value="1"
-                        min="1"
-                        style="max-width: 80px; margin: 0 auto;" />
-                </div>
-                <div class="col-3 col-md-1 text-end mt-2 mt-md-0">
-                    <button class="btn btn-link text-danger p-0" title="Remove item">
-                        <i class="bi bi-x fs-5 mx-2"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="row align-items-center border-bottom py-3">
-                <div class="col-3 col-md-2">
-                    <img
-                        src="<?php echo Settings::UPLOAD_DIR . "sofa.png" ?>"
-                        alt="ARTICLE NAME"
-                        class="img-fluid" />
-                </div>
-                <div class="col-9 col-md-5">
-                    <h5 class="mb-1">ARTICLE NAME</h5>
-                    <small class="text-muted">Article description</small>
-                </div>
-                <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
-                    <strong>€49.99</strong>
-                </div>
-                <div class="col-3 col-md-2 text-end mt-2 mt-md-0">
-                    <input
-                        type="number"
-                        class="form-control"
-                        value="1"
-                        min="1"
-                        style="max-width: 80px; margin: 0 auto;" />
-                </div>
-                <div class="col-3 col-md-1 text-end mt-2 mt-md-0">
-                    <button class="btn btn-link text-danger p-0" title="Remove item">
-                        <i class="bi bi-x fs-5 mx-2"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="row align-items-center border-bottom py-3">
-                <div class="col-3 col-md-2">
-                    <img
-                        src="<?php echo Settings::UPLOAD_DIR . "sofa.png" ?>"
-                        alt="ARTICLE NAME"
-                        class="img-fluid" />
-                </div>
-                <div class="col-9 col-md-5">
-                    <h5 class="mb-1">ARTICLE NAME</h5>
-                    <small class="text-muted">Article description</small>
-                </div>
-                <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
-                    <strong>€49.99</strong>
-                </div>
-                <div class="col-3 col-md-2 text-end mt-2 mt-md-0">
-                    <input
-                        type="number"
-                        class="form-control"
-                        value="1"
-                        min="1"
-                        style="max-width: 80px; margin: 0 auto;" />
-                </div>
-                <div class="col-3 col-md-1 text-end mt-2 mt-md-0">
-                    <button class="btn btn-link text-danger p-0" title="Remove item">
-                        <i class="bi bi-x fs-5 mx-2"></i>
-                    </button>
-                </div>
-            </div>
-
+            <?php if (isset($cartItems)): ?>
+                <?php foreach ($cartItems as $cartItem): ?>
+                    <?php require("components/cartItemCard.php") ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Nothing here!</p>
+            <?php endif; ?>
         </div>
 
         <div class="col-md-4 mt-2 mt-md-5">
