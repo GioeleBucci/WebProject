@@ -1,5 +1,7 @@
 <?php Utils::requireLoggedUser() ?>
 
+<?php $templateParams["title"] = "Checkout" ?>
+
 <div class="container mt-md-2">
     <div class="text-center">
         <h2>Checkout</h2>
