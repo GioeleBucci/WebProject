@@ -9,7 +9,7 @@ if (Utils::isUserLoggedIn()) {
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     if ($dbh->isLoginValid($_POST["email"], $_POST["password"])) {
         Utils::login($_POST["email"]);
-        $dbh->addNotification($_SESSION["sessionId"], date("Y-m-d H:i:s"), "Login effettuato");
+        $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), "Login effettuato");
         unset($templateParams["loginError"]);
         Utils::redirect(Links::ACCOUNT);
     } else {

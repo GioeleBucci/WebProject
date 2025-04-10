@@ -27,7 +27,7 @@ class Utils
     public static function login(string $email): void
     {
         $userId = DatabaseHelper::getInstance()->getUserId($email);
-        $_SESSION['sessionId'] = $userId;
+        $_SESSION['userId'] = $userId;
     }
 
     /**
@@ -46,7 +46,7 @@ class Utils
      */
     public static function isUserLoggedIn(): bool
     {
-        return !empty($_SESSION['sessionId']);
+        return !empty($_SESSION['userId']);
     }
 
     /**
