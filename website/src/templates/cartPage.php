@@ -8,6 +8,8 @@ $cartItems = $dbh->getCartItems($_SESSION["userId"]);
 
 ?>
 
+<?php $templateParams["title"] = "Cart" ?>
+
 <div class="container mt-md-2">
     <div class="text-center">
         <h2>Your Cart</h2>

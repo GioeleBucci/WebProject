@@ -10,6 +10,8 @@ $product = $dbh->getArticle($articleId);
 if (!$product) {
     die("Product not found"); // TODO handle this more gracefully
 }
+
+$templateParams["title"] = implode(" ", [$product["name"], $product["details"]]);
 ?>
 
 <div class="container mt-0">
