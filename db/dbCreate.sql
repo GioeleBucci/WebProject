@@ -77,7 +77,7 @@ create table if not exists ORDER_HAS_ARTICLE (
      orderId int not null,
      articleId int not null,
      versionId int not null,
-     count int null,
+     amount int null,
      primary key (orderId, articleId, versionId),
      constraint FK_Order foreign key (orderId) references CLIENT_ORDER(orderId),
      constraint FK_SelectedArticle foreign key (articleId, versionId) references ARTICLE_VERSION(articleId, versionId)
@@ -87,7 +87,7 @@ create table if not exists SHOPPING_CART_ITEM (
      userId int not null,
      articleId int not null,
      versionId int not null,
-     count int null,
+     amount int null,
      primary key (userId, articleId, versionId),
      constraint FK_CartOwner foreign key (userId) references CLIENT(userId),
      constraint FK_ListedArticle foreign key (articleId, versionId) references ARTICLE_VERSION(articleId, versionId)

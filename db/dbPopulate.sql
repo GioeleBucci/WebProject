@@ -107,7 +107,7 @@ INSERT INTO `CLIENT_ORDER` (`userId`, `orderTime`, `notes`) VALUES
 -- Dumping data for table `ORDER_HAS_ARTICLE`
 --
 
-INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `count`) VALUES
+INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `amount`) VALUES
 (1, 1, 1, 1),
 (1, 2, 1, 1),
 (2, 4, 1, 1),
@@ -128,8 +128,10 @@ INSERT INTO `DELIVERY` (`orderId`, `departureTime`, `arrivalTime`, `lastPosition
 (4, '2025-03-17 07:00:00', NULL, 'Processing');
 
 --
--- Dumping data for table `NOTIFICATION`
+-- Dumping data for table `SHOPPING_CART_ITEM`
 --
 
-INSERT INTO `NOTIFICATION` (`userId`, `receptionTime`, `content`, `isRead`) VALUES
-(1, '2026-02-12 11:00:00', 'Login effettuato', false);
+INSERT INTO `SHOPPING_CART_ITEM` (`userId`, `articleId`, `versionId`, `amount`) VALUES
+(1, 1, 1, 1),
+(1, 2, 1, 1),
+(1, 3, 1, 1);
