@@ -65,7 +65,7 @@
     <div class="row mt-3 g-3">
         <?php foreach ($dbh->getArticles(50) as $prod): ?>
             <div class="col-6 col-md-3">
-                <?php require("components/itemCard.php") ?>
+                <?php require("components/carouselItemCard.php") ?>
             </div>
         <?php endforeach; ?>
     </div>
