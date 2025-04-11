@@ -24,17 +24,18 @@
                     <!-- Logo -->
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="<?php echo Links::HOME ?>">
-                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img" style="height: 60px;">
+                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img d-block d-md-none" style="height: 40px;">
+                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img d-none d-md-block" style="height: 60px;">
                         </a>
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
-                            <a href="<?php echo Links::CART ?>">
+                            <a href="<?php echo Links::CART ?>" class="icon">
                                 <i class="bi bi-cart fs-5 mx-2"></i>
                             </a>
-                            <a href="<?php echo Links::LOGIN ?>">
+                            <a href="<?php echo Links::LOGIN ?>" class="icon">
                                 <i class="bi bi-person fs-5 mx-2"></i>
                             </a>
-                            <a href="<?php echo Links::NOTIFICATIONS ?>">
+                            <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
                                 <i class="bi bi-bell fs-5 mx-2"></i>
                             </a>
                         </div>
@@ -50,13 +51,13 @@
                     </div>
                     <!-- Icons (desktop) -->
                     <div class="d-none d-md-block mt-3">
-                        <a href="<?php echo Links::CART ?>">
+                        <a href="<?php echo Links::CART ?>" class="icon">
                             <i class="bi bi-cart fs-4 mx-2"></i>
                         </a>
-                        <a href="<?php echo Links::LOGIN ?>">
+                        <a href="<?php echo Links::LOGIN ?>" class="icon">
                             <i class="bi bi-person fs-4 mx-2"></i>
                         </a>
-                        <a href="<?php echo Links::NOTIFICATIONS ?>">
+                        <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
                             <i class="bi bi-bell fs-4 mx-2"></i>
                         </a>
                     </div>
