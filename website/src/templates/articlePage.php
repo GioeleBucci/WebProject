@@ -5,37 +5,52 @@ if (!isset($_GET["id"])) {
 }
 
 $articleId = $_GET["id"];
-$product = $dbh->getArticle($articleId);
+$article = $dbh->getArticle($articleId);
 
-if (!$product) {
+if (!$article) {
     die("Product not found"); // TODO handle this more gracefully
 }
 
-$templateParams["title"] = implode(" ", [$product["name"], $product["details"]]);
+$templateParams["title"] = implode(" ", [$article["name"], $article["details"]]);
+
+$articleVersions = $dbh->getArticleVersions($articleId);
 ?>
 
 <div class="container mt-0">
     <div class="row">
         <div class="col-md-6">
             <div class="image-fluid">
-                <img src="<?php echo Settings::UPLOAD_DIR . $product["image"]; ?>"
+                <img src="<?php echo Settings::UPLOAD_DIR . $article["image"]; ?>"
                     class="img-fluid"
                     alt="Product Image">
             </div>
         </div>
         <div class="col-md-6">
-            <h1 class="product-name mt-5 mt-md-0"><?php echo ($product["name"]); ?></h1>
-            <p class="text-muted mb-1"><?php echo ($product["details"]); ?></p>
-            <p class="text-muted mb-1">Size: <?php echo ($product["size"]); ?></p>
-            <p class="text-muted mb-1">Material: <?php echo ($product["material"]); ?></p>
-            <p class="text-muted mb-1">Weight: <?php echo ($product["weight"]); ?> kg</p>
-            <?php if (isset($product["longDescription"])) : ?>
+            <h1 class="article-name mt-5 mt-md-0"><?php echo ($article["name"]); ?></h1>
+            <p class="text-muted mb-1"><?php echo ($article["details"]); ?></p>
+            <p class="text-muted mb-1">Size: <?php echo ($article["size"]); ?></p>
+            <p class="text-muted mb-1">Material: <?php echo ($article["material"]); ?></p>
+            <p class="text-muted mb-1">Weight: <?php echo ($article["weight"]); ?> kg</p>
+            <?php if (isset($article["longDescription"])) : ?>
                 <div class="description-box mt-3 p-3 border rounded bg-light">
-                    <p class="text-muted my-0"><?php echo nl2br($product["longDescription"]); ?></p>
+                    <p class="text-muted my-0"><?php echo nl2br($article["longDescription"]); ?></p>
                 </div>
             <?php endif; ?>
 
-            <h3 class="text-primary mt-3"><small>€</small><?php echo ($product["basePrice"]); ?></h3>
+            <?php if (!empty($articleVersions)) : ?>
+                <form id="versionForm" class="mt-3">
+                    <div class="form-group">
+                        <label for="versionSelect" class="form-label">Select Version:</label>
+                        <select class="form-select" id="versionSelect" name="version" onchange="updatePrice()">
+                            <?php foreach ($articleVersions as $index => $version) : ?>
+                                <option value="<?php echo $index; ?>" data-price-variation="<?php echo $version["priceVariation"]; ?>"><?php echo ($version["features"] . ($version["priceVariation"] > 0 ? " (+" . $version["priceVariation"] . "€)" : "")) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </form>
+            <?php endif; ?>
+
+            <h3 class="text-primary mt-3" id="article-price"><small>€</small><?php echo ($article["basePrice"]); ?></h3>
             <?php if (Utils::isUserLoggedIn()): ?>
                 <button type="button" class="btn btn-primary add-to-cart-btn mt-3" onclick="changeAddToCartIcon.call(this)">
                     <i class="bi bi-cart-plus-fill"></i> Add to Cart
@@ -48,3 +63,21 @@ $templateParams["title"] = implode(" ", [$product["name"], $product["details"]])
         </div>
     </div>
 </div>
+
+<script>
+    const basePrice = <?php echo $article["basePrice"]; ?>;
+
+    function updatePrice() {
+        const select = document.getElementById('versionSelect');
+        if (!select) return;
+
+        const selectedOption = select.options[select.selectedIndex];
+        const priceVariation = parseFloat(selectedOption.getAttribute('data-price-variation'));
+        const totalPrice = basePrice + priceVariation;
+
+        document.getElementById('article-price').innerHTML = `<small>€</small>${totalPrice.toFixed(2)}`;
+    }
+
+    // Initialize price on page load
+    document.addEventListener('DOMContentLoaded', updatePrice);
+</script>

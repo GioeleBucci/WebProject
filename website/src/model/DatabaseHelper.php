@@ -48,6 +48,15 @@ class DatabaseHelper
         return $result->fetch_assoc();
     }
 
+    /** Get all available versions for a specific article */
+    public function getArticleVersions(int $articleId){
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     /**
      * Returns a merged table of the article and its version, with a "price" field 
      * containing the total price of the product.
