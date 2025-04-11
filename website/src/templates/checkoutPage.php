@@ -91,7 +91,7 @@
 
                     <?php foreach ($paymentMethods as $index => $method) : ?>
                         <div class="form-check">
-                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" <?php echo $index == 0 ? "checked" : "" ?> required>
                             <label class="form-check-label" for="credit"><?php echo $method ?></label>
                         </div>
                     <?php endforeach; ?>
