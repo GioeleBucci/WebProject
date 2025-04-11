@@ -25,12 +25,10 @@ $version = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId'
             min="1"
             style="max-width: 80px; margin: 0 auto;" />
     </div>
-    <form method="post">
-        <div class="col-3 col-md-1 text-end mt-2 mt-md-0">
-            <input type="hidden">
-            <button type="submit" class="btn btn-link text-danger p-0" title="Remove item">
-                <i class="bi bi-x fs-5 mx-2"></i>
-            </button>
-        </div>
+    <form method="post" class="col-3 col-md-1 text-end mt-2 mt-md-0">
+        <input type="hidden">
+        <button type="submit" class="btn btn-link text-danger p-0" title="Remove item" style="margin-right: -10px;">
+            <i class="bi bi-x fs-4 mx-2"></i>
+        </button>
     </form>
 </div>
