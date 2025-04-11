@@ -29,14 +29,13 @@ foreach ($cartItems as $cartItem) {
             <ul class="list-group">
                 <?php $total = 0 ?>
                 <?php foreach ($cartItems as $cartItem): ?>
-                    <?php $article = $dbh->getArticle($cartItem['articleId']); ?>
-                    <?php $version = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId']); ?>
+                    <?php $article = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId']); ?>
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <div>
                             <h6 class="my-0"><?php echo ($article["name"] . ($cartItem["amount"] > 1 ? " (" . $cartItem["amount"] . ")" : "")) ?></h6>
                             <small class="text-muted"><?php echo $article["details"] ?></small>
                         </div>
-                        <?php $price = $cartItem["amount"] * ($article["basePrice"] + $version["priceVariation"]);
+                        <?php $price = $cartItem["amount"] * $article["price"];
                         $total += $price;
                         ?>
                         <span class="text-muted">€<?php echo $price ?></span>

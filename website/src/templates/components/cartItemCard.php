@@ -1,6 +1,5 @@
 <?php 
-$article = $dbh->getArticle($cartItem['articleId']);
-$version = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId']);
+$article = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId']);
 ?>
 
 <div class="row align-items-center border-bottom py-3">
@@ -15,7 +14,7 @@ $version = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId'
         <small class="text-muted"><?php echo $article['details']?></small>
     </div>
     <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
-        <strong>€<?php echo ($article['basePrice'] + $version['priceVariation']) ?></strong>
+        <strong>€<?php echo $article['price'] ?></strong>
     </div>
     <div class="col-3 col-md-2 text-end mt-2 mt-md-0">
         <input

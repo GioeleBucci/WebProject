@@ -28,7 +28,8 @@ class DatabaseHelper
 
     public function getArticles(int $amount)
     {
-        $stmt = $this->db->prepare("SELECT * FROM ARTICLE ORDER BY RAND() LIMIT ?"
+        $stmt = $this->db->prepare(
+            "SELECT * FROM ARTICLE ORDER BY RAND() LIMIT ?"
         );
         $stmt->bind_param("i", $amount);
         $stmt->execute();
@@ -46,15 +47,24 @@ class DatabaseHelper
 
         return $result->fetch_assoc();
     }
-    
+
+    /**
+     * Returns a merged table of the article and its version, with a "price" field 
+     * containing the total price of the product.
+     */
     public function getArticleVersion(int $articleId, int $versionId)
     {
-        $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=? AND versionId=?");
+        $stmt = $this->db->prepare(
+            "SELECT a.*, v.*, (a.basePrice + v.priceVariation) AS price 
+            FROM ARTICLE a
+            JOIN ARTICLE_VERSION v ON a.articleId = v.articleId
+            WHERE a.articleId = ? AND v.versionId = ?"
+        );
         $stmt->bind_param("ii", $articleId, $versionId);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        return $stmt->execute() ? $stmt->get_result()->fetch_assoc() : null;
+        return $result->fetch_assoc();
     }
 
     public function addOrder(string $email, string $date, string $notes)
@@ -76,12 +86,12 @@ class DatabaseHelper
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    
+
     public function getCartItems(int $clientId)
     {
         $stmt = $this->db->prepare("SELECT * FROM SHOPPING_CART_ITEM WHERE userId=?");
         $stmt->bind_param("i", $clientId);
-    
+
         return $stmt->execute() ? $stmt->get_result()->fetch_all(MYSQLI_ASSOC) : null;
     }
 
@@ -124,7 +134,7 @@ class DatabaseHelper
         $stmt->bind_param('ss', $email, $password);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        if(count($result) == 1){
+        if (count($result) == 1) {
             return true;
         }
         return false;
@@ -137,7 +147,7 @@ class DatabaseHelper
         $stmt->bind_param('i', $userId);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        if(count($result) == 1){
+        if (count($result) == 1) {
             return "seller";
         }
         return "client";
@@ -183,7 +193,7 @@ class DatabaseHelper
         );
         return str_replace(array_keys($dictionary), array_values($dictionary), $string);
     }
-    
+
     /**
      * Queries the database for the searched term and/or filter.
      * @return array Returns the result of the query if successful,
@@ -227,29 +237,28 @@ class DatabaseHelper
 
         return $result;
     }
-    
+
     private function searchByName($name)
     {
         $query = "SELECT * FROM ARTICLE WHERE name = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $name);
         $success = $stmt->execute();
-        if($success){
+        if ($success) {
             $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        }
-        else{
+        } else {
             $result = [];
         }
         return $result;
     }
-    
+
     private function searchByFilters($filters)
     {
         $query = "SELECT * FROM ARTICLE WHERE categoryId IN (SELECT name FROM CATEGORY WHERE name = ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("s", $keyword);
         $result = [];
-        foreach($filters as $filter){
+        foreach ($filters as $filter) {
             $keyword = $filter;
             if ($stmt->execute()) {
                 $result = array_merge($result, $stmt->get_result()->fetch_all(MYSQLI_ASSOC));
@@ -258,20 +267,14 @@ class DatabaseHelper
         return $result;
     }
 
-    public function addToCart(int $userId, int $itemId)
-    {
-
-    }
+    public function addToCart(int $userId, int $itemId) {}
 
     public function removeFromCart(int $userId, int $itemId)
     {
         $query = "DELETE FROM SHOPPING_CART_ITEM WHERE ";
     }
 
-    public function emptyCart(int $userId)
-    {
-
-    }
+    public function emptyCart(int $userId) {}
 
     public function getPaymentMethodsNames()
     {
