@@ -55,6 +55,8 @@ class Utils
     public static function requireLoggedUser(): void
     {
         if (!self::isUserLoggedIn()) {
+            // Store the current page URL in session before redirecting
+            $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
             self::redirect(Links::LOGIN);
         }
     }
