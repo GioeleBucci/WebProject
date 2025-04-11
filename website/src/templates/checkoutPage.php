@@ -8,8 +8,8 @@
     </div>
 
     <div class="row g-5">
-        <div class="col-md-5 col-md-4 order-md-last">
-            <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <div class="col-md-4 order-md-2 order-1">
+            <h4 class="d-flex justify-content-between align-items-center my-3">
                 <span class="text-primary">Your cart</span>
                 <span class="badge bg-primary rounded-pill">3</span>
             </h4>
@@ -42,9 +42,9 @@
             </ul>
         </div>
 
-        <div class="col-md-7 col-md-8">
+        <div class="col-md-8 order-md-1 order-2">
             <h4 class="mb-3">Shipping details</h4>
-            <form class="needs-validation" novalidate>
+            <form>
                 <div class="row g-3">
                     <div class="col-sm-6">
                         <label for="firstName" class="form-label">First name</label>

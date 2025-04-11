@@ -19,7 +19,7 @@ class Pages
 {
     public const HOME = 'homePage.php';
     public const LOGIN = 'loginPage.php';
-    public const REGISTER = 'registerPage.php';
+    public const REGISTER = 'registrationPage.php';
     public const ACCOUNT = 'accountPage.php';
     public const CART = 'cartPage.php';
     public const CHECKOUT = 'checkoutPage.php';

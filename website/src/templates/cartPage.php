@@ -47,7 +47,7 @@ $cartItems = $dbh->getCartItems($_SESSION["userId"]);
                     <strong>€159.97</strong>
                 </div>
 
-                <button class="btn btn-success w-100">Proceed to Checkout</button>
+                <a href=<?php echo Links::CHECKOUT ?> class="btn btn-success w-100">Proceed to Checkout</a>
             </div>
         </div>
     </div>
