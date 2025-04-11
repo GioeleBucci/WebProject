@@ -25,7 +25,7 @@ create table if not exists ARTICLE (
 create table if not exists ARTICLE_VERSION (
      articleId int not null,
      versionId int not null,
-     features char(255) null,
+     versionType char(63) null,
      priceVariation decimal(6,2) default 0,
      availability int default 0,
      primary key (articleId, versionId),

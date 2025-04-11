@@ -1,4 +1,4 @@
-<?php 
+<?php
 $article = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId']);
 ?>
 
@@ -6,12 +6,13 @@ $article = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId'
     <div class="col-3 col-md-2">
         <img
             src="<?php echo Settings::UPLOAD_DIR . $article['image']; ?>"
-            alt="<?php echo $article['name']?>"
+            alt="<?php echo $article['name'] ?>"
             class="img-fluid" />
     </div>
     <div class="col-9 col-md-5">
-        <h5 class="mb-1"><?php echo $article['name']?></h5>
-        <small class="text-muted"><?php echo $article['details']?></small>
+        <h5 class="mb-1"><?php echo $article['name'] ?></h5>
+        <small class="text-muted"><?php echo "(" . $article['versionType'] . ")" ?></small>
+        <small class="text-muted"><?php echo $article['details'] ?></small>
     </div>
     <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
         <strong>€<?php echo $article['price'] ?></strong>

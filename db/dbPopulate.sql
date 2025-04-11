@@ -33,7 +33,7 @@ INSERT INTO `ARTICLE` (`name`, `details`, `material`, `weight`, `basePrice`, `si
 ('LEJLIN', 'Shower enclosure with sliding doors', 'Glass/Aluminum', 70.00, 499, '120x80x200 cm', 7, 'shower.png', 'A modern shower enclosure with tempered glass and smooth sliding doors, perfect for any bathroom renovation.'),
 ('UBTUSFAM', 'Bathroom vanity with sink', 'Wood/Stainless Steel', 40.00, 299, '80x50x85 cm', 7, 'sink.png', 'A stylish bathroom vanity with a stainless steel sink and wooden cabinet, functional and elegant.');
 
-INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `features`, `priceVariation`, `availability`) VALUES
+INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `versionType`, `priceVariation`, `availability`) VALUES
 (1, 1, 'Gray Fabric', 0, 5),
 (1, 2, 'Blue Fabric', 0, 3),
 (1, 3, 'Beige Fabric', 0, 7),
@@ -62,7 +62,7 @@ INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `features`, `priceVaria
 INSERT INTO `PAYMENT_METHOD` (`name`) VALUES
 ('Credit Card'),
 ('PayPal'),
-('Bank Transfer'),
+('Bank Transfer');
 
 --
 -- Dumping data for table `USER`

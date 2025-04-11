@@ -43,7 +43,7 @@ $articleVersions = $dbh->getArticleVersions($articleId);
                         <label for="versionSelect" class="form-label">Select Version:</label>
                         <select class="form-select" id="versionSelect" name="version" onchange="updatePrice()">
                             <?php foreach ($articleVersions as $index => $version) : ?>
-                                <option value="<?php echo $index; ?>" data-price-variation="<?php echo $version["priceVariation"]; ?>"><?php echo ($version["features"] . ($version["priceVariation"] > 0 ? " (+" . $version["priceVariation"] . "€)" : "")) ?></option>
+                                <option value="<?php echo $index; ?>" data-price-variation="<?php echo $version["priceVariation"]; ?>"><?php echo ($version["versionType"] . ($version["priceVariation"] > 0 ? " (+" . $version["priceVariation"] . "€)" : "")) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
