@@ -1,6 +1,19 @@
-<?php Utils::requireLoggedUser() ?>
+<?php
+Utils::requireLoggedUser();
+$templateParams["title"] = "Checkout";
+$cartItems = $dbh->getCartItems($_SESSION["userId"]);
 
-<?php $templateParams["title"] = "Checkout" ?>
+// Redirect to another page if the cart is empty
+if (!isset($cartItems) || sizeof($cartItems) == 0) {
+    Utils::redirect(Links::CART);
+}
+
+$totalItems = 0;
+foreach ($cartItems as $cartItem) {
+    $totalItems += $cartItem["amount"];
+}
+?>
+
 
 <div class="container mt-md-2">
     <div class="text-center">
@@ -11,33 +24,27 @@
         <div class="col-md-4 order-md-2 order-1">
             <h4 class="d-flex justify-content-between align-items-center my-3">
                 <span class="text-primary">Your cart</span>
-                <span class="badge bg-primary rounded-pill">3</span>
+                <span class="badge bg-primary rounded-pill"><?php echo $totalItems ?></span>
             </h4>
             <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between lh-sm">
-                    <div>
-                        <h6 class="my-0">Product name</h6>
-                        <small class="text-muted">Article description</small>
-                    </div>
-                    <span class="text-muted">€12</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between lh-sm">
-                    <div>
-                        <h6 class="my-0">Second product</h6>
-                        <small class="text-muted">Article description</small>
-                    </div>
-                    <span class="text-muted">€8</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between lh-sm">
-                    <div>
-                        <h6 class="my-0">Third item</h6>
-                        <small class="text-muted">Article description</small>
-                    </div>
-                    <span class="text-muted">€5</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Total</span>
-                    <strong>€25</strong>
+                <?php $total = 0 ?>
+                <?php foreach ($cartItems as $cartItem): ?>
+                    <?php $article = $dbh->getArticle($cartItem['articleId']); ?>
+                    <?php $version = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId']); ?>
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div>
+                            <h6 class="my-0"><?php echo ($article["name"] . ($cartItem["amount"] > 1 ? " (" . $cartItem["amount"] . ")" : "")) ?></h6>
+                            <small class="text-muted"><?php echo $article["details"] ?></small>
+                        </div>
+                        <?php $price = $cartItem["amount"] * ($article["basePrice"] + $version["priceVariation"]);
+                        $total += $price;
+                        ?>
+                        <span class="text-muted">€<?php echo $price ?></span>
+                    </li>
+                <?php endforeach; ?>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <strong class="text-primary">Total</strong>
+                    <strong class="text-primary">€<?php echo $total ?></strong>
                 </li>
             </ul>
         </div>
