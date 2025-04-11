@@ -20,13 +20,10 @@ class DatabaseHelper
         return self::$instance;
     }
 
-    public function getCategories()
+    public function getCategoryNames()
     {
-        $stmt = $this->db->prepare("SELECT * FROM CATEGORY");
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $result = $this->db->query("SELECT * FROM CATEGORY");
+        return array_column($result->fetch_all(MYSQLI_ASSOC), 'name');
     }
 
     public function getArticles(int $amount)
@@ -274,6 +271,12 @@ class DatabaseHelper
     public function emptyCart(int $userId)
     {
 
+    }
+
+    public function getPaymentMethodsNames()
+    {
+        $result = $this->db->query("SELECT name FROM PAYMENT_METHOD");
+        return array_column($result->fetch_all(MYSQLI_ASSOC), 'name');
     }
 
     private function __clone()

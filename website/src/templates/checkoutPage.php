@@ -87,19 +87,14 @@
                 <h4 class="mb-3">Payment</h4>
 
                 <div class="my-3">
-                    <!-- TODO fetch these from the db -->
-                    <div class="form-check">
-                        <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                        <label class="form-check-label" for="credit">Credit card</label>
-                    </div>
-                    <div class="form-check">
-                        <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                        <label class="form-check-label" for="debit">Debit card</label>
-                    </div>
-                    <div class="form-check">
-                        <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                        <label class="form-check-label" for="paypal">PayPal</label>
-                    </div>
+                    <?php $paymentMethods = $dbh->getPaymentMethodsNames() ?>
+
+                    <?php foreach ($paymentMethods as $index => $method) : ?>
+                        <div class="form-check">
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <label class="form-check-label" for="credit"><?php echo $method ?></label>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <div class="row gy-3">

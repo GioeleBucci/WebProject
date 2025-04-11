@@ -11,7 +11,7 @@ $filters = array_map(function ($filter) {
     return htmlspecialchars($filter, ENT_QUOTES, 'UTF-8');
 }, $filters);
 
-$categories = $dbh->getCategories();
+$categories = $dbh->getCategoryNames();
 
 $searchResults = $dbh->searchBy($searchQuery, ...$filters);
 
@@ -31,11 +31,11 @@ $searchResults = $dbh->searchBy($searchQuery, ...$filters);
                                 class="form-check-input"
                                 type="checkbox"
                                 name="filters[]"
-                                value="<?php echo $category["name"]; ?>"
-                                id="filter-<?php echo $category["name"]; ?>"
-                                <?php echo in_array($category["name"], $filters) ? "checked" : ""; ?>>
-                            <label class="form-check-label" for="filter-<?php echo $category["name"]; ?>">
-                                <?php echo $category["name"]; ?>
+                                value="<?php echo $category; ?>"
+                                id="filter-<?php echo $category; ?>"
+                                <?php echo in_array($category, $filters) ? "checked" : ""; ?>>
+                            <label class="form-check-label" for="filter-<?php echo $category; ?>">
+                                <?php echo $category; ?>
                             </label>
                         </div>
                     <?php endforeach; ?>

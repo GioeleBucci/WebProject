@@ -62,9 +62,7 @@ INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `features`, `priceVaria
 INSERT INTO `PAYMENT_METHOD` (`name`) VALUES
 ('Credit Card'),
 ('PayPal'),
-('Cash on Delivery'),
 ('Bank Transfer'),
-('Store Credit');
 
 --
 -- Dumping data for table `USER`

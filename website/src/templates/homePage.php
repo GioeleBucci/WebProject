@@ -5,10 +5,10 @@
     <div id="productCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" data-bs-touch="true" data-bs-pause="none">
 
         <?php
-        $categories = $dbh->getCategories();
+        $categories = $dbh->getCategoryNames();
         shuffle($categories);
         $images = array_map(function ($category) {
-            return strtolower(str_replace(" ", "", $category["name"]));
+            return strtolower(str_replace(" ", "", $category));
         }, $categories);
         $carouselTexts = [
             "Create the space you love.",
@@ -37,10 +37,10 @@
                 <?php $path = Settings::UPLOAD_DIR . "categories/" . $image . ".png"; ?>
 
                 <div class="carousel-item <?php echo ($index == 0) ? "active" : "" ?>">
-                    <a class="e" href="search?q=&filters[]=<?php echo urlencode($categories[$index]['name']); ?>">
+                    <a class="e" href="search?q=&filters[]=<?php echo urlencode($categories[$index]); ?>">
                         <img src="<?php echo $path ?>" class="d-block w-100 img-fluid carousel-image" alt=<?php echo ($image) ?>>
                         <div class="carousel-caption">
-                            <h1><?php echo $categories[$index]["name"] ?></h1>
+                            <h1><?php echo $categories[$index] ?></h1>
                             <p><?php echo $carouselTexts[$index % sizeof($carouselTexts)] ?></p>
                         </div>
                     </a>
