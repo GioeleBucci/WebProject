@@ -20,7 +20,7 @@ class Utils
     }
 
     /** 
-     * Logs in a user by setting the session ID to the user's email.
+     * Logs in a user by setting the correspondent user ID in the session.
      * 
      * @param string $email The email of the user to log in.
      */
