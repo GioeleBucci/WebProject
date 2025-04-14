@@ -112,16 +112,7 @@ class DatabaseHelper
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function addUser(string $email, string $password, string $name)
-    {
-        $query = "INSERT INTO `test`.`USER` (email, password, name) VALUES (?, ?, ?) WHERE NOT EXISTS (SELECT email FROM `test`.`USER` WHERE email = ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssss', $email, $password, $name, $email);
-        $result = $stmt->execute();
-        return $result;
-    }
+    }    
 
     public function getUserId(string $email)
     {
@@ -129,10 +120,37 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         if ($stmt->execute()) {
-            $result = $stmt->get_result()->fetch_assoc()['userId'];
+            $result = intval($stmt->get_result()->fetch_assoc()['userId']);
         } else {
             $result = null;
         }
+        return $result;
+    }
+
+    /**
+     * Adds a new user to the database if one with his credentials
+     * is not already present.
+     * @return array Returns the result of the query if successful,
+     * and an empty string otherwise.
+     */
+    public function addUser(string $email, string $password, string $name)
+    {
+        if ($this->getUserId($email) != null) {
+            $result["errCode"] = "ALR_EXIST";
+            $result["result"] = false;
+        } else {
+            $query = "INSERT INTO `test`.`USER` (email, password, name) VALUES (?, ?, ?)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param('sss', $email, $password, $name);
+            $check = $stmt->execute();
+            if ($check == true) {
+                $result["result"] = true;
+            } else {
+                $result["errCode"] = "FATAL";
+                $result["result"] = false;
+            }
+        }
+
         return $result;
     }
 
@@ -164,7 +182,7 @@ class DatabaseHelper
 
     public function getNotifications(int $userId)
     {
-        $query = "SELECT * FROM NOTIFICATION WHERE userId = ?";
+        $query = "SELECT * FROM NOTIFICATION WHERE userId = ? ORDER BY receptionTime DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userId);
         $stmt->execute();
