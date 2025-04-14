@@ -1,29 +1,6 @@
 <?php $templateParams["title"] = "Notifications" ?>
 
-<?php
-
-Utils::requireLoggedUser();
-
-$maxNotificationAmount = 8;         // could be moved to a more appropriate location, e.g. Settings.php
-$notifications = $dbh->getNotifications($_SESSION["userId"]);
-$notificationsAmount = count($notifications);
-if ($notificationsAmount > $maxNotificationAmount) {
-    $sectionsAmount = $notificationsAmount / $maxNotificationAmount;
-    if ($notificationsAmount % $maxNotificationAmount != 0) {
-        $sectionsAmount = $sectionsAmount + 1;
-    }
-}
-else {
-    $sectionsAmount = 1;
-}
-for ($i = 1; $i <= $sectionsAmount; $i = $i +1) {
-    $sections[$i] = array_slice($notifications, ($i - 1) * $maxNotificationAmount, $maxNotificationAmount);
-}
-if (!isset($_GET["sectionNumber"])) {
-    $_GET["sectionNumber"] = 1;
-}
-
-?>
+<?php require 'utils/loadNotifications.php' ?>
 
 <?php if ($notificationsAmount != 0): ?>
     <div class="container mt-2 mt-md-4">
