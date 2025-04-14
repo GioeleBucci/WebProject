@@ -1,26 +1,6 @@
 <?php $templateParams["title"] = "Register" ?>
 
-<?php
-    if(isset($_SESSION["userId"])){
-        Utils::redirect(Links::ACCOUNT);
-    }
-    if(isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm_password"])){
-        if(strcmp($_POST["password"], $_POST["confirm_password"]) != 0){
-            $templateParams["registrationError"] = "The inserted passwords don't match";
-        } else{
-            $result = $dbh->addUser($_POST["email"], $_POST["password"], $_POST["name"]);
-            if($result){
-                Utils::login($dbh->getUserId($_POST["email"]));
-                //EXTRA: print actual login date and time
-                $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), "Registrazione effettuata");
-                unset($templateParams["registrationError"]);
-                Utils::redirect(Links::ACCOUNT);
-            } else{
-                $templateParams["registrationError"] = "Registration failed! Make sure the email hasn't already been used for another account";
-            }
-        }
-    }
-?>
+<?php require 'utils/register.php' ?>
 
 <div class="container mt-3">
     <div class="row justify-content-center">
