@@ -4,6 +4,15 @@
 
 Utils::requireLoggedUser();
 
+if (isset($_POST["removeItem"])) {
+    $removed = $dbh->removeFromCart($_SESSION["userId"], $_POST["articleId"], $_POST["versionId"]);
+    unset($_POST["removeItem"]);
+    unset($_POST["articleId"]);
+    unset($_POST["versionId"]);
+    if (!$removed) {
+        $templateParams["dbError"] = "Error during item removal";
+    }
+}
 $cartItems = $dbh->getCartItems($_SESSION["userId"]);
 $isCartEmpty = !isset($cartItems) || sizeof($cartItems) == 0;
 
