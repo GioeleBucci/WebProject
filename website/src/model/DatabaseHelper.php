@@ -294,11 +294,29 @@ class DatabaseHelper
         return $result;
     }
 
-    public function addToCart(int $userId, int $itemId) {}
-
-    public function removeFromCart(int $userId, int $itemId)
+    public function addToCart(int $userId, int $articleId, int $versionId) {
+        $query = "INSERT INTO SHOPPING_CART_ITEM VALUES (?, ?, ?, 1)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        if ($stmt->execute()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public function removeFromCart(int $userId, int $articleId, int $versionId)
     {
-        $query = "DELETE FROM SHOPPING_CART_ITEM WHERE ";
+        $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        if ($stmt->execute()) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public function emptyCart(int $userId) {}
