@@ -4,6 +4,10 @@ class DatabaseHelper
     private static $instance = null;
     private $db;
 
+
+
+    /*** Helper-related functions ***/
+
     private function __construct($servername, $username, $password, $dbname, $port)
     {
         $this->db = new mysqli($servername, $username, $password, $dbname, $port);
@@ -20,11 +24,29 @@ class DatabaseHelper
         return self::$instance;
     }
 
+    private function __clone()
+    {
+        // Prevent cloning
+    }
+
+    public function __wakeup()
+    {
+        throw new Exception("Unserialization of this class is not allowed.");
+    }
+
+
+
+    /*** Category functions ***/
+
     public function getCategoryNames()
     {
         $result = $this->db->query("SELECT * FROM CATEGORY");
         return array_column($result->fetch_all(MYSQLI_ASSOC), 'name');
     }
+
+
+
+    /*** Article functions ***/
 
     public function getArticles(int $amount)
     {
@@ -76,6 +98,10 @@ class DatabaseHelper
         return $result->fetch_assoc();
     }
 
+
+
+    /*** Order functions ***/
+    
     public function addOrder(string $email, string $date, string $notes)
     {
         $query = "INSERT INTO `test`.`CLIENT_ORDER` (email, orderDate, notes) VALUES (?, ?, ?)";
@@ -96,6 +122,10 @@ class DatabaseHelper
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+
+
+    /*** Cart functions ***/
+
     public function getCartItems(int $clientId)
     {
         $stmt = $this->db->prepare("SELECT * FROM SHOPPING_CART_ITEM WHERE userId=?");
@@ -104,15 +134,68 @@ class DatabaseHelper
         return $stmt->execute() ? $stmt->get_result()->fetch_all(MYSQLI_ASSOC) : null;
     }
 
-    public function getTrackingStatus(int $order_id)
+    public function isInCart(int $userId, int $articleId, int $versionId)
     {
-        $stmt = $this->db->prepare("SELECT departure, arrival, lastPosition FROM DELIVERY WHERE orderId=?");
-        $stmt->bind_param("i", $order_id);
+        $query = "SELECT amount FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("iii", $userId, $articleId, $versionId);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $result = intval($stmt->get_result()->fetch_assoc()["amount"]);
+        return $result;
+    }
 
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }    
+    public function addToCart(int $userId, int $articleId, int $versionId) {
+        $amount = $this->isInCart($userId, $articleId, $versionId);
+        
+        if ($amount != 0) {
+            $amount += 1;
+            $query = "UPDATE SHOPPING_CART_ITEM SET amount = ? WHERE userId = ? AND articleId = ? AND versionId = ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("iiii", $amount, $userId, $articleId, $versionId);
+        }
+        else {
+            $query = "INSERT INTO SHOPPING_CART_ITEM VALUES (?, ?, ?, 1)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        }
+        
+        if ($stmt->execute()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function removeFromCart(int $userId, int $articleId, int $versionId)
+    {
+        $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        if ($stmt->execute()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    public function emptyCart(int $userId)
+    {
+        $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        if ($stmt->execute()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+
+    /*** User functions ***/
 
     public function getUserId(string $email)
     {
@@ -180,6 +263,10 @@ class DatabaseHelper
         return "client";
     }
 
+
+
+    /*** Notification functions ***/
+
     public function getNotifications(int $userId)
     {
         $query = "SELECT * FROM NOTIFICATION WHERE userId = ? ORDER BY receptionTime DESC";
@@ -200,26 +287,9 @@ class DatabaseHelper
         return $result;
     }
 
-    private function stringClear(string $string)
-    {
-        $dictionary = array(
-            'áàâãªä' => 'a',
-            'ÁÀÂÃÄ' => 'A',
-            'íìîï' => 'i',
-            'ÍÌÎÏ' => 'I',
-            'éèêë' => 'e',
-            'ÉÈÊË' => 'E',
-            'óòôõºö' => 'o',
-            'ÓÒÔÕÖ' => 'O',
-            'úùûü' => 'u',
-            'ÚÙÛÜ' => 'U',
-            'ç' => 'c',
-            'Ç' => 'C',
-            'ñ' => 'n',
-            'Ñ' => 'N'
-        );
-        return str_replace(array_keys($dictionary), array_values($dictionary), $string);
-    }
+
+
+    /*** Search functions ***/
 
     /**
      * Queries the database for the searched term and/or filter.
@@ -228,7 +298,6 @@ class DatabaseHelper
      */
     public function searchBy(string $name = "", string ...$filters)
     {
-        $name = $this->stringClear($name);
         $result = [];
         $query = "SELECT * FROM ARTICLE";
         $conditions = [];
@@ -265,64 +334,9 @@ class DatabaseHelper
         return $result;
     }
 
-    public function isInCart(int $userId, int $articleId, int $versionId)
-    {
-        $query = "SELECT amount FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("iii", $userId, $articleId, $versionId);
-        $stmt->execute();
-        $result = intval($stmt->get_result()->fetch_assoc()["amount"]);
-        return $result;
-    }
-
-    public function addToCart(int $userId, int $articleId, int $versionId) {
-        $amount = $this->isInCart($userId, $articleId, $versionId);
-        
-        if ($amount != 0) {
-            $amount += 1;
-            $query = "UPDATE SHOPPING_CART_ITEM SET amount = ? WHERE userId = ? AND articleId = ? AND versionId = ?";
-            $stmt = $this->db->prepare($query);
-            $stmt->bind_param("iiii", $amount, $userId, $articleId, $versionId);
-        }
-        else {
-            $query = "INSERT INTO SHOPPING_CART_ITEM VALUES (?, ?, ?, 1)";
-            $stmt = $this->db->prepare($query);
-            $stmt->bind_param("iii", $userId, $articleId, $versionId);
-        }
-        
-        if ($stmt->execute()) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    public function removeFromCart(int $userId, int $articleId, int $versionId)
-    {
-        $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("iii", $userId, $articleId, $versionId);
-        if ($stmt->execute()) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
     
-    public function emptyCart(int $userId)
-    {
-        $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("iii", $userId, $articleId, $versionId);
-        if ($stmt->execute()) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+
+    /*** Payment functions ***/
 
     public function getPaymentMethodsNames()
     {
@@ -330,13 +344,4 @@ class DatabaseHelper
         return array_column($result->fetch_all(MYSQLI_ASSOC), 'name');
     }
 
-    private function __clone()
-    {
-        // Prevent cloning
-    }
-
-    public function __wakeup()
-    {
-        throw new Exception("Unserialization of this class is not allowed.");
-    }
 }
