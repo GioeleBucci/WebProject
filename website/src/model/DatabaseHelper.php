@@ -265,39 +265,31 @@ class DatabaseHelper
         return $result;
     }
 
-    private function searchByName($name)
+    public function isInCart(int $userId, int $articleId, int $versionId)
     {
-        $query = "SELECT * FROM ARTICLE WHERE name = ?";
+        $query = "SELECT amount FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('s', $name);
-        $success = $stmt->execute();
-        if ($success) {
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        } else {
-            $result = [];
-        }
-        return $result;
-    }
-
-    private function searchByFilters($filters)
-    {
-        $query = "SELECT * FROM ARTICLE WHERE categoryId IN (SELECT name FROM CATEGORY WHERE name = ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("s", $keyword);
-        $result = [];
-        foreach ($filters as $filter) {
-            $keyword = $filter;
-            if ($stmt->execute()) {
-                $result = array_merge($result, $stmt->get_result()->fetch_all(MYSQLI_ASSOC));
-            }
-        }
+        $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        $stmt->execute();
+        $result = intval($stmt->get_result()->fetch_assoc()["amount"]);
         return $result;
     }
 
     public function addToCart(int $userId, int $articleId, int $versionId) {
-        $query = "INSERT INTO SHOPPING_CART_ITEM VALUES (?, ?, ?, 1)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        $amount = $this->isInCart($userId, $articleId, $versionId);
+        
+        if ($amount != 0) {
+            $amount += 1;
+            $query = "UPDATE SHOPPING_CART_ITEM SET amount = ? WHERE userId = ? AND articleId = ? AND versionId = ?";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("iiii", $amount, $userId, $articleId, $versionId);
+        }
+        else {
+            $query = "INSERT INTO SHOPPING_CART_ITEM VALUES (?, ?, ?, 1)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        }
+        
         if ($stmt->execute()) {
             return true;
         }
@@ -305,7 +297,7 @@ class DatabaseHelper
             return false;
         }
     }
-    
+
     public function removeFromCart(int $userId, int $articleId, int $versionId)
     {
         $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
@@ -318,8 +310,19 @@ class DatabaseHelper
             return false;
         }
     }
-
-    public function emptyCart(int $userId) {}
+    
+    public function emptyCart(int $userId)
+    {
+        $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("iii", $userId, $articleId, $versionId);
+        if ($stmt->execute()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public function getPaymentMethodsNames()
     {
