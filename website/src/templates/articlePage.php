@@ -11,6 +11,14 @@ if (!$article) {
     die("Product not found"); // TODO handle this more gracefully
 }
 
+if (isset($_POST["addArticle"])) {
+    $added = $dbh->addToCart($_SESSION["userId"], $articleId, intval($_POST["selectedVersion"]));
+    if (!$added) {
+        $templateParams["dberror"] = "Database transaction error";
+    }
+    unset($_POST["addArticle"]);
+}
+
 $templateParams["title"] = implode(" ", [$article["name"], $article["details"]]);
 
 $articleVersions = $dbh->getArticleVersions($articleId);
@@ -41,9 +49,9 @@ $articleVersions = $dbh->getArticleVersions($articleId);
                 <form id="versionForm" class="mt-3">
                     <div class="form-group">
                         <label for="versionSelect" class="form-label">Select Version:</label>
-                        <select class="form-select" id="versionSelect" name="version" onchange="updatePrice()">
+                        <select class="form-select" id="versionSelect" name="version" onload="updateSelection()" onchange="updateSelection()">
                             <?php foreach ($articleVersions as $index => $version) : ?>
-                                <option value="<?php echo $index; ?>" data-price-variation="<?php echo $version["priceVariation"]; ?>"><?php echo ($version["versionType"] . ($version["priceVariation"] > 0 ? " (+" . $version["priceVariation"] . "€)" : "")) ?></option>
+                                <option value="<?php echo $version["versionId"]; ?>" data-price-variation="<?php echo $version["priceVariation"]; ?>"><?php echo ($version["versionType"] . ($version["priceVariation"] > 0 ? " (+" . $version["priceVariation"] . "€)" : "")) ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -52,9 +60,13 @@ $articleVersions = $dbh->getArticleVersions($articleId);
 
             <h3 class="text-primary mt-3" id="article-price"><small>€</small><?php echo ($article["basePrice"]); ?></h3>
             <?php if (Utils::isUserLoggedIn()): ?>
-                <button type="button" class="btn btn-primary add-to-cart-btn mt-3" onclick="changeAddToCartIcon.call(this)">
-                    <i class="bi bi-cart-plus-fill"></i> Add to Cart
-                </button>
+                <form method="post">
+                    <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
+                    <input type="hidden" name="addArticle" id="addArticle" value="">
+                    <button type="submit" class="btn btn-primary add-to-cart-btn mt-3" onclick="changeAddToCartIcon.call(this)">
+                        <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                    </button>
+                </form>
             <?php else: ?>
                 <button type="button" class="btn btn-primary add-to-cart-btn mt-3" disabled>
                     <i class="bi bi-cart-plus-fill"></i> Log in to add items to your cart!
@@ -67,11 +79,12 @@ $articleVersions = $dbh->getArticleVersions($articleId);
 <script>
     const basePrice = <?php echo $article["basePrice"]; ?>;
 
-    function updatePrice() {
+    function updateSelection() {
         const select = document.getElementById('versionSelect');
         if (!select) return;
 
         const selectedOption = select.options[select.selectedIndex];
+        document.getElementById('selectedVersion').setAttribute('value', selectedOption.getAttribute("value"));
         const priceVariation = parseFloat(selectedOption.getAttribute('data-price-variation'));
         const totalPrice = basePrice + priceVariation;
 
@@ -79,5 +92,5 @@ $articleVersions = $dbh->getArticleVersions($articleId);
     }
 
     // Initialize price on page load
-    document.addEventListener('DOMContentLoaded', updatePrice);
+    document.addEventListener('DOMContentLoaded', updateSelection);
 </script>
