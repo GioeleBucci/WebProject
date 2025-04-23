@@ -128,7 +128,13 @@ class DatabaseHelper
 
     public function getCartItems(int $clientId)
     {
-        $stmt = $this->db->prepare("SELECT * FROM SHOPPING_CART_ITEM WHERE userId=?");
+        $stmt = $this->db->prepare(
+            "SELECT p.*, c.amount
+            FROM (SELECT a.image, a.name, a.details, v.articleId, v.versionId, v.versionType, (a.basePrice + v.priceVariation) AS price 
+                FROM ARTICLE a
+                JOIN ARTICLE_VERSION v ON a.articleId = v.articleId) p
+            JOIN SHOPPING_CART_ITEM c ON p.articleId = c.articleId AND p.versionId = c.versionId
+            WHERE c.userId = ?");
         $stmt->bind_param("i", $clientId);
 
         return $stmt->execute() ? $stmt->get_result()->fetch_all(MYSQLI_ASSOC) : null;
@@ -140,8 +146,9 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("iii", $userId, $articleId, $versionId);
         $stmt->execute();
-        $result = intval($stmt->get_result()->fetch_assoc()["amount"]);
-        return $result;
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        
+        return intval($result);
     }
 
     public function addToCart(int $userId, int $articleId, int $versionId) {

@@ -11,14 +11,11 @@ if (isset($_POST["removeItem"])) {
     unset($_POST["versionId"]);
 }
 $cartItems = $dbh->getCartItems($_SESSION["userId"]);
-$articles = [];
 $subtotal = 0;
 foreach ($cartItems as $cartItem) {
-    $article = $dbh->getArticleVersion($cartItem["articleId"], $cartItem["versionId"]);
-    $articles[] = $article;
-    $subtotal += $article["price"];
+    $subtotal += $cartItem["price"];
 }
-$isCartEmpty = !isset($cartItems) || sizeof($cartItems) == 0;
+$isCartEmpty = empty($cartItems);
 
 ?>
 
@@ -31,8 +28,8 @@ $isCartEmpty = !isset($cartItems) || sizeof($cartItems) == 0;
 
     <div class="row g-5">
         <div class="col-md-<?php echo $isCartEmpty ? "12" : "8" ?>">
-            <?php if (isset($cartItems)): ?>
-                <?php foreach ($articles as $article): ?>
+            <?php if (!$isCartEmpty): ?>
+                <?php foreach ($cartItems as $article): ?>
                     <?php require("components/cartItem.php") ?>
                 <?php endforeach; ?>
             <?php else: ?>

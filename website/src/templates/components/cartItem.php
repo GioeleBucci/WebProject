@@ -17,7 +17,7 @@
         <input
             type="number"
             class="form-control"
-            value="<?php echo $cartItem['amount'] ?>"
+            value="<?php echo $article['amount'] ?>"
             min="1"
             style="max-width: 80px; margin: 0 auto;" />
     </div>
