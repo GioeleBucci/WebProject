@@ -9,11 +9,15 @@ if (isset($_POST["removeItem"])) {
     unset($_POST["removeItem"]);
     unset($_POST["articleId"]);
     unset($_POST["versionId"]);
-    if (!$removed) {
-        $templateParams["dbError"] = "Error during item removal";
-    }
 }
 $cartItems = $dbh->getCartItems($_SESSION["userId"]);
+$articles = [];
+$subtotal = 0;
+foreach ($cartItems as $cartItem) {
+    $article = $dbh->getArticleVersion($cartItem["articleId"], $cartItem["versionId"]);
+    $articles[] = $article;
+    $subtotal += $article["price"];
+}
 $isCartEmpty = !isset($cartItems) || sizeof($cartItems) == 0;
 
 ?>
@@ -28,8 +32,8 @@ $isCartEmpty = !isset($cartItems) || sizeof($cartItems) == 0;
     <div class="row g-5">
         <div class="col-md-<?php echo $isCartEmpty ? "12" : "8" ?>">
             <?php if (isset($cartItems)): ?>
-                <?php foreach ($cartItems as $cartItem): ?>
-                    <?php require("components/cartItemCard.php") ?>
+                <?php foreach ($articles as $article): ?>
+                    <?php require("components/cartItem.php") ?>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p class="lead mt-4">Nothing here! Come back once you added something to your cart.</p>
@@ -43,7 +47,7 @@ $isCartEmpty = !isset($cartItems) || sizeof($cartItems) == 0;
 
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal</span>
-                        <span>€149.97</span>
+                        <span>€<?php echo $subtotal ?></span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-2">
@@ -55,7 +59,7 @@ $isCartEmpty = !isset($cartItems) || sizeof($cartItems) == 0;
 
                     <div class="d-flex justify-content-between mb-3">
                         <strong>Total</strong>
-                        <strong>€159.97</strong>
+                        <strong>€<?php echo ($subtotal + 10) ?></strong>
                     </div>
 
                     <a href=<?php echo Links::CHECKOUT ?> class="btn btn-success w-100">Proceed to Checkout</a>

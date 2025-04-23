@@ -1,7 +1,3 @@
-<?php
-$article = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId']);
-?>
-
 <div class="row align-items-center border-bottom py-3">
     <div class="col-3 col-md-2">
         <img
