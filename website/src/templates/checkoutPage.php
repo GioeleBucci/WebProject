@@ -1,19 +1,6 @@
-<?php
-Utils::requireLoggedUser();
-$templateParams["title"] = "Checkout";
-$cartItems = $dbh->getCartItems($_SESSION["userId"]);
+<?php $templateParams["title"] = "Checkout" ?>
 
-// Redirect to another page if the cart is empty
-if (!isset($cartItems) || sizeof($cartItems) == 0) {
-    Utils::redirect(Links::CART);
-}
-
-$totalItems = 0;
-foreach ($cartItems as $cartItem) {
-    $totalItems += $cartItem["amount"];
-}
-?>
-
+<?php require "utils/checkout.php" ?>
 
 <div class="container mt-md-2">
     <div class="text-center">
@@ -28,14 +15,13 @@ foreach ($cartItems as $cartItem) {
             </h4>
             <ul class="list-group">
                 <?php $total = 0 ?>
-                <?php foreach ($cartItems as $cartItem): ?>
-                    <?php $article = $dbh->getArticleVersion($cartItem['articleId'], $cartItem['versionId']); ?>
+                <?php foreach ($cartItems as $article): ?>
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <div>
-                            <h6 class="my-0"><?php echo ($article["name"] . ($cartItem["amount"] > 1 ? " (" . $cartItem["amount"] . ")" : "")) ?></h6>
+                            <h6 class="my-0"><?php echo ($article["name"] . ($article["amount"] > 1 ? " (" . $article["amount"] . ")" : "")) ?></h6>
                             <small class="text-muted"><?php echo $article["details"] ?></small>
                         </div>
-                        <?php $price = $cartItem["amount"] * $article["price"];
+                        <?php $price = $article["amount"] * $article["price"];
                         $total += $price;
                         ?>
                         <span class="text-muted">€<?php echo $price ?></span>

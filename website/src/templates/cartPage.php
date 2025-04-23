@@ -1,23 +1,6 @@
 <?php $templateParams["title"] = "Your shopping cart" ?>
 
-<?php
-
-Utils::requireLoggedUser();
-
-if (isset($_POST["removeItem"])) {
-    $removed = $dbh->removeFromCart($_SESSION["userId"], $_POST["articleId"], $_POST["versionId"]);
-    unset($_POST["removeItem"]);
-    unset($_POST["articleId"]);
-    unset($_POST["versionId"]);
-}
-$cartItems = $dbh->getCartItems($_SESSION["userId"]);
-$subtotal = 0;
-foreach ($cartItems as $cartItem) {
-    $subtotal += $cartItem["price"];
-}
-$isCartEmpty = empty($cartItems);
-
-?>
+<?php require "utils/loadCart.php" ?>
 
 <?php $templateParams["title"] = "Cart" ?>
 
