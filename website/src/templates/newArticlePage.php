@@ -1,6 +1,6 @@
 <?php $templateParams["title"] = "New product" ?>
 
-<?php require 'utils/addProduct.php' ?>
+<?php require 'utils/addArticle.php' ?>
 
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -31,7 +31,7 @@
 							<div class="form-group">
 								<label for="categorySelect" class="form-label">Category</label>
 								<select class="form-select" id="categorySelect" name="category" >
-									<?php foreach ($dbh->getCategories as $category): ?>
+									<?php foreach ($dbh->getAllCategories as $category): ?>
 										<option value="<?php echo $category["categoryId"]; ?>" ></option>
 									<?php endforeach; ?>
 								</select>

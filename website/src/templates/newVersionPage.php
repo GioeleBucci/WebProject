@@ -1,6 +1,6 @@
-<?php $templateParams["title"] = "New version for ".implode(" ", [$article["name"], $article["details"]]) ?>
-
 <?php require 'utils/addVersion.php' ?>
+
+<?php $templateParams["title"] = "New version for ".implode(" ", [$article["name"], $article["details"]]) ?>
 
 <div class="container mt-3">
     <div class="row justify-content-center">

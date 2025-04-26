@@ -13,11 +13,7 @@ if (!$article) {
 
 if (isset($_POST["addArticle"])) {
     $added = $dbh->addToCart($_SESSION["userId"], $articleId, intval($_POST["selectedVersion"]));
-    if (!$added) {
-        $templateParams["dberror"] = "Database transaction error";
-    }
     unset($_POST["addArticle"]);
 }
 
-
-$articleVersions = $dbh->getArticleVersions($articleId);
+$articleVersions = $dbh->getAllVersions($articleId);

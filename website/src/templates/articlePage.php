@@ -1,6 +1,6 @@
-<?php $templateParams["title"] = implode(" ", [$article["name"], $article["details"]]) ?>
-
 <?php require "utils/loadArticle.php" ?>
+
+<?php $templateParams["title"] = implode(" ", [$article["name"], $article["details"]]) ?>
 
 <div class="container mt-0">
     <div class="row">
