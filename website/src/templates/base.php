@@ -30,8 +30,8 @@
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
                             <?php if (isset($_SESSION["isSeller"])): ?>
-                                <a href="<?php echo Links::NEW_ARTICLE ?>" class="icon">
-                                    <i class="bi bi-plus fs-5 mx-2"></i>
+                                <a href="<?php echo Links::LISTING ?>" class="icon">
+                                    <i class="bi bi-tag fs-5 mx-2"></i>
                                 </a>
                             <?php endif; ?>
                             <a href="<?php echo Links::CART ?>" class="icon">
@@ -57,8 +57,8 @@
                     <!-- Icons (desktop) -->
                     <div class="d-none d-md-block mt-3">
                         <?php if (isset($_SESSION["isSeller"])): ?>
-                            <a href="<?php echo Links::NEW_ARTICLE ?>" class="icon">
-                                <i class="bi bi-plus fs-4 mx-2"></i>
+                            <a href="<?php echo Links::LISTING ?>" class="icon">
+                                <i class="bi bi-tag fs-4 mx-2"></i>
                             </a>
                         <?php endif; ?>
                         <a href="<?php echo Links::CART ?>" class="icon">
