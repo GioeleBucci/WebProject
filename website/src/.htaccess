@@ -1,6 +1,9 @@
 RewriteEngine On
 
-# Redirect all requests to index.php
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
+# Allow direct access to PHP files in the utils directory
+RewriteRule ^utils/ - [L]
+
+# Redirect all other requests to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]

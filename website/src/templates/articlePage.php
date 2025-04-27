@@ -36,15 +36,29 @@
                 </form>
             <?php endif; ?>
 
-            <h3 class="text-primary mt-3" id="article-price"><small>€</small><?php echo ($article["basePrice"]); ?></h3>
+            <h2 class="text-primary mt-3" id="article-price"><small>€</small><?php echo ($article["basePrice"]); ?></h2>
             <?php if (Utils::isUserLoggedIn()): ?>
-                <form method="post">
-                    <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
-                    <input type="hidden" name="addArticle" id="addArticle" value="">
-                    <button type="submit" class="btn btn-primary add-to-cart-btn mt-3" onclick="changeAddToCartIcon.call(this)">
-                        <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                <div class="mt-4 mt-md-3 d-flex flex-column flex-md-row gap-2 align-items-center align-items-md-start">
+                    <button type="button" class="btn btn-outline-danger wishlist-btn d-flex w-100 w-md-auto justify-content-center"
+                        data-article-id="<?php echo $article['articleId']; ?>"
+                        onclick="toggleWishlist.call(this)">
+                        <?php
+                        $isInWishlist = isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId']);
+                        ?>
+                        <i class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?> me-1"></i>
+                        <div class="wishlist-text">
+                            <?php echo $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
+                        </div>
                     </button>
-                </form>
+
+                    <form method="post" class="d-inline-block w-100 w-md-auto">
+                        <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
+                        <input type="hidden" name="addArticle" id="addArticle" value="">
+                        <button type="submit" class="btn btn-primary add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
+                            <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                        </button>
+                    </form>
+                </div>
             <?php else: ?>
                 <button type="button" class="btn btn-primary add-to-cart-btn mt-3" disabled>
                     <i class="bi bi-cart-plus-fill"></i> Log in to add items to your cart!

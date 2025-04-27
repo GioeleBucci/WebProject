@@ -21,8 +21,14 @@
 
         <?php if (Utils::isUserLoggedIn()): ?>
             <div class="card-body pt-0">
-                <button type="button" class="btn btn-primary add-to-cart-btn" onclick="changeAddToCartIcon.call(this)">
-                    <i class="bi bi-cart-plus-fill"></i>
+                <button type="button" class="btn btn-outline-danger wishlist-btn" 
+                        data-article-id="<?php echo $prod['articleId']; ?>"
+                        onclick="toggleWishlist.call(this)">
+                    <i class="bi bi-heart<?php 
+                        if(isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $prod['articleId'])) {
+                            echo '-fill';
+                        }
+                    ?>"></i>
                 </button>
             </div>
         <?php endif; ?>

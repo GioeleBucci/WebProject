@@ -43,6 +43,9 @@
                             <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
                                 <i class="bi bi-bell fs-5 mx-2"></i>
                             </a>
+                            <a href="<?php echo Links::WISHLIST ?>" class="icon">
+                                <i class="bi bi-heart fs-5 mx-2"></i>
+                            </a>
                         </div>
                     </div>
                     <!-- Search bar -->
@@ -69,6 +72,9 @@
                         </a>
                         <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
                             <i class="bi bi-bell fs-4 mx-2"></i>
+                        </a>
+                        <a href="<?php echo Links::WISHLIST ?>" class="icon">
+                            <i class="bi bi-heart fs-4 mx-2"></i>
                         </a>
                     </div>
                 </div>
