@@ -174,9 +174,8 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("iii", $userId, $articleId, $versionId);
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc();
 
-        return $result['amount'];
+        return $stmt->get_result()->fetch_column();
     }
 
     public function addToCart(int $userId, int $articleId, int $versionId) {
