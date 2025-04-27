@@ -12,7 +12,7 @@ class Links
     public const SEARCH = 'search';
     public const ARTICLE = 'article';
     public const NOTIFICATIONS = 'notifications';
-    public const WISHLIST = 'WISHLIST';
+    public const WISHLIST = 'wishlist';
 }
 
 /* Actual filenames the relative links will be resolved to */
