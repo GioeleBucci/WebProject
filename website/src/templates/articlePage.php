@@ -39,16 +39,18 @@
             <h3 class="text-primary mt-3" id="article-price"><small>€</small><?php echo ($article["basePrice"]); ?></h3>
             <?php if (Utils::isUserLoggedIn()): ?>
                 <div class="mt-3">
-                    <button type="button" class="btn btn-outline-danger wishlist-btn" 
-                            data-article-id="<?php echo $article['articleId']; ?>"
-                            onclick="toggleWishlist.call(this)">
-                        <i class="bi bi-heart<?php 
-                            if(isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId'])) {
-                                echo '-fill';
-                            }
-                        ?>"></i> Add to Wishlist
+                    <button type="button" class="btn btn-outline-danger wishlist-btn"
+                        data-article-id="<?php echo $article['articleId']; ?>"
+                        onclick="toggleWishlist.call(this)">
+                        <?php
+                        $isInWishlist = isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId']);
+                        ?>
+                        <i class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?>"></i>
+                        <div class="wishlist-text">
+                            <?php echo $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
+                        </div>
                     </button>
-                    
+
                     <form method="post" class="d-inline-block">
                         <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
                         <input type="hidden" name="addArticle" id="addArticle" value="">

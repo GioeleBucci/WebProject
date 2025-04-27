@@ -15,6 +15,7 @@ function toggleWishlist() {
     formData.append('articleId', articleId);
 
     const heartIcon = this.querySelector('i');
+    const wishlistTextDiv = this.querySelector('.wishlist-text');
     
     // Disable the button during the request to prevent multiple clicks
     this.disabled = true;    
@@ -58,9 +59,17 @@ function toggleWishlist() {
             if (data.inWishlist) {
                 heartIcon.classList.remove('bi-heart');
                 heartIcon.classList.add('bi-heart-fill');
+                // Update wishlist text div
+                if (wishlistTextDiv) {
+                    wishlistTextDiv.textContent = 'Remove from Wishlist';
+                }
             } else {
                 heartIcon.classList.remove('bi-heart-fill');
                 heartIcon.classList.add('bi-heart');
+                // Update wishlist text div
+                if (wishlistTextDiv) {
+                    wishlistTextDiv.textContent = 'Add to Wishlist';
+                }
             }
         } else {
             console.error('Failed to toggle wishlist:', data.message || 'Unknown error');
