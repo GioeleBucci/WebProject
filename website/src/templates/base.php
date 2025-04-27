@@ -29,6 +29,11 @@
                         </a>
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
+                            <?php if (isset($_SESSION["isSeller"])): ?>
+                                <a href="<?php echo Links::NEW_ARTICLE ?>" class="icon">
+                                    <i class="bi bi-plus fs-5 mx-2"></i>
+                                </a>
+                            <?php endif; ?>
                             <a href="<?php echo Links::CART ?>" class="icon">
                                 <i class="bi bi-cart fs-5 mx-2"></i>
                             </a>
@@ -51,6 +56,11 @@
                     </div>
                     <!-- Icons (desktop) -->
                     <div class="d-none d-md-block mt-3">
+                        <?php if (isset($_SESSION["isSeller"])): ?>
+                            <a href="<?php echo Links::NEW_ARTICLE ?>" class="icon">
+                                <i class="bi bi-plus fs-4 mx-2"></i>
+                            </a>
+                        <?php endif; ?>
                         <a href="<?php echo Links::CART ?>" class="icon">
                             <i class="bi bi-cart fs-4 mx-2"></i>
                         </a>

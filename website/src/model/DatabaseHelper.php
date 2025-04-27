@@ -227,7 +227,7 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
-        
+
         return intval($stmt->get_result()->fetch_assoc()['userId']);
     }
 
@@ -275,7 +275,7 @@ class DatabaseHelper
         $stmt->bind_param('i', $userId);
         $stmt->execute();
 
-        return empty($stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? "client" : "seller";
+        return empty($stmt->get_result()->fetch_assoc()) ? "client" : "seller";
     }
 
 

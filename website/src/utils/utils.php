@@ -28,6 +28,9 @@ class Utils
     {
         $userId = DatabaseHelper::getInstance()->getUserId($email);
         $_SESSION['userId'] = $userId;
+        if (DatabaseHelper::getInstance()->getUserType($userId) == "seller") {
+            $_SESSION["isSeller"] = true;
+        }
     }
 
     /**
