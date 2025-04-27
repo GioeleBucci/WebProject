@@ -12,6 +12,7 @@ class Links
     public const SEARCH = 'search';
     public const ARTICLE = 'article';
     public const NOTIFICATIONS = 'notifications';
+    public const NEW_ARTICLE = 'add-article';
     public const WISHLIST = 'wishlist';
 }
 
@@ -29,4 +30,5 @@ class Pages
     public const NOTIFICATIONS = 'notificationsPage.php';
     public const WISHLIST = 'wishlistPage.php';
     public const NOT_FOUND_404 = 'notFound404.php';
+    public const NEW_ARTICLE = 'newArticlePage.php';
 }
