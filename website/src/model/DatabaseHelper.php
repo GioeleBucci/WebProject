@@ -1,4 +1,5 @@
 <?php
+
 class DatabaseHelper
 {
     private static $instance = null;
@@ -6,7 +7,9 @@ class DatabaseHelper
 
 
 
-    /*** Helper-related functions ***/
+    /*
+     * Helper methods
+    */
 
     private function __construct($servername, $username, $password, $dbname, $port)
     {
@@ -36,17 +39,41 @@ class DatabaseHelper
 
 
 
-    /*** Category functions ***/
+    /*
+     * Category methods
+    */
 
     public function getCategoryNames()
     {
+        $result = $this->db->query("SELECT name FROM CATEGORY");
+        return array_column($result->fetch_all(MYSQLI_ASSOC), "name");
+    }
+
+    public function getAllCategories()
+    {
         $result = $this->db->query("SELECT * FROM CATEGORY");
-        return array_column($result->fetch_all(MYSQLI_ASSOC), 'name');
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
 
 
-    /*** Article functions ***/
+    /*
+     * Article methods
+    */
+
+    public function addArticle(string $name, string $details, string $description, float $price, string $category)
+    {
+
+    }
+
+    public function getArticle(int $articleId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId=?");
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_assoc();
+    }
 
     public function getArticles(int $amount)
     {
@@ -55,53 +82,43 @@ class DatabaseHelper
         );
         $stmt->bind_param("i", $amount);
         $stmt->execute();
-        $result = $stmt->get_result();
 
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function getArticle(int $articleId)
-    {
-        $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId=?");
-        $stmt->bind_param("i", $articleId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_assoc();
-    }
-
-    /** Get all available versions for a specific article */
-    public function getArticleVersions(int $articleId){
-        $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
-        $stmt->bind_param("i", $articleId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
-     * Returns a merged table of the article and its version, with a "price" field 
+     * Returns a merged table of the article and its version, with a "price" field
      * containing the total price of the product.
      */
-    public function getArticleVersion(int $articleId, int $versionId)
+    public function getVersion(int $articleId, int $versionId)
     {
         $stmt = $this->db->prepare(
-            "SELECT a.*, v.*, (a.basePrice + v.priceVariation) AS price 
+            "SELECT a.*, v.*, (a.basePrice + v.priceVariation) AS price
             FROM ARTICLE a
             JOIN ARTICLE_VERSION v ON a.articleId = v.articleId
             WHERE a.articleId = ? AND v.versionId = ?"
         );
         $stmt->bind_param("ii", $articleId, $versionId);
         $stmt->execute();
-        $result = $stmt->get_result();
 
-        return $result->fetch_assoc();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    /** Get all available versions for a specific article */
+    public function getAllVersions(int $articleId){
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
 
 
-    /*** Order functions ***/
-    
+    /*
+     * Order methods
+    */
+
     public function addOrder(string $email, string $date, string $notes)
     {
         $query = "INSERT INTO `test`.`CLIENT_ORDER` (email, orderDate, notes) VALUES (?, ?, ?)";
@@ -124,20 +141,23 @@ class DatabaseHelper
 
 
 
-    /*** Cart functions ***/
+    /*
+     * Cart methods
+    */
 
     public function getCartItems(int $clientId)
     {
         $stmt = $this->db->prepare(
             "SELECT p.*, c.amount
-            FROM (SELECT a.image, a.name, a.details, v.articleId, v.versionId, v.versionType, (a.basePrice + v.priceVariation) AS price 
+            FROM (SELECT a.image, a.name, a.details, v.articleId, v.versionId, v.versionType, (a.basePrice + v.priceVariation) AS price
                 FROM ARTICLE a
                 JOIN ARTICLE_VERSION v ON a.articleId = v.articleId) p
             JOIN SHOPPING_CART_ITEM c ON p.articleId = c.articleId AND p.versionId = c.versionId
             WHERE c.userId = ?");
         $stmt->bind_param("i", $clientId);
+        $stmt->execute();
 
-        return $stmt->execute() ? $stmt->get_result()->fetch_all(MYSQLI_ASSOC) : null;
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
     public function isInCart(int $userId, int $articleId, int $versionId)
@@ -146,14 +166,14 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("iii", $userId, $articleId, $versionId);
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        
-        return intval($result);
+        $result = $stmt->get_result()->fetch_assoc();
+
+        return $result['amount'];
     }
 
     public function addToCart(int $userId, int $articleId, int $versionId) {
         $amount = $this->isInCart($userId, $articleId, $versionId);
-        
+
         if ($amount != 0) {
             $amount += 1;
             $query = "UPDATE SHOPPING_CART_ITEM SET amount = ? WHERE userId = ? AND articleId = ? AND versionId = ?";
@@ -165,13 +185,8 @@ class DatabaseHelper
             $stmt = $this->db->prepare($query);
             $stmt->bind_param("iii", $userId, $articleId, $versionId);
         }
-        
-        if ($stmt->execute()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+
+        return $stmt->execute();
     }
 
     public function removeFromCart(int $userId, int $articleId, int $versionId)
@@ -179,30 +194,24 @@ class DatabaseHelper
         $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("iii", $userId, $articleId, $versionId);
-        if ($stmt->execute()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+
+        return $stmt->execute();
     }
-    
+
     public function emptyCart(int $userId)
     {
         $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("iii", $userId, $articleId, $versionId);
-        if ($stmt->execute()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+
+        return $stmt->execute();
     }
 
 
 
-    /*** User functions ***/
+    /*
+     * User methods
+    */
 
     public function getUserId(string $email)
     {
@@ -218,8 +227,8 @@ class DatabaseHelper
     }
 
     /**
-     * Adds a new user to the database if one with his credentials
-     * is not already present.
+     * Adds a new user to the database. Shows an error if the
+     * chosen credentials have already been used elsewhere.
      * @return array Returns the result of the query if successful,
      * and an empty string otherwise.
      */
@@ -244,59 +253,60 @@ class DatabaseHelper
         return $result;
     }
 
-    public function isLoginValid(string $email, string $password)
+    public function checkCredentials(string $email, string $password)
     {
         $query = "SELECT userId FROM `test`.`USER` WHERE email = ? AND password = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss', $email, $password);
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        if (count($result) == 1) {
-            return true;
-        }
-        return false;
+
+        return empty($stmt->get_result()->fetch_assoc()) ? false : true;
     }
 
-    public function checkUserType(int $userId)
+    public function getUserType(int $userId)
     {
-        $query = "SELECT userId FROM USER WHERE userId = ? AND userId in (select userId from SELLER)";
+        $query = "SELECT userId FROM SELLER WHERE userId = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userId);
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        if (count($result) == 1) {
-            return "seller";
-        }
-        return "client";
+
+        return empty($stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? "client" : "seller";
     }
 
 
 
-    /*** Notification functions ***/
+    /*
+     * Notification methods
+    */
 
-    public function getNotifications(int $userId)
+    public function getAllNotifications(int $userId)
     {
         $query = "SELECT * FROM NOTIFICATION WHERE userId = ? ORDER BY receptionTime DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userId);
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-        return $result;
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    /**
+     * Returns true if a notification was successfully added,
+     * false otherwise.
+     */
     public function addNotification(int $userId, string $time, string $content)
     {
         $query = "INSERT INTO `test`.`NOTIFICATION` (userId, receptionTime, content, isRead) VALUES (?, ?, ?, false)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('iss', $userId, $time, $content);
-        $result = $stmt->execute();
-        return $result;
+
+        return $stmt->execute();
     }
 
 
 
-    /*** Search functions ***/
+    /*
+     * Search methods
+    */
 
     /**
      * Queries the database for the searched term and/or filter.
@@ -336,14 +346,15 @@ class DatabaseHelper
         }
 
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-        return $result;
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    
 
-    /*** Payment functions ***/
+
+    /*
+     * Payment methods
+    */
 
     public function getPaymentMethodsNames()
     {
