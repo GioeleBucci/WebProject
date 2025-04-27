@@ -38,13 +38,25 @@
 
             <h3 class="text-primary mt-3" id="article-price"><small>€</small><?php echo ($article["basePrice"]); ?></h3>
             <?php if (Utils::isUserLoggedIn()): ?>
-                <form method="post">
-                    <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
-                    <input type="hidden" name="addArticle" id="addArticle" value="">
-                    <button type="submit" class="btn btn-primary add-to-cart-btn mt-3" onclick="changeAddToCartIcon.call(this)">
-                        <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                <div class="mt-3">
+                    <button type="button" class="btn btn-outline-danger wishlist-btn" 
+                            data-article-id="<?php echo $article['articleId']; ?>"
+                            onclick="toggleWishlist.call(this)">
+                        <i class="bi bi-heart<?php 
+                            if(isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId'])) {
+                                echo '-fill';
+                            }
+                        ?>"></i> Add to Wishlist
                     </button>
-                </form>
+                    
+                    <form method="post" class="d-inline-block">
+                        <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
+                        <input type="hidden" name="addArticle" id="addArticle" value="">
+                        <button type="submit" class="btn btn-primary add-to-cart-btn" onclick="changeAddToCartIcon.call(this)">
+                            <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                        </button>
+                    </form>
+                </div>
             <?php else: ?>
                 <button type="button" class="btn btn-primary add-to-cart-btn mt-3" disabled>
                     <i class="bi bi-cart-plus-fill"></i> Log in to add items to your cart!

@@ -16,7 +16,8 @@ $routes = [
     Links::CHECKOUT => Pages::CHECKOUT,
     Links::SEARCH => Pages::SEARCH,
     Links::ARTICLE => Pages::ARTICLE,
-    Links::NOTIFICATIONS => Pages::NOTIFICATIONS
+    Links::NOTIFICATIONS => Pages::NOTIFICATIONS,
+    Links::WISHLIST => Pages::WISHLIST
 ];
 
 if (array_key_exists($requestPath, $routes)) {

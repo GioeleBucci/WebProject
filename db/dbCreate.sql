@@ -113,3 +113,11 @@ create table if not exists NOTIFICATION (
      constraint FK_NotifiedUser foreign key (userId) references USER(userId)
 );
 
+create table if not exists WISHLIST (
+     userId int not null,
+     articleId int not null,
+     primary key (userId, articleId),
+     constraint FK_WishlistOwner foreign key (userId) references USER(userId),
+     constraint FK_WishlistArticle foreign key (articleId) references ARTICLE(articleId)
+);
+

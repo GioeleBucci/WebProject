@@ -201,6 +201,53 @@ class DatabaseHelper
     }
 
 
+    /*** Wishlist functions ***/
+
+    public function getWishlistItems(int $userId)
+    {
+        $stmt = $this->db->prepare(
+            "SELECT a.* 
+            FROM ARTICLE a
+            JOIN WISHLIST w ON a.articleId = w.articleId
+            WHERE w.userId = ?");
+        $stmt->bind_param("i", $userId);
+
+        return $stmt->execute() ? $stmt->get_result()->fetch_all(MYSQLI_ASSOC) : null;
+    }
+
+    public function isInWishlist(int $userId, int $articleId)
+    {
+        $query = "SELECT COUNT(*) as count FROM WISHLIST WHERE userId = ? AND articleId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ii", $userId, $articleId);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc();
+        
+        return $result['count'] > 0;
+    }
+
+    public function addToWishlist(int $userId, int $articleId) 
+    {
+        if ($this->isInWishlist($userId, $articleId)) {
+            return true; // Already in wishlist
+        }
+        
+        $query = "INSERT INTO WISHLIST VALUES (?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ii", $userId, $articleId);
+        
+        return $stmt->execute();
+    }
+
+    public function removeFromWishlist(int $userId, int $articleId)
+    {
+        $query = "DELETE FROM WISHLIST WHERE userId = ? AND articleId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ii", $userId, $articleId);
+        
+        return $stmt->execute();
+    }
+
 
     /*** User functions ***/
 

@@ -12,6 +12,7 @@ class Links
     public const SEARCH = 'search';
     public const ARTICLE = 'article';
     public const NOTIFICATIONS = 'notifications';
+    public const WISHLIST = 'WISHLIST';
 }
 
 /* Actual filenames the relative links will be resolved to */
@@ -26,5 +27,6 @@ class Pages
     public const SEARCH = 'searchPage.php';
     public const ARTICLE = 'articlePage.php';
     public const NOTIFICATIONS = 'notificationsPage.php';
+    public const WISHLIST = 'wishlistPage.php';
     public const NOT_FOUND_404 = 'notFound404.php';
 }
