@@ -71,7 +71,7 @@ class DatabaseHelper
     }
 
     /** Get all available versions for a specific article */
-    public function getArticleVersions(int $articleId){
+    public function getAllVersions(int $articleId){
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
         $stmt->bind_param("i", $articleId);
         $stmt->execute();
