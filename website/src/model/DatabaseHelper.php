@@ -82,8 +82,18 @@ class DatabaseHelper
         );
         $stmt->bind_param("i", $amount);
         $stmt->execute();
+        $result = $stmt->get_result();
 
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /** Get all available versions for a specific article */
+    public function getArticleVersions(int $articleId){
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
+        $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
