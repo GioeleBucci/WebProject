@@ -84,6 +84,15 @@ INSERT INTO `SELLER` (`userId`, `deliveredOrders`) VALUES
 (3, 205);
 
 --
+-- Dumping data for table `LISTING`
+--
+
+INSERT INTO `LISTING` (`articleId`, `sellerId`) VALUES
+(1, 2),
+(2, 2),
+(3, 2);
+
+--
 -- Dumping data for table `CLIENT`
 --
 INSERT INTO `CLIENT` (`userId`, `paymentMethodId`) VALUES

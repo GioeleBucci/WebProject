@@ -56,6 +56,13 @@ create table if not exists SELLER (
      constraint FK_SellerKey foreign key (userId) references USER(userId)
 );
 
+create table if not exists LISTING (
+     articleId int not null,
+     sellerId int not null,
+     primary key (articleId),
+     constraint FK_ArticleId foreign key (articleId) references ARTICLE(articleId)
+);
+
 create table if not exists CLIENT (
      userId int not null,
      paymentMethodId int not null,
