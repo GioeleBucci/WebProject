@@ -8,7 +8,7 @@ require_once 'model/pages.php';
 class Utils
 {
     private function __construct() {}
-
+    
     /**
      * Redirects the user to a specified page.
      *
@@ -18,7 +18,10 @@ class Utils
     {
         header("Location: " . Settings::BASE_URL . $to);
     }
-
+    
+    public const CLIENT = "client";
+    public const SELLER = "seller";
+    
     /** 
      * Logs in a user by setting the correspondent user ID in the session.
      * 

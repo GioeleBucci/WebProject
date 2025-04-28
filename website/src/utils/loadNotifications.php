@@ -3,7 +3,7 @@
 Utils::requireLoggedUser();
 
 $maxAmount = SiteConfigs::MAX_NOTIFICATIONS_PER_PAGE;
-$notifications = $dbh->getNotifications($_SESSION["userId"]);
+$notifications = $dbh->getAllNotifications($_SESSION["userId"]);
 $notificationsAmount = count($notifications);
 if ($notificationsAmount > $maxAmount) {
     $sectionsAmount = $notificationsAmount / $maxAmount;
