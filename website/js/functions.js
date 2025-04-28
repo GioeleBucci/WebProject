@@ -1,10 +1,10 @@
 // @ts-nocheck
-function underlineProductName(toggle) {
-    const productName = this.querySelector('.product-name');
-    if (productName) {
-        productName.style.textDecoration = toggle ? 'underline' : 'none';
-    }
-}
+// function underlineProductName(toggle) {
+//     const productName = this.querySelector('.product-name');
+//     if (productName) {
+//         productName.style.textDecoration = toggle ? 'underline' : 'none';
+//     }
+// }
 
 function toggleWishlist() {
     // Get the article ID from the data attribute

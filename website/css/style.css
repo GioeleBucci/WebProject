@@ -30,6 +30,10 @@
     min-height: 100vh;
 }
 
-.icon{
+.icon {
     text-decoration: none;
+}
+
+.card:hover .product-name {
+    text-decoration: underline;
 }
