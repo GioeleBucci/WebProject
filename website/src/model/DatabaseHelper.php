@@ -61,9 +61,12 @@ class DatabaseHelper
      * Article methods
     */
 
-    public function addArticle(string $name, string $details, string $description, float $price, string $category)
+    public function addArticle(string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image)
     {
+        $stmt = $this->db->prepare("INSERT INTO ARTICLE VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssii", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
 
+        return $stmt->execute();
     }
 
     public function getArticle(int $articleId)
@@ -117,6 +120,20 @@ class DatabaseHelper
     public function getAllVersions(int $articleId){
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
         $stmt->bind_param("i", $articleId);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+
+
+    /*
+     * Listing methods 
+    */
+
+    public function getListing (int $sellerId) {
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId IN (SELECT articleId from LISTING WHERE sellerId = ?)");
+        $stmt->bind_param("i", $sellerId);
         $stmt->execute();
 
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -274,7 +291,7 @@ class DatabaseHelper
         $stmt->bind_param('i', $userId);
         $stmt->execute();
 
-        return empty($stmt->get_result()->fetch_assoc()) ? "client" : "seller";
+        return empty($stmt->get_result()->fetch_assoc()) ? Utils::CLIENT : Utils::SELLER;
     }
 
 
