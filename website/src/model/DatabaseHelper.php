@@ -308,7 +308,13 @@ class DatabaseHelper
         return empty($stmt->get_result()->fetch_assoc()) ? Utils::CLIENT : Utils::SELLER;
     }
 
-
+    public function getUserInfo(int $userId)
+    {
+        $stmt = $this->db->prepare("SELECT userId, name, email, birthDate, address, phoneNumber FROM USER WHERE userId=?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
 
     /*
      * Notification methods
