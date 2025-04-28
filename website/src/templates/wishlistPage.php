@@ -9,7 +9,7 @@ $wishlistItems = $dbh->getWishlistItems($_SESSION["userId"]);
 $isWishlistEmpty = empty($wishlistItems);
 ?>
 
-<div class="container mt-md-2">
+<div class="container">
     <div class="text-center">
         <h2>Your Wishlist</h2>
     </div>

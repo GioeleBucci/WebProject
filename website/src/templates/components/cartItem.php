@@ -11,14 +11,16 @@
         <small class="text-muted"><?php echo $article['details'] ?></small>
     </div>
     <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
-        <strong>€<?php echo $article['price'] ?></strong>
+        <strong class="item-price" data-unit-price="<?php echo $article['price'] ?>">€<?php echo $article['price'] * $article['amount'] ?></strong>
     </div>
     <div class="col-3 col-md-2 text-end mt-2 mt-md-0">
         <input
             type="number"
-            class="form-control"
+            class="form-control quantity-input"
             value="<?php echo $article['amount'] ?>"
             min="1"
+            data-article-id="<?php echo $article['articleId'] ?>"
+            data-version-id="<?php echo $article['versionId'] ?>"
             style="max-width: 80px; margin: 0 auto;" />
     </div>
     <form method="post" class="col-3 col-md-1 text-end mt-2 mt-md-0">

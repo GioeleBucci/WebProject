@@ -27,9 +27,16 @@
                         <span class="text-muted">€<?php echo $price ?></span>
                     </li>
                 <?php endforeach; ?>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">Shipping</h6>
+                        <small class="text-muted">Standard delivery</small>
+                    </div>
+                    <span class="text-muted">€10</span>
+                </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <strong class="text-primary">Total</strong>
-                    <strong class="text-primary">€<?php echo $total ?></strong>
+                    <strong class="text-primary">€<?php echo $total + 10 ?></strong>
                 </li>
             </ul>
         </div>

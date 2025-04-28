@@ -3,7 +3,12 @@
 <?php require 'utils/loadNotifications.php' ?>
 
 <?php if ($notificationsAmount != 0): ?>
-    <div class="container mt-2 mt-md-4">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <h2>Notifications</h2>
+        </div>
+
         <div class="row">
             <div class="col">
                 <?php foreach ($sections[$_GET["sectionNumber"]] as $notification): ?>
