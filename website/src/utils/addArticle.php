@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_POST["submit"])) {
-	if (!isset($_POST["name"]) || !isset($_POST["details"]) || !isset($_POST["description"]) || !isset($_POST["price"]) || !isset($_POST["categoryId"])) {
+	if (!isset($_POST["name"]) || !isset($_POST["details"]) || !isset($_POST["description"]) || !isset($_POST["material"]) || !isset($_POST["weight"]) || !isset($_POST["price"]) || !isset($_POST["size"]) || !isset($_POST["categoryId"])) {
 		$templateParams["insertionError"] = "All fields must be filled in order to proceed";
 	} else {
 		unset($_SESSION["add-product"]);
@@ -34,10 +34,11 @@ if (isset($_POST["submit"])) {
 		}
 
 		if ($imageOk == 0) {
+			$templateParams["insertionError"] = "Error during image upload";
 		} else {
 			move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
 		}
 
-		$dbh->addArticle($_POST["name"], $_POST["details"], $_POST["description"], $_POST["price"], $_POST["categoryId"], $_POST["image"]);
+		$dbh->addArticle($_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $_FILES["image"]["tmp_name"]);
 	}
 }

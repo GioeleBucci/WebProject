@@ -1,13 +1,6 @@
 <?php $templateParams["title"] = "New product" ?>
 
-<?php 
-
-if (isset($_SESSION["add-product"])) {
-    
-    require 'utils/addArticle.php'; 
-}
-
-?>
+<?php require 'utils/addArticle.php'; ?>
 
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -29,30 +22,42 @@ if (isset($_SESSION["add-product"])) {
                         </div>
                         <div class="mb-3">
                             <label for="details" class="form-label">Details</label>
-                            <input type="text" class="form-control" id="details" name="email" required>
+                            <input type="text" class="form-control" id="details" name="details" required>
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="description" name="password" required>
+                            <input type="text" class="form-control" id="description" name="description" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="material" class="form-label">Material</label>
+                            <input type="text" class="form-control" id="material" name="material" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="weight" class="form-label">Weight</label>
+                            <input type="text" class="form-control" id="weight" name="weight" required>
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Price</label>
-                            <input type="text" class="form-control" id="price" name="confirm_password" required>
+                            <input type="text" class="form-control" id="price" name="price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="size" class="form-label">Size</label>
+                            <input type="text" class="form-control" id="size" name="size" required>
                         </div>
                         <div>
                             <label for="image" class="form-label">Image</label>
-                            <input type="file" class="form-control" accept=".png .jpg" id="image" name="image" required>
+                            <input type="file" class="form-control" accept=".png, .jpg, .jpeg" id="image" name="image" required>
                         </div>
-						<div>
-							<div class="form-group">
-								<label for="categorySelect" class="form-label">Category</label>
-								<select class="form-select" id="categorySelect" name="categoryId" >
-									<?php foreach ($dbh->getAllCategories() as $category): ?>
-										<option value="<?php echo $category["categoryId"]; ?>" ><?php echo $category["name"] ?></option>
-									<?php endforeach; ?>
-								</select>
-							</div>
-						</div>
+                        <div>
+                            <div class="form-group">
+                                <label for="categoryId" class="form-label">Category</label>
+                                <select class="form-select" id="categoryId" name="categoryId">
+                                    <?php foreach ($dbh->getAllCategories() as $category): ?>
+                                        <option value="<?php echo $category["categoryId"]; ?>"><?php echo $category["name"] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary w-100">Proceed</button>
                     </form>
                 </div>
