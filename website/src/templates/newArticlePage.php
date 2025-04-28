@@ -1,6 +1,13 @@
 <?php $templateParams["title"] = "New product" ?>
 
-<?php require 'utils/addArticle.php' ?>
+<?php 
+
+if (isset($_SESSION["add-product"])) {
+    
+    require 'utils/addArticle.php'; 
+}
+
+?>
 
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -11,6 +18,11 @@
                 </div>
                 <div class="card-body">
                     <form method="post">
+                        <?php if (isset($templateParams["insertionError"])): ?>
+                            <div class="alert alert-warning show mb-1 mt-0" role="alert">
+                                <?php echo $templateParams["insertionError"]; ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
@@ -27,17 +39,21 @@
                             <label for="price" class="form-label">Price</label>
                             <input type="text" class="form-control" id="price" name="confirm_password" required>
                         </div>
+                        <div>
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" class="form-control" accept=".png .jpg" id="image" name="image" required>
+                        </div>
 						<div>
 							<div class="form-group">
 								<label for="categorySelect" class="form-label">Category</label>
-								<select class="form-select" id="categorySelect" name="category" >
-									<?php foreach ($dbh->getAllCategories as $category): ?>
-										<option value="<?php echo $category["categoryId"]; ?>" ></option>
+								<select class="form-select" id="categorySelect" name="categoryId" >
+									<?php foreach ($dbh->getAllCategories() as $category): ?>
+										<option value="<?php echo $category["categoryId"]; ?>" ><?php echo $category["name"] ?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>
 						</div>
-                        <button type="submit" class="btn btn-primary w-100">Add</button>
+                        <button type="submit" class="btn btn-primary w-100">Proceed</button>
                     </form>
                 </div>
             </div>
