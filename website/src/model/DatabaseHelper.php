@@ -231,6 +231,20 @@ class DatabaseHelper
         return $stmt->execute();
     }
 
+    public function updateCartItemQuantity(int $userId, int $articleId, int $versionId, int $quantity)
+    {
+        if ($quantity <= 0) {
+            // If quantity is 0 or less, remove the item from cart
+            return $this->removeFromCart($userId, $articleId, $versionId);
+        }
+        
+        $query = "UPDATE SHOPPING_CART_ITEM SET amount = ? WHERE userId = ? AND articleId = ? AND versionId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("iiii", $quantity, $userId, $articleId, $versionId);
+        
+        return $stmt->execute();
+    }
+
 
 
     /*
