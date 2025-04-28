@@ -69,8 +69,6 @@
 </div>
 
 <script>
-    const basePrice = <?php echo $article["basePrice"]; ?>;
-
     function updateSelection() {
         const select = document.getElementById('versionSelect');
         if (!select) return;
@@ -78,7 +76,7 @@
         const selectedOption = select.options[select.selectedIndex];
         document.getElementById('selectedVersion').setAttribute('value', selectedOption.getAttribute("value"));
         const priceVariation = parseFloat(selectedOption.getAttribute('data-price-variation'));
-        const totalPrice = basePrice + priceVariation;
+        const totalPrice = <?php echo $article["basePrice"]; ?> + priceVariation;
 
         document.getElementById('article-price').innerHTML = `<small>€</small>${totalPrice.toFixed(2)}`;
     }
