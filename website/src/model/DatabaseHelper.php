@@ -316,6 +316,60 @@ class DatabaseHelper
         return $stmt->get_result()->fetch_assoc();
     }
 
+    /**
+     * Updates a user's email address
+     * @return bool True if successful, false otherwise
+     */
+    public function updateUserEmail(int $userId, string $newEmail)
+    {
+        // Check if email already exists for another user
+        $stmt = $this->db->prepare("SELECT userId FROM USER WHERE email = ? AND userId != ?");
+        $stmt->bind_param("si", $newEmail, $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return false; // Email already in use
+        }
+        
+        $stmt = $this->db->prepare("UPDATE USER SET email = ? WHERE userId = ?");
+        $stmt->bind_param("si", $newEmail, $userId);
+        return $stmt->execute();
+    }
+    
+    /**
+     * Updates a user's password
+     * @return bool True if successful, false otherwise
+     */
+    public function updateUserPassword(int $userId, string $newPassword)
+    {
+        $stmt = $this->db->prepare("UPDATE USER SET password = ? WHERE userId = ?");
+        $stmt->bind_param("si", $newPassword, $userId);
+        return $stmt->execute();
+    }
+    
+    /**
+     * Updates a user's phone number
+     * @return bool True if successful, false otherwise
+     */
+    public function updateUserPhoneNumber(int $userId, string $newPhoneNumber)
+    {
+        $stmt = $this->db->prepare("UPDATE USER SET phoneNumber = ? WHERE userId = ?");
+        $stmt->bind_param("si", $newPhoneNumber, $userId);
+        return $stmt->execute();
+    }
+    
+    /**
+     * Updates a user's address
+     * @return bool True if successful, false otherwise
+     */
+    public function updateUserAddress(int $userId, string $newAddress)
+    {
+        $stmt = $this->db->prepare("UPDATE USER SET address = ? WHERE userId = ?");
+        $stmt->bind_param("si", $newAddress, $userId);
+        return $stmt->execute();
+    }
+
     /*
      * Notification methods
     */
