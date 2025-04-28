@@ -4,7 +4,7 @@
 
 <?php $templateParams["title"] = "Cart" ?>
 
-<div class="container mt-md-2">
+<div class="container">
     <div class="text-center">
         <h2>Your Cart</h2>
     </div>
