@@ -63,8 +63,8 @@ class DatabaseHelper
 
     public function addArticle(string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image)
     {
-        $stmt = $this->db->prepare("INSERT INTO ARTICLE VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssii", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
+        $stmt = $this->db->prepare("INSERT INTO ARTICLE (name, details, longDescription, material, weight, basePrice, size, categoryId, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssddsis", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
 
         return $stmt->execute();
     }

@@ -1,6 +1,6 @@
 <?php $templateParams["title"] = "New product" ?>
 
-<?php require 'utils/addArticle.php'; ?>
+<?php require "utils/addArticle.php" ?>
 
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -10,7 +10,7 @@
                     <h4 class="mb-0">Add a new product</h4>
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form enctype="multipart/form-data" method="post">
                         <?php if (isset($templateParams["insertionError"])): ?>
                             <div class="alert alert-warning show mb-1 mt-0" role="alert">
                                 <?php echo $templateParams["insertionError"]; ?>
@@ -46,7 +46,8 @@
                         </div>
                         <div>
                             <label for="image" class="form-label">Image</label>
-                            <input type="file" class="form-control" accept=".png, .jpg, .jpeg" id="image" name="image" required>
+                            <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+                            <input type="file" class="form-control" accept="image/png, image/jpg, image/jpeg" id="image" name="image" required>
                         </div>
                         <div>
                             <div class="form-group">
@@ -58,7 +59,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Proceed</button>
+                        <button type="submit" id="add" name="add" class="btn btn-primary w-100">Proceed</button>
                     </form>
                 </div>
             </div>

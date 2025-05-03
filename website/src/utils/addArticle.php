@@ -1,44 +1,33 @@
 <?php
 
-if (isset($_POST["submit"])) {
-	if (!isset($_POST["name"]) || !isset($_POST["details"]) || !isset($_POST["description"]) || !isset($_POST["material"]) || !isset($_POST["weight"]) || !isset($_POST["price"]) || !isset($_POST["size"]) || !isset($_POST["categoryId"])) {
-		$templateParams["insertionError"] = "All fields must be filled in order to proceed";
+if (isset($_POST["add"])) {
+	unset($templateParams["insertionError"]);
+	// Image processing
+	$fileName = $_FILES["image"]["name"];
+	$filePath = Settings::UPLOAD_DIR . $fileName;
+	$imageFileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+	$imageOk = 1;
+
+	// Check if file already exists
+	if (file_exists($filePath)) {
+		$imageOk = 0;
+	}
+
+	// Only allow certain file formats
+	if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+		$imageOk = 0;
+	}
+
+	if ($imageOk == 0) {
+		$templateParams["insertionError"] = "Error during image elaboration";
 	} else {
-		unset($_SESSION["add-product"]);
-
-		// Image processing
-		$target_dir = "assets/";
-		$target_file = $target_dir . basename($_FILES["image"]["name"]);
-		$imageOk = 1;
-		$imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-		// Check if image file is a actual image or fake image
-		if (isset($_POST["submit"])) {
-			$check = getimagesize($_FILES["image"]["tmp_name"]);
-			if ($check !== false) {
-				$imageOk = 1;
-			} else {
-				$imageOk = 0;
+		if (move_uploaded_file($_FILES["image"]["tmp_name"], "/opt/lampp/htdocs" . $filePath) == false) {
+			$templateParams["insertionError"] = "Error during image upload";
+		}
+		else {
+			if ($dbh->addArticle($_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName) == false) {
+				$templateParams["insertionError"] = "Error during image elaboration";
 			}
 		}
-
-		// Check if file already exists
-		if (file_exists($target_file)) {
-			$imageOk = 0;
-		}
-
-		// Allow certain file formats
-		if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-			&& $imageFileType != "gif") {
-			$imageOk = 0;
-		}
-
-		if ($imageOk == 0) {
-			$templateParams["insertionError"] = "Error during image upload";
-		} else {
-			move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-		}
-
-		$dbh->addArticle($_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $_FILES["image"]["tmp_name"]);
 	}
 }
