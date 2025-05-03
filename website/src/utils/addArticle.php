@@ -25,7 +25,7 @@ if (isset($_POST["add"])) {
 			$templateParams["insertionError"] = "Error during image upload";
 		}
 		else {
-			if ($dbh->addArticle($_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName) == false) {
+			if ($dbh->addArticle($_SESSION["userId"], $_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName) == false) {
 				$templateParams["insertionError"] = "Error during image elaboration";
 			}
 		}

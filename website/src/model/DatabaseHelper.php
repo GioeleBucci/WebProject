@@ -61,12 +61,15 @@ class DatabaseHelper
      * Article methods
     */
 
-    public function addArticle(string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image)
+    public function addArticle(int $sellerId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image)
     {
         $stmt = $this->db->prepare("INSERT INTO ARTICLE (name, details, longDescription, material, weight, basePrice, size, categoryId, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssddsis", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
+        $result = $stmt->execute();
 
-        return $stmt->execute();
+        $articleId = $this->db->query("SELECT articleId FROM ARTICLE ORDER BY articleId DESC LIMIT 1")->fetch_column();
+
+        return $result && $this->insertIntoListing($articleId, $sellerId);
     }
 
     public function getArticle(int $articleId)
@@ -78,7 +81,7 @@ class DatabaseHelper
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function getArticles(int $amount)
+    public function getAllArticles(int $amount)
     {
         $stmt = $this->db->prepare(
             "SELECT * FROM ARTICLE ORDER BY RAND() LIMIT ?"
@@ -130,6 +133,10 @@ class DatabaseHelper
     /*
      * Listing methods 
     */
+
+    private function insertIntoListing (int $articleId, int $sellerId) {
+        return $this->db->query("INSERT INTO LISTING VALUES ('$articleId', '$sellerId')");
+    }
 
     public function getListing (int $sellerId) {
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId IN (SELECT articleId from LISTING WHERE sellerId = ?)");

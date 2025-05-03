@@ -63,7 +63,7 @@
 <div class="container mt-2 mt-md-4">
     <!-- Featured products -->
     <div class="row mt-3 g-3">
-        <?php foreach ($dbh->getArticles(50) as $prod): ?>
+        <?php foreach ($dbh->getAllArticles(50) as $prod): ?>
             <div class="col-6 col-md-3">
                 <?php require("components/itemCard.php") ?>
             </div>
