@@ -33,7 +33,7 @@ INSERT INTO `ARTICLE` (`name`, `details`, `material`, `weight`, `basePrice`, `si
 ('LEJLIN', 'Shower enclosure with sliding doors', 'Glass/Aluminum', 70.00, 499, '120x80x200 cm', 7, 'shower.png', 'A modern shower enclosure with tempered glass and smooth sliding doors, perfect for any bathroom renovation.'),
 ('UBTUSFAM', 'Bathroom vanity with sink', 'Wood/Stainless Steel', 40.00, 299, '80x50x85 cm', 7, 'sink.png', 'A stylish bathroom vanity with a stainless steel sink and wooden cabinet, functional and elegant.');
 
-INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `versionType`, `priceVariation`, `availability`) VALUES
+INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `versionType`, `priceVariation`, `stockAmount`) VALUES
 (1, 1, 'Gray Fabric', 0, 5),
 (1, 2, 'Blue Fabric', 0, 3),
 (1, 3, 'Beige Fabric', 0, 7),
@@ -90,7 +90,14 @@ INSERT INTO `SELLER` (`userId`, `deliveredOrders`) VALUES
 INSERT INTO `LISTING` (`articleId`, `sellerId`) VALUES
 (1, 2),
 (2, 2),
-(3, 2);
+(3, 2),
+(4, 2),
+(5, 2),
+(6, 3),
+(7, 3),
+(8, 3),
+(9, 3),
+(10, 3);
 
 --
 -- Dumping data for table `CLIENT`
@@ -104,41 +111,41 @@ INSERT INTO `CLIENT` (`userId`, `paymentMethodId`) VALUES
 -- Dumping data for table `CLIENT_ORDER`
 --
 
-INSERT INTO `CLIENT_ORDER` (`userId`, `orderTime`, `notes`) VALUES
-(1, '2025-02-10', 'Please deliver on weekend only'),
-(4, '2025-02-15', 'Call before delivery, need to remove old furniture'),
-(5, '2025-03-01', 'Elevator access available, 3rd floor'),
-(1, '2025-03-15', 'Assembly service requested');
+-- INSERT INTO `CLIENT_ORDER` (`userId`, `orderTime`, `notes`) VALUES
+-- (1, '2025-02-10', 'Please deliver on weekend only'),
+-- (4, '2025-02-15', 'Call before delivery, need to remove old furniture'),
+-- (5, '2025-03-01', 'Elevator access available, 3rd floor'),
+-- (1, '2025-03-15', 'Assembly service requested');
 
 --
 -- Dumping data for table `ORDER_HAS_ARTICLE`
 --
 
-INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `amount`) VALUES
-(1, 1, 1, 1),
-(1, 2, 1, 1),
-(2, 4, 1, 1),
-(2, 5, 1, 1),
-(3, 6, 1, 1),
-(3, 7, 1, 6),
-(4, 8, 1, 1),
-(4, 9, 1, 1);
+-- INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `amount`) VALUES
+-- (1, 1, 1, 1),
+-- (1, 2, 1, 1),
+-- (2, 4, 1, 1),
+-- (2, 5, 1, 1),
+-- (3, 6, 1, 1),
+-- (3, 7, 1, 6),
+-- (4, 8, 1, 1),
+-- (4, 9, 1, 1);
 
 --
 -- Dumping data for table `DELIVERY`
 --
 
-INSERT INTO `DELIVERY` (`orderId`, `departureTime`, `arrivalTime`, `lastPosition`) VALUES
-(1, '2025-02-12 12:00:00', '2025-02-14 15:00:00', 'Delivered'),
-(2, '2025-02-17 09:00:00', '2025-02-20 16:00:00', 'Delivered'),
-(3, '2025-03-03 13:00:00', NULL, 'In Warehouse'),
-(4, '2025-03-17 07:00:00', NULL, 'Processing');
+-- INSERT INTO `DELIVERY` (`orderId`, `departureTime`, `arrivalTime`, `lastPosition`) VALUES
+-- (1, '2025-02-12 12:00:00', '2025-02-14 15:00:00', 'Delivered'),
+-- (2, '2025-02-17 09:00:00', '2025-02-20 16:00:00', 'Delivered'),
+-- (3, '2025-03-03 13:00:00', NULL, 'In Warehouse'),
+-- (4, '2025-03-17 07:00:00', NULL, 'Processing');
 
 --
 -- Dumping data for table `SHOPPING_CART_ITEM`
 --
 
-INSERT INTO `SHOPPING_CART_ITEM` (`userId`, `articleId`, `versionId`, `amount`) VALUES
-(1, 1, 1, 1),
-(1, 2, 1, 1),
-(1, 3, 1, 1);
+-- INSERT INTO `SHOPPING_CART_ITEM` (`userId`, `articleId`, `versionId`, `amount`) VALUES
+-- (1, 1, 1, 1),
+-- (1, 2, 1, 1),
+-- (1, 3, 1, 1);

@@ -27,7 +27,7 @@ create table if not exists ARTICLE_VERSION (
      versionId int not null,
      versionType char(63) null,
      priceVariation decimal(6,2) default 0,
-     availability int default 0,
+     stockAmount int default 0,
      primary key (articleId, versionId),
      constraint FK_Article foreign key (articleId) references ARTICLE(articleId)
 );
