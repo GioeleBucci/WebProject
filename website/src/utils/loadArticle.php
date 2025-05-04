@@ -6,6 +6,7 @@ if (!isset($_GET["id"])) {
 
 $articleId = $_GET["id"];
 $article = $dbh->getArticle($articleId);
+$_SESSION["currentArticle"] = $article;
 
 if (!$article) {
     die("Product not found"); // TODO handle this more gracefully

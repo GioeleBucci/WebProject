@@ -17,7 +17,7 @@ $isWishlistEmpty = empty($wishlistItems);
     <div class="row">
         <?php if (!$isWishlistEmpty): ?>
             <div class="row g-3 mt-2">
-                <?php foreach ($wishlistItems as $prod): ?>
+                <?php foreach ($wishlistItems as $article): ?>
                     <div class="col-6 col-md-3">
                         <?php require("components/itemCard.php") ?>
                     </div>

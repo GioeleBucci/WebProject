@@ -46,7 +46,7 @@
                 <p>No results found. Try refining your search.</p>
             <?php else: ?>
                 <div class="row g-3">
-                    <?php foreach ($searchResults as $prod): ?>
+                    <?php foreach ($searchResults as $article): ?>
                         <div class="col-6 col-md-3">
                             <?php require("components/itemCard.php") ?>
                         </div>
