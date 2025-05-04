@@ -1,10 +1,14 @@
 <?php $templateParams["title"] = "Your products" ?>
 
+<?php if (isset($_SESSION["isSeller"])){
+	require "components/deletionModal.php";
+} ?>
+
 <div class="container mt-2 mt-md-4">
 	<div class="row mt-3 g-3">
-		<?php foreach ($dbh->getListing($_SESSION["userId"]) as $prod): ?>
+		<?php foreach ($dbh->getListing($_SESSION["userId"]) as $article): ?>
 			<div class="col-6 col-md-3">
-				<?php require("components/itemCard.php") ?>
+				<?php require("components/listingItem.php") ?>
 			</div>
 		<?php endforeach; ?>
 		<div class="col-6 col-md-3">
