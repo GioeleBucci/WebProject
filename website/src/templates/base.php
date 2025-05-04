@@ -37,7 +37,7 @@
                             <a href="<?php echo Links::CART ?>" class="icon">
                                 <i class="bi bi-cart fs-5 mx-2"></i>
                             </a>
-                            <a href="<?php echo Links::LOGIN ?>" class="icon">
+                            <a href="<?php echo Links::ACCOUNT ?>" class="icon">
                                 <i class="bi bi-person fs-5 mx-2"></i>
                             </a>
                             <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
@@ -67,7 +67,7 @@
                         <a href="<?php echo Links::CART ?>" class="icon">
                             <i class="bi bi-cart fs-4 mx-2"></i>
                         </a>
-                        <a href="<?php echo Links::LOGIN ?>" class="icon">
+                        <a href="<?php echo Links::ACCOUNT ?>" class="icon">
                             <i class="bi bi-person fs-4 mx-2"></i>
                         </a>
                         <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">

@@ -1,8 +1,8 @@
 <?php
 
-if (Utils::isUserLoggedIn()) {
-    Utils::redirect(Links::ACCOUNT);
-}
+// if (Utils::isUserLoggedIn()) {
+//     Utils::redirect(Links::ACCOUNT);
+// }
 
 $templateParams["loginError"] = "Please log-in to access this page.";
 

@@ -9,6 +9,9 @@ class Utils
 {
     private function __construct() {}
     
+    public const CLIENT = "client";
+    public const SELLER = "seller";
+    
     /**
      * Redirects the user to a specified page.
      *
@@ -19,9 +22,6 @@ class Utils
         header("Location: " . Settings::BASE_URL . $to);
     }
     
-    public const CLIENT = "client";
-    public const SELLER = "seller";
-    
     /** 
      * Logs in a user by setting the correspondent user ID in the session.
      * 
@@ -31,9 +31,7 @@ class Utils
     {
         $userId = DatabaseHelper::getInstance()->getUserId($email);
         $_SESSION['userId'] = $userId;
-        if (DatabaseHelper::getInstance()->getUserType($userId) == "seller") {
-            $_SESSION["isSeller"] = true;
-        }
+        DatabaseHelper::getInstance()->getUserType($userId) == self::SELLER ? $_SESSION["isSeller"] = true : $_SESSION["isSeller"] = false;
     }
 
     /**
@@ -52,7 +50,7 @@ class Utils
      */
     public static function isUserLoggedIn(): bool
     {
-        return !empty($_SESSION['userId']);
+        return isset($_SESSION['userId']);
     }
 
     /**

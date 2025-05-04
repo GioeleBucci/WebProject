@@ -1,9 +1,14 @@
 <?php
 
-require("components/accountModals.php");
-
 $templateParams["title"] = "Account";
 Utils::requireLoggedUser();
+
+if (isset($_POST["logout"])) {
+    Utils::logout();
+    exit();
+}
+
+require("components/accountModals.php");
 
 $successMessage = "";
 $errorMessage = "";
@@ -15,10 +20,6 @@ if (isset($_SESSION["account_success"])) {
 if (isset($_SESSION["account_error"])) {
     $errorMessage = $_SESSION["account_error"];
     unset($_SESSION["account_error"]);
-}
-
-if (isset($_POST["logout"])) {
-    Utils::logout();
 }
 
 // Handle user information updates
@@ -67,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     if ($redirect) {
-        Utils::redirect(Links::ACCOUNT);
+        echo("<meta http-equiv='refresh' content='1'>");
         exit();
     }
 }
