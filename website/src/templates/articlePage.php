@@ -61,7 +61,7 @@
                 </div>
                 <?php if (isset($_SESSION["isSeller"])): ?>
                     <div>
-                        <a href="edit-article" class="d-flex justify-content-around align-content-center flex-1 h-100 icon">
+                        <a href="edit-article?articleId=<?= $articleId ?>" class="d-flex justify-content-around align-content-center flex-1 h-100 icon">
                             <i style="font-size:10rem !important;" class="h1 align-content-center bi-plus"></i>
                         </a>
                     </div>

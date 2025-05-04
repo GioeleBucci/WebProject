@@ -1,9 +1,5 @@
 <?php $templateParams["title"] = "Your products" ?>
 
-<?php if (isset($_SESSION["isSeller"])){
-	require "components/deletionModal.php";
-} ?>
-
 <div class="container mt-2 mt-md-4">
 	<div class="row mt-3 g-3">
 		<?php foreach ($dbh->getListing($_SESSION["userId"]) as $article): ?>

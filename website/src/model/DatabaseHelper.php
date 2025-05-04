@@ -74,7 +74,7 @@ class DatabaseHelper
 
     public function updateArticle(int $articleId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image)
     {
-        return $this->db->query("UPDATE ARTICLE SET name = $name, details = $details, longDescription = $description, material = $material, weight = $weight, basePrice = $price, size = $size, categoryId = $categoryId, image = $image WHERE articleId = $articleId");
+        return $this->db->query("UPDATE ARTICLE SET name = '$name', details = '$details', longDescription = '$description', material = '$material', weight = $weight, basePrice = $price, size = '$size', categoryId = $categoryId, image = '$image' WHERE articleId = $articleId");
     }
 
     public function getArticle(int $articleId)

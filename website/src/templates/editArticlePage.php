@@ -54,12 +54,16 @@
                                 <label for="categoryId" class="form-label">Category</label>
                                 <select class="form-select" id="categoryId" name="categoryId">
                                     <?php foreach ($dbh->getAllCategories() as $category): ?>
-                                        <option value="<?php echo $category["categoryId"]; ?>"><?php echo $category["name"] ?></option>
+										<?php $isSelected = "";
+											if ($category["categoryId"] == $article["categoryId"]) {
+												$isSelected = "selected";
+											} ?>
+                                        <option value="<?php echo $category["categoryId"]; ?>" <?= $isSelected ?>><?php echo $category["name"] ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" id="add" name="add" class="btn btn-primary w-100">Proceed</button>
+                        <button type="submit" id="edit" name="edit" class="btn btn-primary w-100">Proceed</button>
                     </form>
                 </div>
             </div>
