@@ -97,13 +97,9 @@ class DatabaseHelper
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    /** Get all available versions for a specific article */
-    public function getArticleVersions(int $articleId){
-        $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
-        $stmt->bind_param("i", $articleId);
-        $stmt->execute();
-
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    public function addVersion(int $articleId, string $type, float $priceVariation, int $amount)
+    {
+        return $this->db->query("INSERT INTO ARTICLE_VERSION (versionId, articleId, versionType, priceVariation, stockAmount) SELECT IFNULL(MAX(versionId), 0) + 1, $articleId, '$type', $priceVariation, $amount FROM ARTICLE_VERSION WHERE articleId = $articleId");
     }
 
     /**
