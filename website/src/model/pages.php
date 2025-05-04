@@ -15,6 +15,7 @@ class Links
     public const LISTING = "listing";
     public const NEW_ARTICLE = 'new-article';
     public const NEW_VERSION = 'new-version';
+    public const EDIT_ARTICLE = 'edit-article';
     public const WISHLIST = 'wishlist';
 }
 
@@ -35,4 +36,5 @@ class Pages
     public const LISTING = "listingPage.php";
     public const NEW_ARTICLE = 'newArticlePage.php';
     public const NEW_VERSION = 'newVersionPage.php';
+    public const EDIT_ARTICLE = 'editArticlePage.php';
 }

@@ -20,6 +20,7 @@ $routes = [
     Links::WISHLIST => Pages::WISHLIST,
     Links::LISTING => Pages::LISTING,
     Links::NEW_ARTICLE => Pages::NEW_ARTICLE,
+    Links::EDIT_ARTICLE => Pages::EDIT_ARTICLE,
     Links::NEW_VERSION => Pages::NEW_VERSION
 ];
 
