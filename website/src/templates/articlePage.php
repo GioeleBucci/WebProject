@@ -59,6 +59,13 @@
                         </button>
                     </form>
                 </div>
+                <?php if (isset($_SESSION["isSeller"])): ?>
+                    <div>
+                        <a href="edit-article" class="d-flex justify-content-around align-content-center flex-1 h-100 icon">
+                            <i style="font-size:10rem !important;" class="h1 align-content-center bi-plus"></i>
+                        </a>
+                    </div>
+                <?php endif ?>
             <?php else: ?>
                 <button type="button" class="btn btn-primary add-to-cart-btn mt-3" disabled>
                     <i class="bi bi-cart-plus-fill"></i> Log in to add items to your cart!
