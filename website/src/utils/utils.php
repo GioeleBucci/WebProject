@@ -1,7 +1,7 @@
 <?php
 
 // require_once '../config/settings.php';
-require_once 'model/pages.php';
+// require_once 'model/pages.php';
 // require_once '../src/model/DatabaseHelper.php';
 // require_once '../src/utils/utils.php';
 
@@ -17,9 +17,10 @@ class Utils
      *
      * @param string $to The page's link to redirect to. See {@see Links}
      */
-    public static function redirect(string $to)
+    public static function redirect(string $dest, int $statusCode = 303)
     {
-        header("Location: " . Settings::BASE_URL . $to);
+        header("Location: " . Settings::BASE_URL . $dest, true, $statusCode);
+        $_SESSION["redirect"] = true;
     }
     
     /** 
@@ -39,8 +40,9 @@ class Utils
      */
     public static function logout(): void
     {
-        session_destroy();
         self::redirect(Links::HOME);
+        session_unset();
+        session_destroy();
     }
 
     /**
@@ -60,7 +62,9 @@ class Utils
     {
         if (!self::isUserLoggedIn()) {
             // Store the current page URL in session before redirecting
-            $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
+            $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            $requestPath = str_replace(Settings::BASE_PATH, '', $requestUri);
+            $_SESSION['redirect_after_login'] = $requestPath;
             self::redirect(Links::LOGIN);
         }
     }

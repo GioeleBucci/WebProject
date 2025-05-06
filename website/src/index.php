@@ -31,4 +31,15 @@ if (array_key_exists($requestPath, $routes)) {
     $templateParams["page"] = Pages::NOT_FOUND_404; 
 }
 
+ob_start();
+
 require_once 'templates/base.php';
+
+if ($_SESSION["redirect"]) {
+    unset($_SESSION["redirect"]);
+    ob_flush();
+}
+else {
+    $landingPage = ob_get_clean();
+    echo $landingPage;
+}

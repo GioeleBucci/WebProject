@@ -16,7 +16,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         if (isset($_SESSION['redirect_after_login'])) {
             $redirectURL = $_SESSION['redirect_after_login'];
             unset($_SESSION['redirect_after_login']);
-            header("Location: " . $redirectURL);
+            Utils::redirect($redirectURL);
         } else {
             Utils::redirect(Links::ACCOUNT);
         }
