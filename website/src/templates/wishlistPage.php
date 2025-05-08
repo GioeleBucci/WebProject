@@ -2,7 +2,15 @@
 
 <?php 
 // Check if user is logged in
-Utils::requireLoggedUser();
+//Utils::requireLoggedUser();
+if (!Utils::isUserLoggedIn()) {
+    // Store the current page URL in session before redirecting
+    $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $requestPath = str_replace(Settings::BASE_PATH, '', $requestUri);
+    $_SESSION['redirect_after_login'] = $requestPath;
+    Utils::redirect(Links::LOGIN);
+    die();
+}
 
 // Get wishlist items for the current user
 $wishlistItems = $dbh->getWishlistItems($_SESSION["userId"]);

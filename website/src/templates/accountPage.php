@@ -1,18 +1,19 @@
 <?php require "utils/loadAccount.php" ?>
+<?php require "templates/components/accountModals.php" ?>
 
 <?php $templateParams["title"] = "Account" ?>
 
 <div class="container py-5">
     <div class="text-center mb-4">
         <h2>Your Account</h2>
-        <?php if (!empty($successMessage)): ?>
+        <?php if (!empty($_SESSION["account_success"])): ?>
             <div class="alert alert-success mt-3" role="alert">
-                <?php echo htmlspecialchars($successMessage); ?>
+                <?php echo htmlspecialchars($_SESSION["account_success"]); ?>
             </div>
         <?php endif; ?>
-        <?php if (!empty($errorMessage)): ?>
+        <?php if (!empty($_SESSION["account_error"])): ?>
             <div class="alert alert-danger mt-3" role="alert">
-                <?php echo htmlspecialchars($errorMessage); ?>
+                <?php echo htmlspecialchars($_SESSION["account_error"]); ?>
             </div>
         <?php endif; ?>
     </div>

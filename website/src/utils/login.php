@@ -1,9 +1,5 @@
 <?php
 
-// if (Utils::isUserLoggedIn()) {
-//     Utils::redirect(Links::ACCOUNT);
-// }
-
 $templateParams["loginError"] = "Please log-in to access this page.";
 
 if (isset($_POST["email"]) && isset($_POST["password"])) {

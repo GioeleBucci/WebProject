@@ -1,28 +1,24 @@
 <?php
 
-Utils::requireLoggedUser();
+if (!Utils::isUserLoggedIn()) {
+    // Store the current page URL in session before redirecting
+    $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $requestPath = str_replace(Settings::BASE_PATH, '', $requestUri);
+    $_SESSION['redirect_after_login'] = $requestPath;
+    Utils::redirect(Links::LOGIN);
+    die();
+}
 
 if (isset($_POST["logout"])) {
     Utils::logout();
     exit();
 }
 
-require("templates/components/accountModals.php");
-
-$successMessage = "";
-$errorMessage = "";
-
-if (isset($_SESSION["account_success"])) {
-    $successMessage = $_SESSION["account_success"];
-    unset($_SESSION["account_success"]);
-}
-if (isset($_SESSION["account_error"])) {
-    $errorMessage = $_SESSION["account_error"];
-    unset($_SESSION["account_error"]);
-}
+unset($_SESSION["account_success"]);
+unset($_SESSION["account_error"]);
 
 // Handle user information updates
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $redirect = false;
     
     // Update Email
@@ -64,12 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["account_error"] = "Address couldn't be updated.";
         }
         $redirect = true;
-    }
-    
-    if ($redirect) {
-        //echo("<meta http-equiv='refresh' content='1'>");
-		Utils::redirect("Refresh:0");
-        exit();
     }
 }
 

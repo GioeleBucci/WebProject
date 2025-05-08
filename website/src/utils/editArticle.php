@@ -1,7 +1,7 @@
 <?php
 
 $article = $dbh->getArticle($_GET["articleId"]);
-if ($article == false) {
+if (!$article) {
 	die("Product not found"); // TODO handle this more gracefully
 }
 unset($templateParams["insertionError"]);
@@ -24,10 +24,10 @@ if (isset($_POST["edit"])) {
 			$imageOk = 0;
 		}
 
-		if ($imageOk == 0) {
+		if ($imageOk === 0) {
 			$templateParams["insertionError"] = "Error during image elaboration";
 		} else {
-			if (move_uploaded_file($_FILES["image"]["tmp_name"], "/opt/lampp/htdocs" . $filePath) == false) {
+			if (!move_uploaded_file($_FILES["image"]["tmp_name"], "/opt/lampp/htdocs" . $filePath)) {
 				$templateParams["insertionError"] = "Error during image upload";
 			}
 			else {
@@ -39,7 +39,7 @@ if (isset($_POST["edit"])) {
 		$fileName = $article["image"];
 	}
 
-	if ($dbh->updateArticle($article["articleId"], $_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName) == false) {
+	if (!$dbh->updateArticle($article["articleId"], $_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName)) {
 		$templateParams["insertionError"] = "Error during article update";
 	}
 	else {

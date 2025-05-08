@@ -1,6 +1,6 @@
-<?php $templateParams["title"] = "Register" ?>
-
 <?php require 'utils/register.php' ?>
+
+<?php $templateParams["title"] = "Register" ?>
 
 <div class="container mt-3">
     <div class="row justify-content-center">

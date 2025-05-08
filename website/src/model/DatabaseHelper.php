@@ -43,13 +43,13 @@ class DatabaseHelper
      * Category methods
     */
 
-    public function getCategoryNames()
+    public function getCategoryNames(): array
     {
         $result = $this->db->query("SELECT name FROM CATEGORY");
         return array_column($result->fetch_all(MYSQLI_ASSOC), "name");
     }
 
-    public function getAllCategories()
+    public function getAllCategories(): array
     {
         $result = $this->db->query("SELECT * FROM CATEGORY");
         return $result->fetch_all(MYSQLI_ASSOC);
@@ -61,7 +61,7 @@ class DatabaseHelper
      * Article methods
     */
 
-    public function addArticle(int $sellerId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image)
+    public function addArticle(int $sellerId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image): bool
     {
         $stmt = $this->db->prepare("INSERT INTO ARTICLE (name, details, longDescription, material, weight, basePrice, size, categoryId, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssddsis", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
@@ -72,21 +72,24 @@ class DatabaseHelper
         return $result && $this->insertIntoListing($articleId, $sellerId);
     }
 
-    public function updateArticle(int $articleId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image)
+    public function updateArticle(int $articleId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image): bool
     {
-        return $this->db->query("UPDATE ARTICLE SET name = '$name', details = '$details', longDescription = '$description', material = '$material', weight = $weight, basePrice = $price, size = '$size', categoryId = $categoryId, image = '$image' WHERE articleId = $articleId");
+        $stmt = $this->db->prepare("UPDATE ARTICLE SET name = ?, details = ?, longDescription = ?, material = ?, weight = ?, basePrice = ?, size = ?, categoryId = ?, image = ? WHERE articleId = ?");
+        $stmt->bind_param("ssssdisisi", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image, $articleId);
+
+        return $stmt->execute();
     }
 
-    public function getArticle(int $articleId)
+    public function getArticle(int $articleId): array|bool|null
     {
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId=?");
         $stmt->bind_param("i", $articleId);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_assoc();
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_assoc();
     }
 
-    public function getAllArticles(int $amount)
+    public function getAllArticles(int $amount): array|bool
     {
         $stmt = $this->db->prepare(
             "SELECT * FROM ARTICLE ORDER BY RAND() LIMIT ?"
@@ -94,19 +97,22 @@ class DatabaseHelper
         $stmt->bind_param("i", $amount);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function addVersion(int $articleId, string $type, float $priceVariation, int $amount)
+    public function addVersion(int $articleId, string $type, float $priceVariation, int $amount): bool
     {
-        return $this->db->query("INSERT INTO ARTICLE_VERSION (versionId, articleId, versionType, priceVariation, stockAmount) SELECT IFNULL(MAX(versionId), 0) + 1, $articleId, '$type', $priceVariation, $amount FROM ARTICLE_VERSION WHERE articleId = $articleId");
+        $stmt = $this->db->prepare("INSERT INTO ARTICLE_VERSION (versionId, articleId, versionType, priceVariation, stockAmount) SELECT IFNULL(MAX(versionId), 0) + 1, ?, ?, ?, ? FROM ARTICLE_VERSION WHERE articleId = ?");
+        $stmt->bind_param("isdii", $articleId, $type, $priceVariation, $amount, $articleId);
+
+        return $stmt->execute();
     }
 
     /**
      * Returns a merged table of the article and its version, with a "price" field
      * containing the total price of the product.
      */
-    public function getVersion(int $articleId, int $versionId)
+    public function getVersion(int $articleId, int $versionId): array|bool|null
     {
         $stmt = $this->db->prepare(
             "SELECT a.*, v.*, (a.basePrice + v.priceVariation) AS price
@@ -117,16 +123,17 @@ class DatabaseHelper
         $stmt->bind_param("ii", $articleId, $versionId);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_assoc();
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_assoc();
     }
 
     /** Get all available versions for a specific article */
-    public function getAllVersions(int $articleId){
+    public function getAllVersions(int $articleId): array|bool
+    {
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
         $stmt->bind_param("i", $articleId);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
     }
 
 
@@ -135,16 +142,21 @@ class DatabaseHelper
      * Listing methods 
     */
 
-    private function insertIntoListing (int $articleId, int $sellerId) {
-        return $this->db->query("INSERT INTO LISTING VALUES ('$articleId', '$sellerId')");
+    private function insertIntoListing (int $articleId, int $sellerId): bool
+    {
+        $stmt = $this->db->prepare("INSERT INTO LISTING VALUES (?, ?)");
+        $stmt->bind_param("ii", $articleId, $sellerId);
+
+        return $stmt->execute();
     }
 
-    public function getListing (int $sellerId) {
+    public function getListing (int $sellerId): array|bool
+    {
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId IN (SELECT articleId from LISTING WHERE sellerId = ?)");
         $stmt->bind_param("i", $sellerId);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
     }
 
 
@@ -153,23 +165,22 @@ class DatabaseHelper
      * Order methods
     */
 
-    public function addOrder(string $email, string $date, string $notes)
+    public function addOrder(string $email, string $date, string $notes): bool
     {
-        $query = "INSERT INTO `test`.`CLIENT_ORDER` (email, orderDate, notes) VALUES (?, ?, ?)";
+        $query = "INSERT INTO `CLIENT_ORDER` (email, orderDate, notes) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sss', $email, $date, $content);
-        $result = $stmt->execute();
-        $this->addNotification($email, "", "Ordine effettuato");
-        return $result;
+        $stmt->bind_param('sss', $email, $date, $notes);
+
+        return $stmt->execute() === false ?: $this->addNotification($email, date("Y-m-d H:i:s"), "Ordine effettuato");
     }
 
-    public function getOrders(int $clientId)
+    public function getAllOrders(int $clientId): array|bool
     {
         $stmt = $this->db->prepare("SELECT * FROM CLIENT_ORDER WHERE userId=?");
         $stmt->bind_param("i", $clientId);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
     }
 
 
@@ -178,7 +189,7 @@ class DatabaseHelper
      * Cart methods
     */
 
-    public function getCartItems(int $clientId)
+    public function getCartItems(int $clientId): array|bool
     {
         $stmt = $this->db->prepare(
             "SELECT p.*, c.amount
@@ -190,20 +201,21 @@ class DatabaseHelper
         $stmt->bind_param("i", $clientId);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function isInCart(int $userId, int $articleId, int $versionId)
+    public function isInCart(int $userId, int $articleId, int $versionId): bool|int
     {
         $query = "SELECT amount FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("iii", $userId, $articleId, $versionId);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_column();
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_column();
     }
 
-    public function addToCart(int $userId, int $articleId, int $versionId) {
+    public function addToCart(int $userId, int $articleId, int $versionId): bool
+    {
         $amount = $this->isInCart($userId, $articleId, $versionId);
 
         if ($amount != 0) {
@@ -221,7 +233,7 @@ class DatabaseHelper
         return $stmt->execute();
     }
 
-    public function removeFromCart(int $userId, int $articleId, int $versionId)
+    public function removeFromCart(int $userId, int $articleId, int $versionId): bool
     {
         $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ? AND articleId = ? AND versionId = ?";
         $stmt = $this->db->prepare($query);
@@ -230,7 +242,7 @@ class DatabaseHelper
         return $stmt->execute();
     }
 
-    public function emptyCart(int $userId)
+    public function emptyCart(int $userId): bool
     {
         $query = "DELETE FROM SHOPPING_CART_ITEM WHERE userId = ?";
         $stmt = $this->db->prepare($query);
@@ -239,7 +251,7 @@ class DatabaseHelper
         return $stmt->execute();
     }
 
-    public function updateCartItemQuantity(int $userId, int $articleId, int $versionId, int $quantity)
+    public function updateCartItemQuantity(int $userId, int $articleId, int $versionId, int $quantity): bool
     {
         if ($quantity <= 0) {
             // If quantity is 0 or less, remove the item from cart
@@ -259,14 +271,14 @@ class DatabaseHelper
      * User methods
     */
 
-    public function getUserId(string $email)
+    public function getUserId(string $email): bool|int
     {
         $query = "SELECT userId FROM `test`.`USER` WHERE email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
-
-        return intval($stmt->get_result()->fetch_assoc()['userId']);
+        
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_column();;
     }
 
     /**
@@ -275,7 +287,7 @@ class DatabaseHelper
      * @return array Returns the result of the query if successful,
      * and an empty string otherwise.
      */
-    public function addUser(string $email, string $password, string $name)
+    public function addUser(string $email, string $password, string $name): array
     {
         if ($this->getUserId($email) != null) {
             $result["errCode"] = "ALR_EXIST";
@@ -285,7 +297,7 @@ class DatabaseHelper
             $stmt = $this->db->prepare($query);
             $stmt->bind_param('sss', $email, $password, $name);
             $check = $stmt->execute();
-            if ($check == true) {
+            if ($check === true) {
                 $result["result"] = true;
             } else {
                 $result["errCode"] = "FATAL";
@@ -296,39 +308,40 @@ class DatabaseHelper
         return $result;
     }
 
-    public function checkCredentials(string $email, string $password)
+    public function checkCredentials(string $email, string $password): bool
     {
         $query = "SELECT userId FROM `test`.`USER` WHERE email = ? AND password = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss', $email, $password);
         $stmt->execute();
 
-        return empty($stmt->get_result()->fetch_assoc()) ? false : true;
+        return !empty($stmt->get_result()->fetch_assoc());
     }
 
-    public function getUserType(int $userId)
+    public function getUserType(int $userId): string
     {
         $query = "SELECT userId FROM SELLER WHERE userId = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userId);
         $stmt->execute();
 
-        return empty($stmt->get_result()->fetch_assoc()) ? Utils::CLIENT : Utils::SELLER;
+        return empty(($result = $stmt->get_result()) === false ?: $result->fetch_assoc()) ? Utils::CLIENT : Utils::SELLER;
     }
 
-    public function getUserInfo(int $userId)
+    public function getUserInfo(int $userId): array|bool
     {
         $stmt = $this->db->prepare("SELECT userId, name, email, birthDate, address, phoneNumber FROM USER WHERE userId=?");
         $stmt->bind_param("i", $userId);
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_assoc();
     }
 
     /**
      * Updates a user's email address
      * @return bool True if successful, false otherwise
      */
-    public function updateUserEmail(int $userId, string $newEmail)
+    public function updateUserEmail(int $userId, string $newEmail): bool
     {
         // Check if email already exists for another user
         $stmt = $this->db->prepare("SELECT userId FROM USER WHERE email = ? AND userId != ?");
@@ -342,6 +355,7 @@ class DatabaseHelper
         
         $stmt = $this->db->prepare("UPDATE USER SET email = ? WHERE userId = ?");
         $stmt->bind_param("si", $newEmail, $userId);
+
         return $stmt->execute();
     }
     
@@ -349,10 +363,11 @@ class DatabaseHelper
      * Updates a user's password
      * @return bool True if successful, false otherwise
      */
-    public function updateUserPassword(int $userId, string $newPassword)
+    public function updateUserPassword(int $userId, string $newPassword): bool
     {
         $stmt = $this->db->prepare("UPDATE USER SET password = ? WHERE userId = ?");
         $stmt->bind_param("si", $newPassword, $userId);
+
         return $stmt->execute();
     }
     
@@ -360,10 +375,11 @@ class DatabaseHelper
      * Updates a user's phone number
      * @return bool True if successful, false otherwise
      */
-    public function updateUserPhoneNumber(int $userId, string $newPhoneNumber)
+    public function updateUserPhoneNumber(int $userId, string $newPhoneNumber): bool
     {
         $stmt = $this->db->prepare("UPDATE USER SET phoneNumber = ? WHERE userId = ?");
         $stmt->bind_param("si", $newPhoneNumber, $userId);
+
         return $stmt->execute();
     }
     
@@ -371,10 +387,11 @@ class DatabaseHelper
      * Updates a user's address
      * @return bool True if successful, false otherwise
      */
-    public function updateUserAddress(int $userId, string $newAddress)
+    public function updateUserAddress(int $userId, string $newAddress): bool
     {
         $stmt = $this->db->prepare("UPDATE USER SET address = ? WHERE userId = ?");
         $stmt->bind_param("si", $newAddress, $userId);
+
         return $stmt->execute();
     }
 
@@ -382,21 +399,21 @@ class DatabaseHelper
      * Notification methods
     */
 
-    public function getAllNotifications(int $userId)
+    public function getAllNotifications(int $userId): array|bool
     {
         $query = "SELECT * FROM NOTIFICATION WHERE userId = ? ORDER BY receptionTime DESC";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userId);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
      * Returns true if a notification was successfully added,
      * false otherwise.
      */
-    public function addNotification(int $userId, string $time, string $content)
+    public function addNotification(int $userId, string $time, string $content): bool
     {
         $query = "INSERT INTO `test`.`NOTIFICATION` (userId, receptionTime, content, isRead) VALUES (?, ?, ?, false)";
         $stmt = $this->db->prepare($query);
@@ -416,7 +433,7 @@ class DatabaseHelper
      * @return array Returns the result of the query if successful,
      * and an empty string otherwise.
      */
-    public function searchBy(string $name = "", string ...$filters)
+    public function searchBy(string $name = "", string ...$filters): array|bool
     {
         $result = [];
         $query = "SELECT * FROM ARTICLE";
@@ -450,7 +467,7 @@ class DatabaseHelper
 
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
     }
 
 
@@ -459,9 +476,10 @@ class DatabaseHelper
      * Payment methods
     */
 
-    public function getPaymentMethodsNames()
+    public function getPaymentMethodsNames(): array
     {
         $result = $this->db->query("SELECT name FROM PAYMENT_METHOD");
+
         return array_column($result->fetch_all(MYSQLI_ASSOC), 'name');
     }
 
@@ -471,25 +489,25 @@ class DatabaseHelper
      * Checks if an article is in the user's wishlist
      * @return bool True if the article is in the wishlist, false otherwise
      */
-    public function isInWishlist(int $userId, int $articleId)
+    public function isInWishlist(int $userId, int $articleId): bool
     {
         $stmt = $this->db->prepare("SELECT * FROM WISHLIST WHERE userId = ? AND articleId = ?");
         $stmt->bind_param("ii", $userId, $articleId);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $isInWishlist = $result->num_rows > 0;        
-        return $isInWishlist;
+
+        return ($result = $stmt->get_result()) === false ?: ($result->num_rows > 0);
     }
 
     /**
      * Adds an article to the user's wishlist
      * @return bool True if successful, false otherwise
      */
-    public function addToWishlist(int $userId, int $articleId)
+    public function addToWishlist(int $userId, int $articleId): bool
     {
         $stmt = $this->db->prepare("INSERT INTO WISHLIST (userId, articleId) VALUES (?, ?)");
         $stmt->bind_param("ii", $userId, $articleId);
-        return $stmt->execute();        
+
+        return $stmt->execute();
     }
 
     /**
@@ -497,17 +515,18 @@ class DatabaseHelper
      * 
      * @return bool True if successful, false otherwise
      */
-    public function removeFromWishlist(int $userId, int $articleId)
+    public function removeFromWishlist(int $userId, int $articleId): bool
     {
         $stmt = $this->db->prepare("DELETE FROM WISHLIST WHERE userId = ? AND articleId = ?");
         $stmt->bind_param("ii", $userId, $articleId);
+
         return $stmt->execute();
     }
 
     /**
      * Gets all items in a user's wishlist
      */
-    public function getWishlistItems(int $userId)
+    public function getWishlistItems(int $userId): array|bool
     {
         $stmt = $this->db->prepare(
             "SELECT a.* 
@@ -516,8 +535,7 @@ class DatabaseHelper
             WHERE w.userId = ?");
         $stmt->bind_param("i", $userId);
         $stmt->execute();
-        $result = $stmt->get_result();
         
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
     }
 }

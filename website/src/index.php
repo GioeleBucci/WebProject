@@ -35,11 +35,11 @@ ob_start();
 
 require_once 'templates/base.php';
 
-if ($_SESSION["redirect"]) {
-    unset($_SESSION["redirect"]);
-    ob_flush();
-}
-else {
-    $landingPage = ob_get_clean();
-    echo $landingPage;
-}
+$landingPage = ob_get_clean();
+echo $landingPage;
+// if (($_SESSION["redirect"] ?? false) === true) {
+//     unset($_SESSION["redirect"]);
+//     ob_clean();
+// }
+// else {
+// }

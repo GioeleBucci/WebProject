@@ -19,7 +19,13 @@ class Utils
      */
     public static function redirect(string $dest, int $statusCode = 303)
     {
-        header("Location: " . Settings::BASE_URL . $dest, true, $statusCode);
+        if ($dest === "Refresh:0") {
+            $to = $dest;
+        }
+        else {
+            $to = "Location: " . Settings::BASE_PATH . $dest;
+        }
+        header($to, true, $statusCode);
         $_SESSION["redirect"] = true;
     }
     
@@ -32,7 +38,7 @@ class Utils
     {
         $userId = DatabaseHelper::getInstance()->getUserId($email);
         $_SESSION['userId'] = $userId;
-        DatabaseHelper::getInstance()->getUserType($userId) == self::SELLER ? $_SESSION["isSeller"] = true : $_SESSION["isSeller"] = false;
+        DatabaseHelper::getInstance()->getUserType($userId) === self::SELLER ? $_SESSION["isSeller"] = true : $_SESSION["isSeller"] = false;
     }
 
     /**

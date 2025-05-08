@@ -36,7 +36,7 @@
 
                 <?php $path = Settings::UPLOAD_DIR . "categories/" . $image . ".png"; ?>
 
-                <div class="carousel-item <?php echo ($index == 0) ? "active" : "" ?>">
+                <div class="carousel-item <?php echo ($index === 0) ? "active" : "" ?>">
                     <a class="e" href="search?q=&filters[]=<?php echo urlencode($categories[$index]); ?>">
                         <img src="<?php echo $path ?>" class="d-block w-100 img-fluid carousel-image" alt=<?php echo ($image) ?>>
                         <div class="carousel-caption">

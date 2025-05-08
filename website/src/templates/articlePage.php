@@ -59,7 +59,7 @@
                         </button>
                     </form>
                 </div>
-                <?php if (isset($_SESSION["isSeller"])): ?>
+                <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
                     <div class="mt-4 mt-md-3 d-flex flex-column flex-md-row gap-2 align-items-center align-items-md-start">
                         <a href="edit-article?articleId=<?= $articleId ?>" class="d-flex w-100 w-md-auto justify-content-center icon">
                             <i style="font-size:10rem !important;" class="h1 align-content-center bi-pencil"></i>

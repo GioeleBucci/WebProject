@@ -29,7 +29,7 @@
                         </a>
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
-                            <?php if (isset($_SESSION["isSeller"])): ?>
+                            <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
                                 <a href="<?php echo Links::LISTING ?>" class="icon">
                                     <i class="bi bi-tag fs-5 mx-2"></i>
                                 </a>
@@ -59,7 +59,7 @@
                     </div>
                     <!-- Icons (desktop) -->
                     <div class="d-none d-md-block mt-3">
-                        <?php if (isset($_SESSION["isSeller"])): ?>
+                        <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
                             <a href="<?php echo Links::LISTING ?>" class="icon">
                                 <i class="bi bi-tag fs-4 mx-2"></i>
                             </a>
@@ -84,7 +84,7 @@
         <main style="flex-grow: 1;">
             <?php
             if (isset($templateParams["page"])) {
-                require($templateParams["page"]);
+                require $templateParams["page"];
             }
             ?>
             <!-- Title can be set only after page's specific templateParams are loaded in -->
