@@ -1,8 +1,6 @@
-<?php $templateParams["title"] = "Your shopping cart" ?>
-
 <?php require "utils/loadCart.php" ?>
 
-<?php $templateParams["title"] = "Cart" ?>
+<?php $templateParams["title"] = "Your shopping cart" ?>
 
 <div class="container">
     <div class="text-center">

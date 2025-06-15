@@ -34,17 +34,17 @@
                                     <i class="bi bi-tag fs-5 mx-2"></i>
                                 </a>
                             <?php endif; ?>
-                            <a href="<?php echo Links::CART ?>" class="icon">
-                                <i class="bi bi-cart fs-5 mx-2"></i>
-                            </a>
-                            <a href="<?php echo Links::ACCOUNT ?>" class="icon">
-                                <i class="bi bi-person fs-5 mx-2"></i>
-                            </a>
                             <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
                                 <i class="bi bi-bell fs-5 mx-2"></i>
                             </a>
                             <a href="<?php echo Links::WISHLIST ?>" class="icon">
                                 <i class="bi bi-heart fs-5 mx-2"></i>
+                            </a>
+                            <a href="<?php echo Links::CART ?>" class="icon">
+                                <i class="bi bi-cart fs-5 mx-2"></i>
+                            </a>
+                            <a href="<?php echo Links::ACCOUNT ?>" class="icon">
+                                <i class="bi bi-person fs-5 mx-2"></i>
                             </a>
                         </div>
                     </div>
@@ -64,17 +64,17 @@
                                 <i class="bi bi-tag fs-4 mx-2"></i>
                             </a>
                         <?php endif; ?>
-                        <a href="<?php echo Links::CART ?>" class="icon">
-                            <i class="bi bi-cart fs-4 mx-2"></i>
-                        </a>
-                        <a href="<?php echo Links::ACCOUNT ?>" class="icon">
-                            <i class="bi bi-person fs-4 mx-2"></i>
-                        </a>
                         <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
                             <i class="bi bi-bell fs-4 mx-2"></i>
                         </a>
                         <a href="<?php echo Links::WISHLIST ?>" class="icon">
                             <i class="bi bi-heart fs-4 mx-2"></i>
+                        </a>
+                        <a href="<?php echo Links::CART ?>" class="icon">
+                            <i class="bi bi-cart fs-4 mx-2"></i>
+                        </a>
+                        <a href="<?php echo Links::ACCOUNT ?>" class="icon">
+                            <i class="bi bi-person fs-4 mx-2"></i>
                         </a>
                     </div>
                 </div>

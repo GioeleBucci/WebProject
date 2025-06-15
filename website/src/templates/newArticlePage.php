@@ -1,6 +1,6 @@
-<?php $templateParams["title"] = "New product" ?>
-
 <?php require "utils/addArticle.php" ?>
+
+<?php $templateParams["title"] = "New product" ?>
 
 <div class="container mt-3">
     <div class="row justify-content-center">
@@ -19,6 +19,10 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Type</label>
+                            <input type="text" class="form-control" id="type" name="type" required>
                         </div>
                         <div class="mb-3">
                             <label for="details" class="form-label">Details</label>
@@ -43,6 +47,10 @@
                         <div class="mb-3">
                             <label for="size" class="form-label">Size</label>
                             <input type="text" class="form-control" id="size" name="size" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Stock amount</label>
+                            <input type="text" class="form-control" id="amount" name="amount" required>
                         </div>
                         <div>
                             <label for="image" class="form-label">Image</label>

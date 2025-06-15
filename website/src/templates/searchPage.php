@@ -1,6 +1,6 @@
-<?php $templateParams["title"] = "Search Results" ?>
+<?php require "utils/search.php" ?>
 
-<?php require "utils/search.php"; ?>
+<?php $templateParams["title"] = "Search Results" ?>
 
 <div class="container mt-md-3">
     <div class="row">

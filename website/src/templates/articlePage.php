@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="image-fluid">
-                <img src="<?php echo Settings::UPLOAD_DIR . $article["image"]; ?>"
+                <img src="<?php echo Settings::UPLOAD_DIR . "articles/" . $article["image"]; ?>"
                     class="img-fluid"
                     alt="Product Image">
             </div>

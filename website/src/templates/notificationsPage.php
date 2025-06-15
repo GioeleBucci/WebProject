@@ -1,6 +1,6 @@
-<?php $templateParams["title"] = "Notifications" ?>
-
 <?php require 'utils/loadNotifications.php' ?>
+
+<?php $templateParams["title"] = "Notifications" ?>
 
 <?php if ($notificationsAmount != 0): ?>
     <div class="container">

@@ -1,6 +1,6 @@
-<?php $templateParams["title"] = "Login" ?>
-
 <?php require 'utils/login.php' ?>
+
+<?php $templateParams["title"] = "Login" ?>
 
 <div class="container mt-2">
     <div class="row justify-content-center">

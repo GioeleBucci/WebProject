@@ -26,7 +26,6 @@ class Utils
             $to = "Location: " . Settings::BASE_PATH . $dest;
         }
         header($to, true, $statusCode);
-        $_SESSION["redirect"] = true;
     }
     
     /** 

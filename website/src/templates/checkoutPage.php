@@ -1,6 +1,6 @@
-<?php $templateParams["title"] = "Checkout" ?>
-
 <?php require "utils/checkout.php" ?>
+
+<?php $templateParams["title"] = "Checkout" ?>
 
 <div class="container mt-md-2">
     <div class="text-center">
