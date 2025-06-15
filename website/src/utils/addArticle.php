@@ -4,7 +4,7 @@ if (isset($_POST["add"])) {
 	unset($templateParams["insertionError"]);
 	// Image processing
 	$fileName = $_FILES["image"]["name"];
-	$filePath = Settings::UPLOAD_DIR . $fileName;
+	$filePath = Settings::UPLOAD_DIR . "articles/" . $fileName;
 	$imageFileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 	$imageOk = true;
 
@@ -28,7 +28,7 @@ if (isset($_POST["add"])) {
 		die();
 	}
 
-	if (!$dbh->addArticle($_SESSION["userId"], $_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName) === false) {
+	if (!$dbh->addArticle($_SESSION["userId"], $_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName) || !$dbh->addVersion(-1, $_POST["type"], 0, $_POST["amount"])) {
 		$templateParams["insertionError"] = "Error during image elaboration";
 	}
 }

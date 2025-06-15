@@ -10,7 +10,7 @@ if (isset($_POST["edit"])) {
 	if (isset($_FILES["image"]) && !empty($_FILES["image"]["name"])) {
 		// Image processing
 		$fileName = $_FILES["image"]["name"];
-		$filePath = Settings::UPLOAD_DIR . $fileName;
+		$filePath = Settings::UPLOAD_DIR . "articles/" . $fileName;
 		$imageFileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 		$imageOk = 1;
 	
@@ -31,7 +31,7 @@ if (isset($_POST["edit"])) {
 				$templateParams["insertionError"] = "Error during image upload";
 			}
 			else {
-				unlink("/opt/lampp/htdocs" . Settings::UPLOAD_DIR . $article["image"]);
+				unlink("/opt/lampp/htdocs" . Settings::UPLOAD_DIR . "articles/" . $article["image"]);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 <div class="row align-items-center border-bottom py-3">
     <div class="col-3 col-md-2">
         <img
-            src="<?php echo Settings::UPLOAD_DIR . $article['image']; ?>"
+            src="<?php echo Settings::UPLOAD_DIR . "articles/" . $article['image']; ?>"
             alt="<?php echo $article['name'] ?>"
             class="img-fluid" />
     </div>

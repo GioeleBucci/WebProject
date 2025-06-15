@@ -2,7 +2,6 @@
 
 <?php 
 // Check if user is logged in
-//Utils::requireLoggedUser();
 if (!Utils::isUserLoggedIn()) {
     // Store the current page URL in session before redirecting
     $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

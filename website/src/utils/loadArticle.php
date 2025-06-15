@@ -13,7 +13,7 @@ if (!$article) {
 }
 
 if (isset($_POST["addArticle"])) {
-    $added = $dbh->addToCart($_SESSION["userId"], $articleId, intval($_POST["selectedVersion"]));
+    $added = $dbh->addToCart($_SESSION["userId"], $articleId, $_POST["selectedVersion"]);
     unset($_POST["addArticle"]);
 }
 

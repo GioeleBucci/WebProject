@@ -4,7 +4,7 @@
         <div class="card-top" style="transform: rotate(0);">
             <a href="article?id=<?php echo $article['articleId']; ?>" class="stretched-link text-decoration-none mb-0">
                 <div class="image-fluid overflow-hidden d-flex justify-content-center align-items-center" style="height: 200px;">
-                    <img src="<?php echo Settings::UPLOAD_DIR . $article['image']; ?>"
+                    <img src="<?php echo Settings::UPLOAD_DIR . "articles/" . $article['image']; ?>"
                         class="card-img-top"
                         alt="Product Image">
                 </div>
