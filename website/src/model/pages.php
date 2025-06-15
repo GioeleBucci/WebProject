@@ -9,6 +9,7 @@ class Links
     public const ACCOUNT = 'account';
     public const CART = 'cart';
     public const CHECKOUT = 'checkout';
+    public const ORDERS = 'orders';
     public const SEARCH = 'search';
     public const ARTICLE = 'article';
     public const NOTIFICATIONS = 'notifications';
@@ -28,6 +29,7 @@ class Pages
     public const ACCOUNT = 'accountPage.php';
     public const CART = 'cartPage.php';
     public const CHECKOUT = 'checkoutPage.php';
+    public const ORDERS = 'ordersPage.php';
     public const SEARCH = 'searchPage.php';
     public const ARTICLE = 'articlePage.php';
     public const NOTIFICATIONS = 'notificationsPage.php';

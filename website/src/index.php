@@ -14,6 +14,7 @@ $routes = [
     Links::ACCOUNT => Pages::ACCOUNT,
     Links::CART => Pages::CART,
     Links::CHECKOUT => Pages::CHECKOUT,
+    Links::ORDERS => Pages::ORDERS,
     Links::SEARCH => Pages::SEARCH,
     Links::ARTICLE => Pages::ARTICLE,
     Links::NOTIFICATIONS => Pages::NOTIFICATIONS,
@@ -37,9 +38,3 @@ require_once 'templates/base.php';
 
 $landingPage = ob_get_clean();
 echo $landingPage;
-// if (($_SESSION["redirect"] ?? false) === true) {
-//     unset($_SESSION["redirect"]);
-//     ob_clean();
-// }
-// else {
-// }
