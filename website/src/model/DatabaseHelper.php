@@ -61,32 +61,44 @@ class DatabaseHelper
      * Article methods
     */
 
+    private function getLatestArticleId(): int
+    {
+        return $this->db->query("SELECT articleId FROM ARTICLE ORDER BY articleId DESC LIMIT 1")->fetch_column();
+    }
+
     public function addArticle(int $sellerId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image): bool
     {
-        $stmt = $this->db->prepare("INSERT INTO ARTICLE (name, details, longDescription, material, weight, basePrice, size, categoryId, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->db->prepare(
+            "INSERT INTO ARTICLE (name, details, longDescription, material, weight, basePrice, size, categoryId, image)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
         $stmt->bind_param("ssssddsis", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
         $result = $stmt->execute();
 
-        $articleId = $this->db->query("SELECT articleId FROM ARTICLE ORDER BY articleId DESC LIMIT 1")->fetch_column();
-
-        return $result && $this->insertIntoListing($articleId, $sellerId);
+        return $result && $this->insertIntoListing($this->getLatestArticleId(), $sellerId);
     }
 
     public function updateArticle(int $articleId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image): bool
     {
-        $stmt = $this->db->prepare("UPDATE ARTICLE SET name = ?, details = ?, longDescription = ?, material = ?, weight = ?, basePrice = ?, size = ?, categoryId = ?, image = ? WHERE articleId = ?");
+        $stmt = $this->db->prepare(
+            "UPDATE ARTICLE SET name = ?, details = ?, longDescription = ?, material = ?, weight = ?, basePrice = ?, size = ?, categoryId = ?, image = ?
+            WHERE articleId = ?"
+        );
         $stmt->bind_param("ssssdisisi", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image, $articleId);
 
         return $stmt->execute();
     }
 
-    public function getArticle(int $articleId): array|bool|null
+    public function getArticle(int $articleId): array|bool
     {
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId=?");
         $stmt->bind_param("i", $articleId);
-        $stmt->execute();
 
-        return ($result = $stmt->get_result()) === false ?: $result->fetch_assoc();
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        return empty($article = $stmt->get_result()->fetch_assoc()) ? false : $article;
     }
 
     public function getAllArticles(int $amount): array|bool
@@ -95,14 +107,32 @@ class DatabaseHelper
             "SELECT * FROM ARTICLE ORDER BY RAND() LIMIT ?"
         );
         $stmt->bind_param("i", $amount);
-        $stmt->execute();
 
-        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        return empty($articles = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $articles;
     }
+
+
+
+    /*
+     * Version methods
+    */
 
     public function addVersion(int $articleId, string $type, float $priceVariation, int $amount): bool
     {
-        $stmt = $this->db->prepare("INSERT INTO ARTICLE_VERSION (versionId, articleId, versionType, priceVariation, stockAmount) SELECT IFNULL(MAX(versionId), 0) + 1, ?, ?, ?, ? FROM ARTICLE_VERSION WHERE articleId = ?");
+        if ($articleId === -1) {
+            $articleId = $this->getLatestArticleId();
+        }
+
+        $stmt = $this->db->prepare(
+            "INSERT INTO ARTICLE_VERSION (versionId, articleId, versionType, priceVariation, stockAmount) 
+            SELECT IFNULL(MAX(versionId), 0) + 1, ?, ?, ?, ? 
+            FROM ARTICLE_VERSION 
+            WHERE articleId = ?"
+        );
         $stmt->bind_param("isdii", $articleId, $type, $priceVariation, $amount, $articleId);
 
         return $stmt->execute();
@@ -121,9 +151,12 @@ class DatabaseHelper
             WHERE a.articleId = ? AND v.versionId = ?"
         );
         $stmt->bind_param("ii", $articleId, $versionId);
-        $stmt->execute();
 
-        return ($result = $stmt->get_result()) === false ?: $result->fetch_assoc();
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        return empty($version = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $version;
     }
 
     /** Get all available versions for a specific article */
@@ -131,9 +164,18 @@ class DatabaseHelper
     {
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE_VERSION WHERE articleId=?");
         $stmt->bind_param("i", $articleId);
-        $stmt->execute();
 
-        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result === false) {
+            return false;
+        }
+
+        return empty($versions = $result->fetch_all(MYSQLI_ASSOC)) ? false : $versions;
     }
 
 
@@ -154,9 +196,18 @@ class DatabaseHelper
     {
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId IN (SELECT articleId from LISTING WHERE sellerId = ?)");
         $stmt->bind_param("i", $sellerId);
-        $stmt->execute();
 
-        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result === false) {
+            return false;
+        }
+
+        return empty($listing = $result->fetch_all(MYSQLI_ASSOC)) ? false : $listing;
     }
 
 
@@ -178,9 +229,12 @@ class DatabaseHelper
     {
         $stmt = $this->db->prepare("SELECT * FROM CLIENT_ORDER WHERE userId=?");
         $stmt->bind_param("i", $clientId);
-        $stmt->execute();
+        
+        if (!$stmt->execute()) {
+            return false;
+        }
 
-        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
+        return empty($orders = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $orders;
     }
 
 
@@ -289,7 +343,8 @@ class DatabaseHelper
      */
     public function addUser(string $email, string $password, string $name): array
     {
-        if ($this->getUserId($email) != null) {
+        $alrExists = $this->getUserId($email);
+        if($alrExists !== false) {
             $result["errCode"] = "ALR_EXIST";
             $result["result"] = false;
         } else {
@@ -299,6 +354,8 @@ class DatabaseHelper
             $check = $stmt->execute();
             if ($check === true) {
                 $result["result"] = true;
+                $userId = $this->getUserId($email);
+                $this->db->query("INSERT INTO CLIENT VALUES ($userId, 1)");
             } else {
                 $result["errCode"] = "FATAL";
                 $result["result"] = false;
@@ -493,9 +550,12 @@ class DatabaseHelper
     {
         $stmt = $this->db->prepare("SELECT * FROM WISHLIST WHERE userId = ? AND articleId = ?");
         $stmt->bind_param("ii", $userId, $articleId);
-        $stmt->execute();
 
-        return ($result = $stmt->get_result()) === false ?: ($result->num_rows > 0);
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        return empty($stmt->get_result());
     }
 
     /**
@@ -534,8 +594,17 @@ class DatabaseHelper
             JOIN WISHLIST w ON a.articleId = w.articleId
             WHERE w.userId = ?");
         $stmt->bind_param("i", $userId);
-        $stmt->execute();
-        
-        return ($result = $stmt->get_result()) === false ?: $result->fetch_all(MYSQLI_ASSOC);
+
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result === false) {
+            return false;
+        }
+
+        return empty($wishlist = $result->fetch_all(MYSQLI_ASSOC)) ? false : $wishlist;
     }
 }

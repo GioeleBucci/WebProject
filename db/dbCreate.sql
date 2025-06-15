@@ -96,7 +96,7 @@ create table if not exists SHOPPING_CART_ITEM (
      versionId int not null,
      amount int null,
      primary key (userId, articleId, versionId),
-     constraint FK_CartOwner foreign key (userId) references CLIENT(userId),
+     constraint FK_CartOwner foreign key (userId) references USER(userId),
      constraint FK_ListedArticle foreign key (articleId, versionId) references ARTICLE_VERSION(articleId, versionId)
 );
 
