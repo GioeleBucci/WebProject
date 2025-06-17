@@ -479,6 +479,15 @@ class DatabaseHelper
         return $stmt->execute();
     }
 
+    public function deleteNotification(int $notificationId): bool
+    {
+        $query = "DELETE FROM `test`.`NOTIFICATION` WHERE notificationId = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $notificationId);
+
+        return $stmt->execute();
+    }
+
 
 
     /*

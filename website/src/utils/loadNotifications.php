@@ -10,6 +10,10 @@ if (!Utils::isUserLoggedIn()) {
     die();
 }
 
+if (isset($_POST["remnot"])) {
+    $dbh->deleteNotification($_POST["remnot"]);
+}
+
 $maxAmount = SiteConfigs::MAX_NOTIFICATIONS_PER_PAGE;
 $notifications = $dbh->getAllNotifications($_SESSION["userId"]);
 $notificationsAmount = count($notifications);

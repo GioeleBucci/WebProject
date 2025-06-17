@@ -9,20 +9,20 @@
             <h2>Notifications</h2>
         </div>
 
-        <div class="row">
-            <div class="col">
-                <?php foreach ($sections[$_GET["sectionNumber"]] as $notification): ?>
-                    <?php require("components/notificationCard.php") ?>
+        <table style="width:100%">
+            <?php foreach ($sections[$_GET["sectionNumber"]] as $notification): ?>
+                <?php require "components/notificationCard.php" ?>
+            <?php endforeach ?>
+        </table>
+        <nav>
+            <form>
+                <?php foreach (array_keys($sections) as $sectionNumber): ?>
+                    <input type="submit" name="sectionNumber" value=<?php echo $sectionNumber ?>></input>
                 <?php endforeach; ?>
-                <nav>
-                    <form>
-                        <?php foreach (array_keys($sections) as $sectionNumber): ?>
-                            <input type="submit" name="sectionNumber" value=<?php echo $sectionNumber ?>></input>
-                        <?php endforeach; ?>
-                    </form>
-                </nav>
-            </div>
-        </div>
+            </form>
+        </nav>
+        <!-- <div class="row">
+        </div> -->
     </div>
 <?php else: ?>
     <p>There are no notifications</p>

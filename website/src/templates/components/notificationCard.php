@@ -1,4 +1,4 @@
-<div class="card-wrapper">
+<!-- <div class="card-wrapper">
     <div class="card h-100">
         <div class="card-top" style="transform: rotate(0);">
             <div class="card-body">
@@ -7,4 +7,13 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+<tr>
+    <td style="width:80%"><?php echo $notification["content"] ?></td>
+    <td style="text-align:right"><?php echo $notification["receptionTime"] ?></td>
+    <td style="text-align:right">
+        <form method="POST">
+            <button type="submit" name="remnot" value=<?php echo $notification["notificationId"] ?>>Delete</button>
+        </form>
+    </td>
+</tr>
