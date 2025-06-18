@@ -96,7 +96,7 @@
                 <!-- Footer -->
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-center py-3 border-top">
                     <div>
-                        <p class="mb-0">&copy; <?php echo date("Y"); ?> Company Name</p>
+                        <p class="mb-0">&copy; <?php echo date("Y"); ?> KIWI Corp.</p>
                     </div>
                     <div class="d-flex flex-column flex-md-row text-center text-md-start">
                         <a href="<?php echo Links::PRIVACY_POLICY ?>" class="text-decoration-underline text-dark my-1 mx-md-2">Privacy Policy</a>
