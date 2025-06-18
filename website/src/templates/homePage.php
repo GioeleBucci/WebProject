@@ -37,16 +37,16 @@
                 <?php $path = Settings::UPLOAD_DIR . "categories/" . $image . ".png"; ?>
 
                 <div class="carousel-item <?php echo ($index === 0) ? "active" : "" ?>">
-                    <?php 
+                    <?php
                     $searchUrl = "search?" . http_build_query([
                         'q' => '',
                         'filters' => [$categories[$index]]
-                    ]); 
+                    ]);
                     ?>
                     <a class="e" href="<?php echo $searchUrl; ?>" aria-label="Browse <?php echo htmlspecialchars($categories[$index]); ?> products">
                         <img src="<?php echo $path ?>" class="d-block w-100 img-fluid carousel-image" alt="<?php echo htmlspecialchars($image); ?>">
                         <div class="carousel-caption">
-                            <h2><?php echo htmlspecialchars($categories[$index]); ?></h2>
+                            <span class="fs-2 fw-bold"><?php echo htmlspecialchars($categories[$index]); ?></span>
                             <p><?php echo htmlspecialchars($carouselTexts[$index % sizeof($carouselTexts)]); ?></p>
                         </div>
                     </a>
