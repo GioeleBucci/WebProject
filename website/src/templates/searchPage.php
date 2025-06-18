@@ -6,7 +6,7 @@
     <div class="row">
         <!-- Sidebar for filters -->
         <div class="col-md-3 mt-0">
-            <h4>Filters</h4>
+            <div class="fs-4 my-2">Filters</div>
             <form method="GET" action="search">
                 <input type="hidden" name="q" value="<?php echo $searchQuery; ?>">
                 <div class="d-md-block d-flex flex-wrap">
@@ -17,9 +17,9 @@
                                 type="checkbox"
                                 name="filters[]"
                                 value="<?php echo $category; ?>"
-                                id="filter-<?php echo $category; ?>"
+                                id="filter-<?php echo str_replace(' ', '-', strtolower($category)); ?>"
                                 <?php echo in_array($category, $filters) ? "checked" : ""; ?>>
-                            <label class="form-check-label" for="filter-<?php echo $category; ?>">
+                            <label class="form-check-label" for="filter-<?php echo str_replace(' ', '-', strtolower($category)); ?>">
                                 <?php echo $category; ?>
                             </label>
                         </div>
@@ -31,7 +31,7 @@
 
         <!-- Main content -->
         <div class="col-md-9">
-            <h2 class="mb-4">Search results for
+            <div class="page-title-text mb-4">Search results for
                 <?php
                 echo empty($searchQuery) ? "all products" : '"' . $searchQuery . '"';
                 if (sizeof($filters) > 0) {
@@ -40,7 +40,7 @@
                     echo ' in all categories';
                 }
                 ?>
-            </h2>
+            </div>
 
             <?php if (empty($searchResults)): ?>
                 <p>No results found. Try refining your search.</p>
