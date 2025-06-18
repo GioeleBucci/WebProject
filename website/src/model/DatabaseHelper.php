@@ -566,14 +566,15 @@ class DatabaseHelper
      */
     public function isInWishlist(int $userId, int $articleId): bool
     {
-        $stmt = $this->db->prepare("SELECT * FROM WISHLIST WHERE userId = ? AND articleId = ?");
+        $stmt = $this->db->prepare("SELECT userId FROM WISHLIST WHERE userId = ? AND articleId = ?");
         $stmt->bind_param("ii", $userId, $articleId);
 
         if (!$stmt->execute()) {
             return false;
         }
 
-        return empty($stmt->get_result());
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
     }
 
     /**
