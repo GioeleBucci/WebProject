@@ -21,8 +21,7 @@
                 <?php endforeach; ?>
             </form>
         </nav>
-        <!-- <div class="row">
-        </div> -->
+        <?php $dbh->markNotificationsAsRead($_SESSION["userId"]) ?>
     </div>
 <?php else: ?>
     <p>There are no notifications</p>
