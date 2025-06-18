@@ -45,7 +45,7 @@
                         <?php
                         $isInWishlist = isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId']);
                         ?>
-                        <i class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?> me-1"></i>
+                        <span class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?> me-1" aria-hidden="true"></span>
                         <div class="wishlist-text">
                             <?php echo $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
                         </div>
@@ -55,23 +55,23 @@
                         <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
                         <input type="hidden" name="addArticle" id="addArticle" value="">
                         <button type="submit" class="btn btn-primary add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
-                            <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                            <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
                         </button>
                     </form>
                 </div>
                 <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
                     <div class="mt-4 mt-md-3 d-flex flex-column flex-md-row gap-2 align-items-center align-items-md-start">
                         <a href="edit-article?articleId=<?= $articleId ?>" class="d-flex w-100 w-md-auto justify-content-center icon">
-                            <i style="font-size:10rem !important;" class="h1 align-content-center bi-pencil"></i>
+                            <span style="font-size:10rem !important;" class="h1 align-content-center bi-pencil" aria-hidden="true"></span>
                         </a>
                         <a href="new-version?articleId=<?= $articleId ?>" class="d-flex w-100 w-md-auto justify-content-center icon">
-                            <i style="font-size:10rem !important;" class="h1 align-content-center bi-plus"></i>
+                            <span style="font-size:10rem !important;" class="h1 align-content-center bi-plus" aria-hidden="true"></span>
                         </a>
                     </div>
                 <?php endif ?>
             <?php else: ?>
                 <button type="button" class="btn btn-primary add-to-cart-btn mt-3" disabled>
-                    <i class="bi bi-cart-plus-fill"></i> Log in to add items to your cart!
+                    <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Log in to add items to your cart!
                 </button>
             <?php endif; ?>
         </div>

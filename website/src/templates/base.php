@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="<?php echo Settings::BASE_PATH; ?>" />
     <link rel="icon" href="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" type="image/png">
+    <title><?php echo "Kiwi" . (isset($templateParams["title"]) ? " - " . $templateParams["title"] : "") ?></title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -30,51 +31,52 @@
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
                             <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
-                                <a href="<?php echo Links::LISTING ?>" class="icon">
-                                    <i class="bi bi-tag fs-5 mx-2"></i>
+                                <a href="<?php echo Links::LISTING ?>" class="icon" aria-label="Your Listings">
+                                    <span class="bi bi-tag fs-5 mx-2" aria-hidden="true"></span>
                                 </a>
                             <?php endif; ?>
-                            <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
-                                <i class="bi bi-bell fs-5 mx-2"></i>
+                            <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon" aria-label="Notifications">
+                                <span class="bi bi-bell fs-5 mx-2" aria-hidden="true"></span>
                             </a>
-                            <a href="<?php echo Links::WISHLIST ?>" class="icon">
-                                <i class="bi bi-heart fs-5 mx-2"></i>
+                            <a href="<?php echo Links::WISHLIST ?>" class="icon" aria-label="Wishlist">
+                                <span class="bi bi-heart fs-5 mx-2" aria-hidden="true"></span>
                             </a>
-                            <a href="<?php echo Links::CART ?>" class="icon">
-                                <i class="bi bi-cart fs-5 mx-2"></i>
+                            <a href="<?php echo Links::CART ?>" class="icon" aria-label="Shopping Cart">
+                                <span class="bi bi-cart fs-5 mx-2" aria-hidden="true"></span>
                             </a>
-                            <a href="<?php echo Links::ACCOUNT ?>" class="icon">
-                                <i class="bi bi-person fs-5 mx-2"></i>
+                            <a href="<?php echo Links::ACCOUNT ?>" class="icon" aria-label="Account">
+                                <span class="bi bi-person fs-5 mx-2" aria-hidden="true"></span>
                             </a>
                         </div>
                     </div>
                     <!-- Search bar -->
                     <div class="flex-grow-1 mt-3 mb-3 mb-md-0 mx-md-3">
                         <form class="d-flex" action="search" method="get">
-                            <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search" name="q" value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES, 'UTF-8') : ''; ?>">
-                            <button class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" type="submit">
-                                <i class="bi bi-search"></i>
+                            <label for="search-input" class="visually-hidden">Search products</label>
+                            <input class="form-control me-2 rounded-pill" type="search" placeholder="What are you looking for?" aria-label="Search products" name="q" id="search-input" value="<?php echo isset($_GET['q']) ? htmlspecialchars($_GET['q'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+                            <button class="btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center" type="submit" aria-label="Search">
+                                <span class="bi bi-search" aria-hidden="true"></span>
                             </button>
                         </form>
                     </div>
                     <!-- Icons (desktop) -->
                     <div class="d-none d-md-block mt-3">
                         <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
-                            <a href="<?php echo Links::LISTING ?>" class="icon">
-                                <i class="bi bi-tag fs-4 mx-2"></i>
+                            <a href="<?php echo Links::LISTING ?>" class="icon" aria-label="Your Listings">
+                                <span class="bi bi-tag fs-4 mx-2" aria-hidden="true"></span>
                             </a>
                         <?php endif; ?>
-                        <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon">
-                            <i class="bi bi-bell fs-4 mx-2"></i>
+                        <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon" aria-label="Notifications">
+                            <span class="bi bi-bell fs-4 mx-2" aria-hidden="true"></span>
                         </a>
-                        <a href="<?php echo Links::WISHLIST ?>" class="icon">
-                            <i class="bi bi-heart fs-4 mx-2"></i>
+                        <a href="<?php echo Links::WISHLIST ?>" class="icon" aria-label="Wishlist">
+                            <span class="bi bi-heart fs-4 mx-2" aria-hidden="true"></span>
                         </a>
-                        <a href="<?php echo Links::CART ?>" class="icon">
-                            <i class="bi bi-cart fs-4 mx-2"></i>
+                        <a href="<?php echo Links::CART ?>" class="icon" aria-label="Shopping Cart">
+                            <span class="bi bi-cart fs-4 mx-2" aria-hidden="true"></span>
                         </a>
-                        <a href="<?php echo Links::ACCOUNT ?>" class="icon">
-                            <i class="bi bi-person fs-4 mx-2"></i>
+                        <a href="<?php echo Links::ACCOUNT ?>" class="icon" aria-label="Account">
+                            <span class="bi bi-person fs-4 mx-2" aria-hidden="true"></span>
                         </a>
                     </div>
                 </div>
@@ -87,8 +89,6 @@
                 require $templateParams["page"];
             }
             ?>
-            <!-- Title can be set only after page's specific templateParams are loaded in -->
-            <title> <?php echo "Kiwi" . (isset($templateParams["title"]) ? " - " . $templateParams["title"] : "") ?> </title>
         </main>
 
         <footer>

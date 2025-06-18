@@ -37,7 +37,7 @@
                                 <div class="d-flex align-items-center">
                                     <span class="fs-5"><?php echo htmlspecialchars($userInfo["email"] ?? "Not provided"); ?></span>
                                     <button type="button" class="btn btn-sm btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#emailModal">
-                                        <i class="bi bi-pencil-square"></i> Edit
+                                        <span class="bi bi-pencil-square" aria-hidden="true"></span> Edit
                                     </button>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                 <div class="d-flex align-items-center">
                                     <span class="fs-5"><?php echo htmlspecialchars($userInfo["phoneNumber"] ?? "Not provided"); ?></span>
                                     <button type="button" class="btn btn-sm btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#phoneModal">
-                                        <i class="bi bi-pencil-square"></i> Edit
+                                        <span class="bi bi-pencil-square" aria-hidden="true"></span> Edit
                                     </button>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                 <div class="d-flex align-items-center">
                                     <span class="fs-5"><?php echo htmlspecialchars($userInfo["address"] ?? "Not provided"); ?></span>
                                     <button type="button" class="btn btn-sm btn-outline-primary ms-2" data-bs-toggle="modal" data-bs-target="#addressModal">
-                                        <i class="bi bi-pencil-square"></i> Edit
+                                        <span class="bi bi-pencil-square" aria-hidden="true"></span> Edit
                                     </button>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                     <div class="row">
                         <div class="col-12">
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#passwordModal">
-                                <i class="bi bi-key"></i> Change Password
+                                <span class="bi bi-key" aria-hidden="true"></span> Change Password
                             </button>
                         </div>
                     </div>

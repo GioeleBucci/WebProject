@@ -59,6 +59,7 @@ function toggleWishlist() {
             if (data.inWishlist) {
                 heartIcon.classList.remove('bi-heart');
                 heartIcon.classList.add('bi-heart-fill');
+                this.setAttribute('aria-label', 'Remove from wishlist');
                 // Update wishlist text div
                 if (wishlistTextDiv) {
                     wishlistTextDiv.textContent = 'Remove from Wishlist';
@@ -66,6 +67,7 @@ function toggleWishlist() {
             } else {
                 heartIcon.classList.remove('bi-heart-fill');
                 heartIcon.classList.add('bi-heart');
+                this.setAttribute('aria-label', 'Add to wishlist');
                 // Update wishlist text div
                 if (wishlistTextDiv) {
                     wishlistTextDiv.textContent = 'Add to Wishlist';

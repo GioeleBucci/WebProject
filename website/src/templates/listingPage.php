@@ -12,8 +12,8 @@
 				<div class="card h-100">
 					<!-- rotate(0) prevents the stretched link from affecting other elements -->
 					<div style="transform: rotate(0);" class="d-flex flex-column h-100 card-top">
-						<a href="new-article" class="d-flex justify-content-around align-content-center flex-1 h-100 icon">
-							<i style="font-size:10rem !important;" class="h1 align-content-center bi-plus"></i>
+						<a href="new-article" class="d-flex justify-content-around align-content-center flex-1 h-100 icon" aria-label="Add new product">
+							<i style="font-size:10rem !important;" class="h1 align-content-center bi-plus" aria-hidden="true"></i>
 						</a>
 						<div class="flex-shrink card-body">
 							<h6 class="card-text mb-0 text">New product</h6>

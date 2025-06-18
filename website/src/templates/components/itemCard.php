@@ -2,7 +2,7 @@
     <div class="card h-100">
         <!-- rotate(0) prevents the stretched link from affecting other elements -->
         <div class="card-top" style="transform: rotate(0);">
-            <a href="article?id=<?php echo $article['articleId']; ?>" class="stretched-link text-decoration-none mb-0">
+            <a href="article?id=<?php echo $article['articleId']; ?>" class="stretched-link text-decoration-none mb-0" aria-label="View <?php echo htmlspecialchars($article['name']); ?> details">
                 <div class="image-fluid overflow-hidden d-flex justify-content-center align-items-center" style="height: 200px;">
                     <img src="<?php echo Settings::UPLOAD_DIR . "articles/" . $article['image']; ?>"
                         class="card-img-top"
@@ -21,12 +21,13 @@
             <div class="card-body pt-0">
                 <button type="button" class="btn btn-outline-danger wishlist-btn" 
                         data-article-id="<?php echo $article['articleId']; ?>"
-                        onclick="toggleWishlist.call(this)">
-                    <i class="bi bi-heart<?php 
+                        onclick="toggleWishlist.call(this)"
+                        aria-label="<?php echo (isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId'])) ? 'Remove from wishlist' : 'Add to wishlist'; ?>">
+                    <span class="bi bi-heart<?php 
                         if(isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId'])) {
                             echo '-fill';
                         }
-                    ?>"></i>
+                    ?>" aria-hidden="true"></span>
                 </button>
             </div>
         <?php endif ?>

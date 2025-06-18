@@ -27,8 +27,8 @@
         <input type="hidden" id="removeItem" name="removeItem" >
         <input type="hidden" id="articleId" name="articleId" value=<?php echo $article["articleId"] ?>>
         <input type="hidden" id="versionId" name="versionId" value=<?php echo $article["versionId"] ?>>
-        <button type="submit" class="btn btn-link text-danger p-0" title="Remove item" style="margin-right: -10px;">
-            <i class="bi bi-x fs-4 mx-2"></i>
+        <button type="submit" class="btn btn-link text-danger p-0" title="Remove item" aria-label="Remove <?php echo htmlspecialchars($article['name']); ?> from cart" style="margin-right: -10px;">
+            <span class="bi bi-x fs-4 mx-2" aria-hidden="true"></span>
         </button>
     </form>
 </div>

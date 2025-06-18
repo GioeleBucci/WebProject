@@ -9,8 +9,9 @@
                 <div class="flex-shrink-0">
                     <form method="POST" class="d-inline">
                         <button type="submit" name="remnot" value="<?php echo $notification["notificationId"] ?>"
-                            class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-trash"></i>
+                            class="btn btn-outline-danger btn-sm"
+                            aria-label="Delete notification">
+                            <span class="bi bi-trash" aria-hidden="true"></span>
                         </button>
                     </form>
                 </div>
