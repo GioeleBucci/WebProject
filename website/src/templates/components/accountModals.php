@@ -33,6 +33,10 @@
             <form method="post" id="passwordForm" onsubmit="return validatePasswordForm()">
                 <div class="modal-body">
                     <div class="mb-3">
+                        <label for="old_password" class="form-label">Old Password</label>
+                        <input type="password" class="form-control" id="old_password" name="old_password" required>
+                    </div>
+                    <div class="mb-3">
                         <label for="new_password" class="form-label">New Password</label>
                         <input type="password" class="form-control" id="new_password" name="new_password" required>
                     </div>
@@ -41,7 +45,7 @@
                         <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                     </div>
                     <div class="invalid-feedback d-none" id="password-error">
-                        Passwords do not match or are too short (minimum 6 characters).
+                        <!-- Error message is set via JavaScript -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -104,11 +108,27 @@
 <script>
     // Password validation function
     function validatePasswordForm() {
+        const oldPassword = document.getElementById('old_password').value;
         const newPassword = document.getElementById('new_password').value;
         const confirmPassword = document.getElementById('confirm_password').value;
         const errorElement = document.getElementById('password-error');
 
-        if (newPassword !== confirmPassword || newPassword.length < 6) {
+        if (newPassword.length < 6) {
+            errorElement.textContent = 'New password must be at least 6 characters long.';
+            errorElement.classList.remove('d-none');
+            errorElement.classList.add('d-block');
+            return false;
+        }
+
+        if (newPassword !== confirmPassword) {
+            errorElement.textContent = 'New passwords do not match.';
+            errorElement.classList.remove('d-none');
+            errorElement.classList.add('d-block');
+            return false;
+        }
+
+        if (oldPassword === newPassword) {
+            errorElement.textContent = 'New password cannot be the same as the old password.';
             errorElement.classList.remove('d-none');
             errorElement.classList.add('d-block');
             return false; // Prevent form submission
@@ -116,17 +136,19 @@
 
         errorElement.classList.add('d-none');
         errorElement.classList.remove('d-block');
-        return true; 
+        return true;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         const passwordModal = document.getElementById('passwordModal');
+        const oldPasswordField = document.getElementById('old_password');
         const newPasswordField = document.getElementById('new_password');
         const confirmPasswordField = document.getElementById('confirm_password');
         const errorElement = document.getElementById('password-error');
 
         // Clear validation errors when modal is opened
         passwordModal.addEventListener('show.bs.modal', function() {
+            oldPasswordField.value = '';
             newPasswordField.value = '';
             confirmPasswordField.value = '';
             errorElement.classList.add('d-none');
@@ -135,14 +157,20 @@
 
         // Validate on input changes
         function validatePasswords() {
-            if (newPasswordField.value && confirmPasswordField.value) {
-                if (newPasswordField.value !== confirmPasswordField.value || newPasswordField.value.length < 6) {
-                    errorElement.classList.remove('d-none');
-                    errorElement.classList.add('d-block');
-                } else {
-                    errorElement.classList.add('d-none');
-                    errorElement.classList.remove('d-block');
-                }
+            const newPassword = newPasswordField.value;
+            const confirmPassword = confirmPasswordField.value;
+
+            if (newPassword.length > 0 && newPassword.length < 6) {
+                errorElement.textContent = 'New password must be at least 6 characters long.';
+                errorElement.classList.remove('d-none');
+                errorElement.classList.add('d-block');
+            } else if (newPassword && confirmPassword && newPassword !== confirmPassword) {
+                errorElement.textContent = 'New passwords do not match.';
+                errorElement.classList.remove('d-none');
+                errorElement.classList.add('d-block');
+            } else {
+                errorElement.classList.add('d-none');
+                errorElement.classList.remove('d-block');
             }
         }
 

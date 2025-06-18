@@ -20,7 +20,7 @@ unset($_SESSION["account_error"]);
 // Handle user information updates
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $redirect = false;
-    
+
     // Update Email
     if (isset($_POST["update_email"]) && !empty($_POST["new_email"])) {
         $newEmail = $_POST["new_email"];
@@ -31,17 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         $redirect = true;
     }
-    
+
     // Update Password
-    if (isset($_POST["update_password"]) && !empty($_POST["new_password"]) && !empty($_POST["confirm_password"])) {
-        if ($dbh->updateUserPassword($_SESSION["userId"], $_POST["new_password"])) {
+    if (isset($_POST["update_password"]) && !empty($_POST["old_password"]) && !empty($_POST["new_password"]) && !empty($_POST["confirm_password"])) {
+        if ($dbh->updateUserPassword($_SESSION["userId"], $_POST["old_password"], $_POST["new_password"])) {
             $_SESSION["account_success"] = "Password updated successfully!";
         } else {
             $_SESSION["account_error"] = "Password couldn't be updated.";
         }
         $redirect = true;
     }
-    
+
     // Update Phone Number
     if (isset($_POST["update_phone"]) && !empty($_POST["new_phone"])) {
         if ($dbh->updateUserPhoneNumber($_SESSION["userId"], $_POST["new_phone"])) {
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         $redirect = true;
     }
-    
+
     // Update Address
     if (isset($_POST["update_address"]) && !empty($_POST["new_address"])) {
         if ($dbh->updateUserAddress($_SESSION["userId"], $_POST["new_address"])) {

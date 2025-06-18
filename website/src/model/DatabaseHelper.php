@@ -184,7 +184,7 @@ class DatabaseHelper
      * Listing methods 
     */
 
-    private function insertIntoListing (int $articleId, int $sellerId): bool
+    private function insertIntoListing(int $articleId, int $sellerId): bool
     {
         $stmt = $this->db->prepare("INSERT INTO LISTING VALUES (?, ?)");
         $stmt->bind_param("ii", $articleId, $sellerId);
@@ -192,7 +192,7 @@ class DatabaseHelper
         return $stmt->execute();
     }
 
-    public function getListing (int $sellerId): array|bool
+    public function getListing(int $sellerId): array|bool
     {
         $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId IN (SELECT articleId from LISTING WHERE sellerId = ?)");
         $stmt->bind_param("i", $sellerId);
@@ -229,7 +229,7 @@ class DatabaseHelper
     {
         $stmt = $this->db->prepare("SELECT * FROM CLIENT_ORDER WHERE userId=?");
         $stmt->bind_param("i", $clientId);
-        
+
         if (!$stmt->execute()) {
             return false;
         }
@@ -251,7 +251,8 @@ class DatabaseHelper
                 FROM ARTICLE a
                 JOIN ARTICLE_VERSION v ON a.articleId = v.articleId) p
             JOIN SHOPPING_CART_ITEM c ON p.articleId = c.articleId AND p.versionId = c.versionId
-            WHERE c.userId = ?");
+            WHERE c.userId = ?"
+        );
         $stmt->bind_param("i", $clientId);
         $stmt->execute();
 
@@ -277,8 +278,7 @@ class DatabaseHelper
             $query = "UPDATE SHOPPING_CART_ITEM SET amount = ? WHERE userId = ? AND articleId = ? AND versionId = ?";
             $stmt = $this->db->prepare($query);
             $stmt->bind_param("iiii", $amount, $userId, $articleId, $versionId);
-        }
-        else {
+        } else {
             $query = "INSERT INTO SHOPPING_CART_ITEM VALUES (?, ?, ?, 1)";
             $stmt = $this->db->prepare($query);
             $stmt->bind_param("iii", $userId, $articleId, $versionId);
@@ -311,11 +311,11 @@ class DatabaseHelper
             // If quantity is 0 or less, remove the item from cart
             return $this->removeFromCart($userId, $articleId, $versionId);
         }
-        
+
         $query = "UPDATE SHOPPING_CART_ITEM SET amount = ? WHERE userId = ? AND articleId = ? AND versionId = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("iiii", $quantity, $userId, $articleId, $versionId);
-        
+
         return $stmt->execute();
     }
 
@@ -331,7 +331,7 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
-        
+
         return ($result = $stmt->get_result()) === false ?: $result->fetch_column();;
     }
 
@@ -344,7 +344,7 @@ class DatabaseHelper
     public function addUser(string $email, string $password, string $name): array
     {
         $alrExists = $this->getUserId($email);
-        if($alrExists !== false) {
+        if ($alrExists !== false) {
             $result["errCode"] = "ALR_EXIST";
             $result["result"] = false;
         } else {
@@ -405,29 +405,38 @@ class DatabaseHelper
         $stmt->bind_param("si", $newEmail, $userId);
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         if ($result->num_rows > 0) {
             return false; // Email already in use
         }
-        
+
         $stmt = $this->db->prepare("UPDATE USER SET email = ? WHERE userId = ?");
         $stmt->bind_param("si", $newEmail, $userId);
 
         return $stmt->execute();
     }
-    
+
     /**
      * Updates a user's password
      * @return bool True if successful, false otherwise
      */
-    public function updateUserPassword(int $userId, string $newPassword): bool
+    public function updateUserPassword(int $userId, string $oldPassword, string $newPassword): bool
     {
+        // Check if the old password matches
+        $stmt = $this->db->prepare("SELECT userId FROM USER WHERE userId = ? AND password = ?");
+        $stmt->bind_param("is", $userId, $oldPassword);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows === 0) {
+            return false; // Old password does not match
+        }
+        // Update the password
         $stmt = $this->db->prepare("UPDATE USER SET password = ? WHERE userId = ?");
         $stmt->bind_param("si", $newPassword, $userId);
 
         return $stmt->execute();
     }
-    
+
     /**
      * Updates a user's phone number
      * @return bool True if successful, false otherwise
@@ -439,7 +448,7 @@ class DatabaseHelper
 
         return $stmt->execute();
     }
-    
+
     /**
      * Updates a user's address
      * @return bool True if successful, false otherwise
@@ -601,7 +610,8 @@ class DatabaseHelper
             "SELECT a.* 
             FROM ARTICLE a
             JOIN WISHLIST w ON a.articleId = w.articleId
-            WHERE w.userId = ?");
+            WHERE w.userId = ?"
+        );
         $stmt->bind_param("i", $userId);
 
         if (!$stmt->execute()) {
