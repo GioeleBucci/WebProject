@@ -46,9 +46,9 @@
                         $isInWishlist = isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId']);
                         ?>
                         <span class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?> me-1" aria-hidden="true"></span>
-                        <div class="wishlist-text">
+                        <span class="wishlist-text">
                             <?php echo $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
-                        </div>
+                        </span>
                     </button>
 
                     <form method="post" class="d-inline-block w-100 w-md-auto">

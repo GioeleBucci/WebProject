@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="<?php echo Settings::BASE_PATH; ?>" />
+    <base href="<?php echo Settings::BASE_PATH; ?>">
     <link rel="icon" href="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" type="image/png">
     <title><?php echo "Kiwi" . (isset($templateParams["title"]) ? " - " . $templateParams["title"] : "") ?></title>
 
