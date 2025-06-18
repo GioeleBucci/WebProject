@@ -27,6 +27,8 @@
                 </ul>
             </nav>
         <?php endif; ?>
+
+        <?php $dbh->markNotificationsAsRead($_SESSION["userId"]) ?>
     </div>
 <?php else: ?>
     <div class="container mt-2 mt-md-4">

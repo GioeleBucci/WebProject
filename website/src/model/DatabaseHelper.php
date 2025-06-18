@@ -496,6 +496,15 @@ class DatabaseHelper
 
         return $stmt->execute();
     }
+    
+    public function markNotificationsAsRead(int $userId): bool
+    {
+        $query = "UPDATE `test`.`NOTIFICATION` SET isRead = true WHERE userId = ? AND isRead = false";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userId);
+    
+        return $stmt->execute();
+    }
 
 
 
