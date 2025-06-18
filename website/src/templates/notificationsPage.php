@@ -3,27 +3,36 @@
 <?php $templateParams["title"] = "Notifications" ?>
 
 <?php if ($notificationsAmount != 0): ?>
-    <div class="container">
-
+    <div class="container mt-2 mt-md-4">
         <div class="text-center mb-4">
             <h2>Notifications</h2>
         </div>
 
-        <table style="width:100%">
+        <div class="row g-3">
             <?php foreach ($sections[$_GET["sectionNumber"]] as $notification): ?>
-                <?php require "components/notificationCard.php" ?>
+                <div class="col-12">
+                    <?php require "components/notificationCard.php" ?>
+                </div>
             <?php endforeach ?>
-        </table>
-        <nav>
-            <form>
-                <?php foreach (array_keys($sections) as $sectionNumber): ?>
-                    <input type="submit" name="sectionNumber" value=<?php echo $sectionNumber ?>></input>
-                <?php endforeach; ?>
-            </form>
-        </nav>
-        <!-- <div class="row">
-        </div> -->
+        </div>
+
+        <?php if (count($sections) > 1): ?>
+            <nav aria-label="Notifications pagination" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <?php foreach (array_keys($sections) as $sectionNumber): ?>
+                        <li class="page-item <?php echo ($_GET["sectionNumber"] == $sectionNumber) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?sectionNumber=<?php echo $sectionNumber; ?>"><?php echo $sectionNumber; ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
+        <?php endif; ?>
     </div>
 <?php else: ?>
-    <p>There are no notifications</p>
+    <div class="container mt-2 mt-md-4">
+        <div class="text-center">
+            <h2>Notifications</h2>
+            <p class="lead mt-4">You have no notifications at the moment.</p>
+        </div>
+    </div>
 <?php endif; ?>
