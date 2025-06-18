@@ -3,9 +3,9 @@
 <?php $templateParams["title"] = "Notifications" ?>
 
 <?php if ($notificationsAmount != 0): ?>
-    <div class="container mt-2 mt-md-4">
+    <div class="container">
         <div class="text-center mb-4">
-            <h2>Notifications</h2>
+            <span class="page-title-text">Notifications</span>
         </div>
 
         <div class="row g-3">
@@ -33,7 +33,7 @@
 <?php else: ?>
     <div class="container mt-2 mt-md-4">
         <div class="text-center">
-            <h2>Notifications</h2>
+            <h2 class="page-title-text">Notifications</h2>
             <p class="lead mt-4">You have no notifications at the moment.</p>
         </div>
     </div>

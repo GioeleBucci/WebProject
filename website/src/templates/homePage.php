@@ -46,7 +46,7 @@
                     <a class="e" href="<?php echo $searchUrl; ?>" aria-label="Browse <?php echo htmlspecialchars($categories[$index]); ?> products">
                         <img src="<?php echo $path ?>" class="d-block w-100 img-fluid carousel-image" alt="<?php echo htmlspecialchars($image); ?>">
                         <div class="carousel-caption">
-                            <span class="fs-2 fw-bold"><?php echo htmlspecialchars($categories[$index]); ?></span>
+                            <span class="page-title-text"><?php echo htmlspecialchars($categories[$index]); ?></span>
                             <p><?php echo htmlspecialchars($carouselTexts[$index % sizeof($carouselTexts)]); ?></p>
                         </div>
                     </a>

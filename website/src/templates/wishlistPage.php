@@ -1,6 +1,6 @@
 <?php $templateParams["title"] = "Your Wishlist" ?>
 
-<?php 
+<?php
 // Check if user is logged in
 if (!Utils::isUserLoggedIn()) {
     // Store the current page URL in session before redirecting
@@ -18,7 +18,7 @@ $isWishlistEmpty = empty($wishlistItems);
 
 <div class="container">
     <div class="text-center">
-        <h2>Your Wishlist</h2>
+        <span class="page-title-text">Your Wishlist</span>
     </div>
 
     <div class="row">

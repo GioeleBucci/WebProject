@@ -3,7 +3,7 @@
         <img
             src="<?php echo Settings::UPLOAD_DIR . "articles/" . $article['image']; ?>"
             alt="<?php echo $article['name'] ?>"
-            class="img-fluid" />
+            class="img-fluid">
     </div>
     <div class="col-9 col-md-5">
         <h5 class="mb-1"><?php echo $article['name'] ?></h5>
@@ -14,14 +14,16 @@
         <strong class="item-price" data-unit-price="<?php echo $article['price'] ?>">€<?php echo $article['price'] * $article['amount'] ?></strong>
     </div>
     <div class="col-3 col-md-2 text-end mt-2 mt-md-0">
+        <label for="quantity-<?php echo $article['articleId'] ?>-<?php echo $article['versionId'] ?>" class="visually-hidden">Quantity for <?php echo htmlspecialchars($article['name']); ?></label>
         <input
+            id="quantity-<?php echo $article['articleId'] ?>-<?php echo $article['versionId'] ?>"
             type="number"
             class="form-control quantity-input"
             value="<?php echo $article['amount'] ?>"
             min="1"
             data-article-id="<?php echo $article['articleId'] ?>"
             data-version-id="<?php echo $article['versionId'] ?>"
-            style="max-width: 80px; margin: 0 auto;" />
+            style="max-width: 80px; margin: 0 auto;">
     </div>
     <form method="post" class="col-3 col-md-1 text-end mt-2 mt-md-0">
         <input type="hidden" id="removeItem" name="removeItem" >

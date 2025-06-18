@@ -1,10 +1,10 @@
 <?php require "utils/loadCart.php" ?>
 
-<?php $templateParams["title"] = "Your shopping cart" ?>
+<?php $templateParams["title"] = "Cart" ?>
 
 <div class="container">
     <div class="text-center">
-        <h2>Your Cart</h2>
+        <span class="page-title-text">Your Cart</span>
     </div>
 
     <div class="row g-5">
@@ -21,7 +21,7 @@
         <?php if (!$isCartEmpty) : ?>
             <div class="col-md-4 mt-2 mt-md-5">
                 <div class="p-3" id="cart-summary">
-                    <h4 class="mb-4">Order Summary</h4>
+                    <h3 class="mb-4">Order Summary</h3>
 
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal</span>
@@ -33,7 +33,7 @@
                         <span>€10</span>
                     </div>
 
-                    <hr />
+                    <hr>
 
                     <div class="d-flex justify-content-between mb-3">
                         <strong>Total</strong>
@@ -48,87 +48,87 @@
 </div>
 
 <?php if (!$isCartEmpty) : ?>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const quantityInputs = document.querySelectorAll('.quantity-input');
-    
-    // Timeout to prevent multiple rapid requests
-    let updateTimeout;
-    
-    // Add event listeners to all quantity inputs
-    quantityInputs.forEach(input => {
-        input.addEventListener('change', handleQuantityChange);
-        input.addEventListener('input', handleQuantityChange);
-    });
-    
-    function handleQuantityChange(e) {
-        const input = e.target;
-        const quantity = parseInt(input.value, 10);
-        const articleId = input.dataset.articleId;
-        const versionId = input.dataset.versionId;
-        
-        // Validate quantity
-        if (quantity < 1) {
-            input.value = 1;
-            return;
-        }
-        
-        // Get the price element
-        const priceElement = input.closest('.row').querySelector('.item-price');
-        const unitPrice = parseFloat(priceElement.dataset.unitPrice);
-        
-        // Update price immediately in UI
-        priceElement.textContent = '€' + (unitPrice * quantity).toFixed(2);
-        
-        // Clear any pending updates
-        clearTimeout(updateTimeout);
-        
-        // Schedule update to database
-        updateTimeout = setTimeout(() => {
-            updateCartItemQuantity(articleId, versionId, quantity);
-        }, 500);
-    }
-    
-    function updateCartItemQuantity(articleId, versionId, quantity) {
-        // Create form data
-        const formData = new FormData();
-        formData.append('articleId', articleId);
-        formData.append('versionId', versionId);
-        formData.append('quantity', quantity);
-        formData.append('getTotal', 'true');
-        
-        // Show loading indicator
-        // You could add a loading spinner here if desired
-        
-        // Send AJAX request
-        fetch('/WebProject/website/src/utils/updateCartQuantity.php', {
-            method: 'POST',
-            body: formData,
-            credentials: 'include'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                // Update the subtotal and total in the summary
-                if (data.subtotal !== null) {
-                    document.getElementById('cart-subtotal').textContent = '€' + data.subtotal.toFixed(2);
-                    document.getElementById('cart-total').textContent = '€' + data.total.toFixed(2);
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+
+            // Timeout to prevent multiple rapid requests
+            let updateTimeout;
+
+            // Add event listeners to all quantity inputs
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', handleQuantityChange);
+                input.addEventListener('input', handleQuantityChange);
+            });
+
+            function handleQuantityChange(e) {
+                const input = e.target;
+                const quantity = parseInt(input.value, 10);
+                const articleId = input.dataset.articleId;
+                const versionId = input.dataset.versionId;
+
+                // Validate quantity
+                if (quantity < 1) {
+                    input.value = 1;
+                    return;
                 }
-            } else {
-                console.error('Failed to update cart:', data.message || 'Unknown error');
-                alert('Could not update cart. Please try again later.');
+
+                // Get the price element
+                const priceElement = input.closest('.row').querySelector('.item-price');
+                const unitPrice = parseFloat(priceElement.dataset.unitPrice);
+
+                // Update price immediately in UI
+                priceElement.textContent = '€' + (unitPrice * quantity).toFixed(2);
+
+                // Clear any pending updates
+                clearTimeout(updateTimeout);
+
+                // Schedule update to database
+                updateTimeout = setTimeout(() => {
+                    updateCartItemQuantity(articleId, versionId, quantity);
+                }, 500);
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Could not update cart: ' + error.message);
+
+            function updateCartItemQuantity(articleId, versionId, quantity) {
+                // Create form data
+                const formData = new FormData();
+                formData.append('articleId', articleId);
+                formData.append('versionId', versionId);
+                formData.append('quantity', quantity);
+                formData.append('getTotal', 'true');
+
+                // Show loading indicator
+                // You could add a loading spinner here if desired
+
+                // Send AJAX request
+                fetch('/WebProject/website/src/utils/updateCartQuantity.php', {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'include'
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Update the subtotal and total in the summary
+                            if (data.subtotal !== null) {
+                                document.getElementById('cart-subtotal').textContent = '€' + data.subtotal.toFixed(2);
+                                document.getElementById('cart-total').textContent = '€' + data.total.toFixed(2);
+                            }
+                        } else {
+                            console.error('Failed to update cart:', data.message || 'Unknown error');
+                            alert('Could not update cart. Please try again later.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Could not update cart: ' + error.message);
+                    });
+            }
         });
-    }
-});
-</script>
+    </script>
 <?php endif ?>

@@ -3,7 +3,7 @@
 
 <?php $templateParams["title"] = "Account" ?>
 
-<div class="container py-5">
+<div class="container py-2">
     <div class="text-center mb-4">
         <h2>Your Account</h2>
         <?php if (!empty($_SESSION["account_success"])): ?>
