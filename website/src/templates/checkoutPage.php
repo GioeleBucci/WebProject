@@ -4,15 +4,16 @@
 
 <div class="container mt-md-2">
     <div class="text-center">
-        <h2>Checkout</h2>
+        <span class="page-title-text">Checkout</span>
     </div>
 
     <div class="row g-5">
         <div class="col-md-4 order-md-2 order-1">
-            <h4 class="d-flex justify-content-between align-items-center my-3">
-                <span class="text-primary">Your cart</span>
+            <div class="d-flex justify-content-between align-items-center my-3">
+                <span class="text-primary fs-4">Your cart</span>
                 <span class="badge bg-primary rounded-pill"><?php echo $totalItems ?></span>
-            </h4>
+            </div>
+
             <ul class="list-group">
                 <?php $total = 0 ?>
                 <?php foreach ($cartItems as $article): ?>
@@ -71,7 +72,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label for="state" class="form-label">Province</label>
+                        <label for="province" class="form-label">Province</label>
                         <input type="text" class="form-control" id="province" required>
                     </div>
 
@@ -85,16 +86,17 @@
 
                 <h4 class="mb-3">Payment</h4>
 
-                <div class="my-3">
+                <fieldset class="my-3">
+                    <legend class="visually-hidden">Payment Method</legend>
                     <?php $paymentMethods = $dbh->getPaymentMethodsNames() ?>
 
                     <?php foreach ($paymentMethods as $index => $method) : ?>
                         <div class="form-check">
-                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" <?php echo $index === 0 ? "checked" : "" ?> required>
-                            <label class="form-check-label" for="credit"><?php echo $method ?></label>
+                            <input id="payment-<?php echo $index ?>" name="paymentMethod" type="radio" class="form-check-input" <?php echo $index === 0 ? "checked" : "" ?> required>
+                            <label class="form-check-label" for="payment-<?php echo $index ?>"><?php echo $method ?></label>
                         </div>
                     <?php endforeach; ?>
-                </div>
+                </fieldset>
 
                 <div class="row gy-3">
                     <div class="col-md-6">

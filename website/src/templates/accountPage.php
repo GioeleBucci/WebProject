@@ -5,7 +5,7 @@
 
 <div class="container py-2">
     <div class="text-center mb-4">
-        <h2>Your Account</h2>
+        <span class="page-title-text">Your Account</span>
         <?php if (!empty($_SESSION["account_success"])): ?>
             <div class="alert alert-success mt-3" role="alert">
                 <?php echo htmlspecialchars($_SESSION["account_success"]); ?>
@@ -22,8 +22,8 @@
         <div class="col-md-8">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <h3 class="card-title mb-4">Personal Information</h3>
-                    
+                    <h4 class="card-title mb-4">Personal Information</h4>
+
                     <div class="row mb-4">
                         <div class="col-md-6 mb-3">
                             <div class="d-flex flex-column">
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row mb-4">
                         <div class="col-md-6 mb-3">
                             <div class="d-flex flex-column">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row mb-4">
                         <div class="col-12 mb-3">
                             <div class="d-flex flex-column">
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-12">
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#passwordModal">
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-4 text-center">
                 <form method="post">
                     <input type="hidden" id="logout" name="logout" value="logout">
