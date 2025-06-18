@@ -22,7 +22,10 @@ $routes = [
     Links::LISTING => Pages::LISTING,
     Links::NEW_ARTICLE => Pages::NEW_ARTICLE,
     Links::EDIT_ARTICLE => Pages::EDIT_ARTICLE,
-    Links::NEW_VERSION => Pages::NEW_VERSION
+    Links::NEW_VERSION => Pages::NEW_VERSION,
+    Links::PRIVACY_POLICY => Pages::PRIVACY_POLICY,
+    Links::TERMS_OF_SERVICE => Pages::TERMS_OF_SERVICE,
+    Links::COOKIE_POLICY => Pages::COOKIE_POLICY
 ];
 
 if (array_key_exists($requestPath, $routes)) {

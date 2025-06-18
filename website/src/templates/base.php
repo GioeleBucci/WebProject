@@ -99,9 +99,9 @@
                         <p class="mb-0">&copy; <?php echo date("Y"); ?> Company Name</p>
                     </div>
                     <div class="d-flex flex-column flex-md-row text-center text-md-start">
-                        <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Privacy Policy</a>
-                        <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Terms of Service</a>
-                        <a href="#" class="text-decoration-underline text-dark my-1 mx-md-2">Cookies</a>
+                        <a href="<?php echo Links::PRIVACY_POLICY ?>" class="text-decoration-underline text-dark my-1 mx-md-2">Privacy Policy</a>
+                        <a href="<?php echo Links::TERMS_OF_SERVICE ?>" class="text-decoration-underline text-dark my-1 mx-md-2">Terms of Service</a>
+                        <a href="<?php echo Links::COOKIE_POLICY ?>" class="text-decoration-underline text-dark my-1 mx-md-2">Cookies</a>
                     </div>
                 </div>
             </div>

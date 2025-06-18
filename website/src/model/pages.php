@@ -18,6 +18,9 @@ class Links
     public const NEW_VERSION = 'new-version';
     public const EDIT_ARTICLE = 'edit-article';
     public const WISHLIST = 'wishlist';
+    public const PRIVACY_POLICY = 'privacy-policy';
+    public const TERMS_OF_SERVICE = 'terms-of-service';
+    public const COOKIE_POLICY = 'cookie-policy';
 }
 
 /* Actual filenames the relative links will be resolved to */
@@ -39,4 +42,7 @@ class Pages
     public const NEW_ARTICLE = 'newArticlePage.php';
     public const NEW_VERSION = 'newVersionPage.php';
     public const EDIT_ARTICLE = 'editArticlePage.php';
+    public const PRIVACY_POLICY = 'privacyPolicyPage.php';
+    public const TERMS_OF_SERVICE = 'termsOfServicePage.php';
+    public const COOKIE_POLICY = 'cookiePolicyPage.php';
 }
