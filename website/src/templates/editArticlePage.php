@@ -44,12 +44,12 @@
                             <label for="size" class="form-label">Size</label>
                             <input type="text" class="form-control" id="size" name="size" value="<?php echo $article["size"] ?>" required>
                         </div>
-                        <div>
+                        <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
                             <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
                             <input type="file" class="form-control" accept="image/png, image/jpg, image/jpeg" id="image" name="image">
                         </div>
-                        <div>
+                        <div class="mb-4">
                             <div class="form-group">
                                 <label for="categoryId" class="form-label">Category</label>
                                 <select class="form-select" id="categoryId" name="categoryId">

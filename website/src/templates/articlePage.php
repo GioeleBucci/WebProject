@@ -58,17 +58,16 @@
                             <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
                         </button>
                     </form>
+
+                    <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
+                        <a href="edit-article?articleId=<?= $articleId ?>" class="btn btn-outline-primary w-100 w-md-auto">
+                            <span class="bi bi-pencil me-1" aria-hidden="true"></span> Edit Article
+                        </a>
+                        <a href="new-version?articleId=<?= $articleId ?>" class="btn btn-outline-success w-100 w-md-auto">
+                            <span class="bi bi-plus me-1" aria-hidden="true"></span> Add Version
+                        </a>
+                    <?php endif ?>
                 </div>
-                <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
-                    <div class="mt-4 mt-md-3 d-flex flex-column flex-md-row gap-2 align-items-center align-items-md-start">
-                        <a href="edit-article?articleId=<?= $articleId ?>" class="d-flex w-100 w-md-auto justify-content-center icon">
-                            <span style="font-size:10rem !important;" class="h1 align-content-center bi-pencil" aria-hidden="true"></span>
-                        </a>
-                        <a href="new-version?articleId=<?= $articleId ?>" class="d-flex w-100 w-md-auto justify-content-center icon">
-                            <span style="font-size:10rem !important;" class="h1 align-content-center bi-plus" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                <?php endif ?>
             <?php else: ?>
                 <button type="button" class="btn btn-primary add-to-cart-btn mt-3" disabled>
                     <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Log in to add items to your cart!

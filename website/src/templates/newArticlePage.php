@@ -52,12 +52,12 @@
                             <label for="amount" class="form-label">Stock amount</label>
                             <input type="text" class="form-control" id="amount" name="amount" required>
                         </div>
-                        <div>
+                        <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
                             <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
                             <input type="file" class="form-control" accept="image/png, image/jpg, image/jpeg" id="image" name="image" required>
                         </div>
-                        <div>
+                        <div class="mb-4">
                             <div class="form-group">
                                 <label for="categoryId" class="form-label">Category</label>
                                 <select class="form-select" id="categoryId" name="categoryId">
