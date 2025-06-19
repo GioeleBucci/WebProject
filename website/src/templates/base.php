@@ -19,7 +19,7 @@
 <body>
     <div class="page-wrapper">
         <header>
-            <div class="container mt-4 mb-1 mb-md-4">
+            <div class="container-fluid px-3 px-md-5 mt-4 mb-1 mb-md-4">
                 <!-- Header -->
                 <div class="d-flex flex-column flex-md-row justify-content-between py-3 gap-2 gap-md-0">
                     <!-- Logo -->
@@ -92,7 +92,7 @@
         </main>
 
         <footer>
-            <div class="container mt-5">
+            <div class="container-fluid px-3 px-md-5 mt-5">
                 <!-- Footer -->
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-center py-3 border-top">
                     <div>

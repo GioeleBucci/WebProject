@@ -1,3 +1,24 @@
+body {
+    zoom: 0.8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container responsive padding to eliminate side spaces - only for non-mobile devices */
+@media (min-width: 721px) {
+    .container-fluid {
+        max-width: none !important;
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+
+    .container {
+        max-width: none !important;
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+}
+
 .carousel-image {
     height: 65vh;
     @media (max-width: 720px) {
@@ -32,7 +53,7 @@
 }
 
 .page-title-text {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: 500;
 }
 
