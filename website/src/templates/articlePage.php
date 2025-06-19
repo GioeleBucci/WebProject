@@ -54,7 +54,7 @@
                     <form method="post" class="d-inline-block w-100 w-md-auto">
                         <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
                         <input type="hidden" name="addArticle" id="addArticle" value="">
-                        <button type="submit" class="btn btn-primary add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
+                        <button type="submit" class="btn btn-outline-primary add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
                             <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
                         </button>
                     </form>

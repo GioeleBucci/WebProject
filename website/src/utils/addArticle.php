@@ -4,12 +4,12 @@ if (isset($_POST["add"])) {
 	unset($templateParams["insertionError"]);
 	// Image processing
 	$fileName = $_FILES["image"]["name"];
-	$filePath = Settings::UPLOAD_DIR . "articles/" . $fileName;
-	$imageFileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+	$absoluteFilePath = "/opt/lampp/htdocs" . Settings::UPLOAD_DIR . "articles/" . $fileName;
+	$imageFileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 	$imageOk = true;
 
 	// Check if file already exists
-	if (file_exists($filePath)) {
+	if (file_exists($absoluteFilePath)) {
 		$imageOk = false;
 	}
 
@@ -23,7 +23,7 @@ if (isset($_POST["add"])) {
 		die();
 	}
 
-	if (!move_uploaded_file($_FILES["image"]["tmp_name"], "/opt/lampp/htdocs" . $filePath)) {
+	if (!move_uploaded_file($_FILES["image"]["tmp_name"], $absoluteFilePath)) {
 		$templateParams["insertionError"] = "Error during image upload";
 		die();
 	}

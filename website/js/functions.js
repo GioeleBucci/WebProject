@@ -14,7 +14,7 @@ function toggleWishlist() {
     const formData = new FormData();
     formData.append('articleId', articleId);
 
-    const heartIcon = this.querySelector('i');
+    const heartIcon = this.querySelector('span[class*="bi-heart"]');
     const wishlistTextDiv = this.querySelector('.wishlist-text');
     
     // Disable the button during the request to prevent multiple clicks

@@ -1,6 +1,9 @@
-<?php $templateParams["title"] = "Your products" ?>
+<?php $templateParams["title"] = "Your Listings" ?>
 
-<div class="container mt-2 mt-md-4">
+<div class="container">
+	<div class="text-center mb-4">
+		<span class="page-title-text">Your Listings</span>
+	</div>
 	<div class="row mt-3 g-3">
 		<?php foreach ($dbh->getListing($_SESSION["userId"]) as $article): ?>
 			<div class="col-6 col-md-3">
