@@ -2,7 +2,7 @@
 
 $article = $dbh->getArticle($_GET["articleId"]);
 if (!$article) {
-	die("Product not found"); // TODO handle this more gracefully
+	die("Product not found");
 }
 unset($templateParams["insertionError"]);
 
@@ -13,12 +13,12 @@ if (isset($_POST["edit"])) {
 		$filePath = Settings::UPLOAD_DIR . "articles/" . $fileName;
 		$imageFileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 		$imageOk = 1;
-	
+
 		// Check if file already exists
 		if (file_exists($filePath)) {
 			$imageOk = 0;
 		}
-	
+
 		// Only allow certain file formats
 		if (!in_array($imageFileType, ["jpg", "png", "jpeg"])) {
 			$imageOk = 0;
@@ -29,20 +29,17 @@ if (isset($_POST["edit"])) {
 		} else {
 			if (!move_uploaded_file($_FILES["image"]["tmp_name"], "/opt/lampp/htdocs" . $filePath)) {
 				$templateParams["insertionError"] = "Error during image upload";
-			}
-			else {
+			} else {
 				unlink("/opt/lampp/htdocs" . Settings::UPLOAD_DIR . "articles/" . $article["image"]);
 			}
 		}
-	}
-	else {
+	} else {
 		$fileName = $article["image"];
 	}
 
 	if (!$dbh->updateArticle($article["articleId"], $_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName)) {
 		$templateParams["insertionError"] = "Error during article update";
-	}
-	else {
+	} else {
 		$article = $dbh->getArticle($_GET["articleId"]);
 	}
 }

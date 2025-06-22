@@ -3,7 +3,7 @@
 $article = $dbh->getArticle($_GET["articleId"]) ?? false;
 
 if ($article === false) {
-	die("Product not found"); // TODO handle this more gracefully
+	die("Product not found");
 }
 
 unset($templateParams["insertionError"]);

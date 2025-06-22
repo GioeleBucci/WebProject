@@ -9,7 +9,7 @@ $article = $dbh->getArticle($articleId);
 $_SESSION["currentArticle"] = $article;
 
 if (!$article) {
-    die("Product not found"); // TODO handle this more gracefully
+    die("Product not found");
 }
 
 if (isset($_POST["addArticle"])) {
