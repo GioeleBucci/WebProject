@@ -88,6 +88,12 @@
                 </div>
             </div>
 
+            <div class="mt-3 text-center">
+                <a href="<?php echo Links::ORDERS ?>" aria-label="Your orders">
+                    <span class="bi bi-bag"></span>
+                </a>
+            </div>
+
             <div class="mt-4 text-center">
                 <form method="post">
                     <input type="hidden" id="logout" name="logout" value="logout">
