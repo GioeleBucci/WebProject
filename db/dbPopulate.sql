@@ -1,4 +1,4 @@
-use test;
+use Kiwi;
 
 --
 -- Dumping data for table `CATEGORY`
@@ -53,7 +53,11 @@ INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `versionType`, `priceVa
 (8, 2, 'Dark Finish', 0, 3),
 (9, 1, 'Black', 0, 7),
 (9, 2, 'Gray', 0, 5),
-(10, 1, 'Natural Finish', 0, 2);
+(10, 1, 'Natural Finish', 0, 2),
+(11, 1, 'Natural Finish', 0, 2),
+(12, 1, 'Natural Finish', 0, 2),
+(13, 1, 'Natural Finish', 0, 2),
+(14, 1, 'Natural Finish', 0, 2);
 
 --
 -- Dumping data for table `PAYMENT_METHOD`

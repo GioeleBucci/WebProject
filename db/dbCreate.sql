@@ -1,5 +1,5 @@
-create schema if not exists test;
-use test;
+create schema if not exists Kiwi;
+use Kiwi;
 
 create table if not exists CATEGORY (
      categoryId int not null AUTO_INCREMENT,
@@ -74,8 +74,9 @@ create table if not exists CLIENT (
 create table if not exists CLIENT_ORDER (
      orderId int not null AUTO_INCREMENT,
      userId int not null,
-     orderTime datetime null,
+     totalExpense int null,
      notes char(127) null,
+     orderTime datetime null,
      primary key (orderId),
      constraint FK_OrderIssuer foreign key (userId) references CLIENT(userId) 
 );

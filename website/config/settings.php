@@ -9,6 +9,6 @@ class Settings
     public const DB_SERVERNAME = "localhost";
     public const DB_USERNAME = "root";
     public const DB_PASSWORD = "";
-    public const DB_DBNAME = "test";
+    public const DB_DBNAME = "Kiwi";
     public const DB_PORT = 3306;
 }
