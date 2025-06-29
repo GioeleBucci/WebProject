@@ -10,7 +10,6 @@ if (!Utils::isUserLoggedIn()) {
     die();
 }
 
-$templateParams["title"] = "Checkout";
 $cartItems = $dbh->getCartItems($_SESSION["userId"]);
 
 // Redirect to another page if the cart is empty
@@ -21,4 +20,12 @@ if (!isset($cartItems) || sizeof($cartItems) === 0) {
 $totalItems = 0;
 foreach ($cartItems as $cartItem) {
     $totalItems += $cartItem["amount"];
+}
+
+if (isset($_POST["checkout"])) {
+    // Process checkout...
+    $dbh->addOrder($_SESSION["userId"], $_POST["totalPrice"], date("Y-m-d H:i:s"));
+    $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), "Order issued");
+    $dbh->emptyCart($_SESSION["userId"]);
+    Utils::redirect(Links::CART);
 }

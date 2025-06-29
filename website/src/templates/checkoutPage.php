@@ -37,14 +37,14 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <strong class="text-primary">Total</strong>
-                    <strong class="text-primary">€<?php echo $total + 10 ?></strong>
+                    <strong class="text-primary">€<?php echo $total += 10 ?></strong>
                 </li>
             </ul>
         </div>
 
         <div class="col-md-8 order-md-1 order-2">
             <h4 class="mb-3">Shipping details</h4>
-            <form>
+            <form method="post">
                 <div class="row g-3">
                     <div class="col-sm-6">
                         <label for="firstName" class="form-label">First name</label>
@@ -126,7 +126,8 @@
 
                 <hr class="my-4">
 
-                <button class="w-100 btn btn-primary btn-md" type="submit">Pay</button>
+                <input type="hidden" name="totalPrice" id="totalPrice" value=<?php echo $total ?>>
+                <button class="w-100 btn btn-primary btn-md" type="submit" name="checkout" id="checkout">Pay</button>
             </form>
         </div>
     </div>
