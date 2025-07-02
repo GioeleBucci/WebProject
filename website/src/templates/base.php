@@ -83,7 +83,7 @@
             </div>
         </header>
 
-        <main style="flex-grow: 1;">
+        <main>
             <?php
             if (isset($templateParams["page"])) {
                 require $templateParams["page"];
