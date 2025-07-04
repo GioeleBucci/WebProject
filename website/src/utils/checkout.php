@@ -24,8 +24,8 @@ foreach ($cartItems as $cartItem) {
 
 if (isset($_POST["checkout"])) {
     // Process checkout...
-    $dbh->addOrder($_SESSION["userId"], $_POST["totalPrice"], date("Y-m-d H:i:s"));
-    $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), "Order issued");
+    $dbh->addOrder($_SESSION["userId"], $_POST["totalPrice"], date("Y-m-d H:i:s"), $cartItems);
+    $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), "Your order of €" . $_POST["totalPrice"] . " has been issued");
     $dbh->emptyCart($_SESSION["userId"]);
     Utils::redirect(Links::CART);
 }

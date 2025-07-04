@@ -216,13 +216,42 @@ class DatabaseHelper
      * Order methods
     */
 
-    public function addOrder(int $userId, int $expense, string $date, string $notes = ""): bool
+    private function getLatestOrderId(): int
+    {
+        return $this->db->query("SELECT orderId FROM CLIENT_ORDER ORDER BY orderId DESC LIMIT 1")->fetch_column();
+    }
+
+    private function addOrderItems(int $orderId, array $cartItems): bool
+    {
+        $stmt = $this->db->prepare("INSERT INTO ORDER_HAS_ARTICLE (orderId, articleId, versionId, amount) VALUES (?, ?, ?, ?)");
+        
+        foreach ($cartItems as $item) {
+            $stmt->bind_param("iiii", $orderId, $item['articleId'], $item['versionId'], $item['amount']);
+            if (!$stmt->execute()) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    public function addOrder(int $userId, int $expense, string $date, array $cartItems = [], string $notes = ""): bool
     {
         $query = "INSERT INTO `CLIENT_ORDER` (userId, totalExpense, notes, orderTime) VALUES (?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('iiss', $userId, $expense, $notes, $date);
 
-        return $stmt->execute();
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        // If cart items are provided, add them to the order
+        if (!empty($cartItems)) {
+            $orderId = $this->getLatestOrderId();
+            return $this->addOrderItems($orderId, $cartItems);
+        }
+
+        return true;
     }
 
     public function getAllOrders(int $clientId): array|bool
