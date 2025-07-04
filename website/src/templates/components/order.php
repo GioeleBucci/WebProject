@@ -6,9 +6,11 @@
                     <div class="flex-grow-1 me-3">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h6 class="card-title mb-0">Order #<?php echo $order["orderId"] ?></h6>
-                            <span class="badge bg-primary">Processing</span>
+                            <span class="badge <?php echo $order["delivered"] ? 'bg-success' : 'bg-primary' ?>">
+                                <?php echo $order["delivered"] ? 'Delivered' : 'Processing' ?>
+                            </span>
                         </div>
-    
+
                         <div class="row mb-2">
                             <div class="col-6">
                                 <strong>Total: €<?php echo number_format($order["totalExpense"], 2) ?></strong>
@@ -45,7 +47,9 @@
                         <strong>Order ID:</strong> #<?php echo $order["orderId"] ?>
                     </div>
                     <div class="col-6">
-                        <strong>Status:</strong> <span class="badge bg-primary">Processing</span>
+                        <strong>Status:</strong> <span class="badge <?php echo $order["delivered"] ? 'bg-success' : 'bg-primary' ?>">
+                            <?php echo $order["delivered"] ? 'Delivered' : 'Processing' ?>
+                        </span>
                     </div>
                 </div>
 
@@ -75,20 +79,31 @@
 
                 <hr>
                 <h6>Order Items:</h6>
-                <?php foreach ($order["items"] as $item): ?>
-                    <div class="row mb-2">
-                        <div class="col-8">
-                            <strong><?php echo htmlspecialchars($item["articleName"]) ?></strong><br>
-                            <small class="text-muted"><?php echo htmlspecialchars($item["versionType"]) ?></small>
-                        </div>
-                        <div class="col-2 text-center">
-                            <span class="badge bg-light text-dark"><?php echo $item["amount"] ?></span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <small>€<?php echo number_format($item["price"], 2) ?></small>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th id="article-name">Article Name</th>
+                            <th id="quantity" class="text-center">Quantity</th>
+                            <th id="total" class="text-end">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($order["items"] as $item): ?>
+                            <tr>
+                                <td headers="article-name">
+                                    <strong><?php echo htmlspecialchars($item["articleName"]) ?></strong><br>
+                                    <small class="text-muted"><?php echo htmlspecialchars($item["versionType"]) ?></small>
+                                </td>
+                                <td headers="quantity" class="text-center">
+                                    <?php echo $item["amount"] ?>
+                                </td>
+                                <td headers="total" class="text-end">
+                                    €<?php echo number_format($item["price"] * $item["amount"], 2) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

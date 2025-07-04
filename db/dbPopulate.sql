@@ -1,4 +1,4 @@
-use Kiwi;
+use kiwi;
 
 --
 -- Dumping data for table `CATEGORY`

@@ -285,6 +285,7 @@ class DatabaseHelper
                     'totalExpense' => $orderDetails[0]['totalExpense'],
                     'orderTime' => $orderDetails[0]['orderTime'],
                     'notes' => $orderDetails[0]['notes'],
+                    'delivered' => $orderDetails[0]['delivered'],
                     'itemCount' => count($orderDetails),
                     'items' => array_map(function($item) {
                         return [
@@ -410,7 +411,7 @@ class DatabaseHelper
 
     public function getUserId(string $email): bool|int
     {
-        $query = "SELECT userId FROM `Kiwi`.`USER` WHERE email = ?";
+        $query = "SELECT userId FROM `kiwi`.`USER` WHERE email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -431,7 +432,7 @@ class DatabaseHelper
             $result["errCode"] = "ALR_EXIST";
             $result["result"] = false;
         } else {
-            $query = "INSERT INTO `Kiwi`.`USER` (email, password, salt, name) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO `kiwi`.`USER` (email, password, salt, name) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
             $stmt->bind_param('ssss', $email, $hashedPassword, $salt, $name);
             $check = $stmt->execute();
@@ -450,7 +451,7 @@ class DatabaseHelper
 
     public function checkCredentials(string $email, string $password): bool
     {
-        $query = "SELECT password, salt FROM `Kiwi`.`USER` WHERE email = ?";
+        $query = "SELECT password, salt FROM `kiwi`.`USER` WHERE email = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -575,7 +576,7 @@ class DatabaseHelper
      */
     public function addNotification(int $userId, string $time, string $content): bool
     {
-        $query = "INSERT INTO `Kiwi`.`NOTIFICATION` (userId, receptionTime, content, isRead) VALUES (?, ?, ?, false)";
+        $query = "INSERT INTO `kiwi`.`NOTIFICATION` (userId, receptionTime, content, isRead) VALUES (?, ?, ?, false)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('iss', $userId, $time, $content);
 
@@ -584,7 +585,7 @@ class DatabaseHelper
 
     public function deleteNotification(int $notificationId): bool
     {
-        $query = "DELETE FROM `Kiwi`.`NOTIFICATION` WHERE notificationId = ?";
+        $query = "DELETE FROM `kiwi`.`NOTIFICATION` WHERE notificationId = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $notificationId);
 
@@ -593,7 +594,7 @@ class DatabaseHelper
 
     public function markNotificationsAsRead(int $userId): bool
     {
-        $query = "UPDATE `Kiwi`.`NOTIFICATION` SET isRead = true WHERE userId = ? AND isRead = false";
+        $query = "UPDATE `kiwi`.`NOTIFICATION` SET isRead = true WHERE userId = ? AND isRead = false";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userId);
 

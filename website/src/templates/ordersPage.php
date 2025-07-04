@@ -4,11 +4,11 @@
 
 <div class="container">
 	<div class="text-center">
-		<h2>Your Orders</h2>
+		<span class="page-title-text">Your Orders</span>
 	</div>
-	
+
 	<?php if ($orders !== false): ?>
-		<?php foreach($orders as $order) require "components/order.php" ?>
+		<?php foreach ($orders as $order) require "components/order.php" ?>
 	<?php else: ?>
 		<div class="row g-5">
 			<div class="col-md-12">
