@@ -13,7 +13,7 @@ if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["password"])
         if ($register["result"] == true) {
             Utils::login($_POST["email"]);
             //EXTRA: print actual login date and time
-            $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), "Registrazione effettuata");
+            $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i"), "Registrazione effettuata");
             unset($templateParams["registrationError"]);
             Utils::redirect(Links::ACCOUNT);
         } else {

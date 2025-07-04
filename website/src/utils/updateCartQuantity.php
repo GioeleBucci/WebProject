@@ -71,7 +71,7 @@ try {
         'quantity' => $quantity,
         'subtotal' => $newTotal,
         'itemPrice' => $itemPrice,
-        'total' => $newTotal !== null ? $newTotal + 10 : null // Add shipping cost of €10
+        'total' => $newTotal !== null ? $newTotal : null
     ]);
     
 } catch (Exception $e) {

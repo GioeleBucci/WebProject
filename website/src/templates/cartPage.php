@@ -27,17 +27,11 @@
                         <span>Subtotal</span>
                         <span id="cart-subtotal">€<?php echo number_format($subtotal, 2) ?></span>
                     </div>
-
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Shipping</span>
-                        <span>€10.00</span>
-                    </div>
-
                     <hr>
 
                     <div class="d-flex justify-content-between mb-3">
                         <strong>Total</strong>
-                        <strong id="cart-total">€<?php echo number_format(($subtotal + 10), 2) ?></strong>
+                        <strong id="cart-total">€<?php echo number_format($subtotal, 2) ?></strong>
                     </div>
 
                     <a href=<?php echo Links::CHECKOUT ?> class="btn btn-success w-100">Proceed to Checkout</a>

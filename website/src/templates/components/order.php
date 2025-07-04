@@ -58,7 +58,7 @@
                         <strong>Total Amount:</strong> €<?php echo number_format($order["totalExpense"], 2) ?>
                     </div>
                     <div class="col-6">
-                        <strong>Items:</strong> <?php echo $order["itemCount"] ?> item<?php echo $order["itemCount"] != 1 ? 's' : '' ?>
+                        <strong>Total Items:</strong> <?php echo $order["itemCount"] ?>
                     </div>
                 </div>
 
@@ -77,8 +77,6 @@
                     </div>
                 <?php endif; ?>
 
-                <hr>
-                <h6>Order Items:</h6>
                 <table class="table table-sm">
                     <thead>
                         <tr>

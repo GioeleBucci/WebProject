@@ -279,6 +279,9 @@ class DatabaseHelper
         foreach ($orderIds as $orderRow) {
             $orderDetails = $this->getOrderDetails($orderRow['orderId']);
             if ($orderDetails !== false) {
+                // Calculate total item count by summing all amounts
+                $totalItemCount = array_sum(array_column($orderDetails, 'amount'));
+                
                 // Extract order info from first item and group items
                 $orderInfo = [
                     'orderId' => $orderDetails[0]['orderId'],
@@ -286,7 +289,7 @@ class DatabaseHelper
                     'orderTime' => $orderDetails[0]['orderTime'],
                     'notes' => $orderDetails[0]['notes'],
                     'delivered' => $orderDetails[0]['delivered'],
-                    'itemCount' => count($orderDetails),
+                    'itemCount' => $totalItemCount,
                     'items' => array_map(function($item) {
                         return [
                             'articleName' => $item['articleName'],

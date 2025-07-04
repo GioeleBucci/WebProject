@@ -28,16 +28,9 @@
                         <span class="text-muted">€<?php echo $price ?></span>
                     </li>
                 <?php endforeach; ?>
-                <li class="list-group-item d-flex justify-content-between lh-sm">
-                    <div>
-                        <h6 class="my-0">Shipping</h6>
-                        <small class="text-muted">Standard delivery</small>
-                    </div>
-                    <span class="text-muted">€10</span>
-                </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <strong class="text-primary">Total</strong>
-                    <strong class="text-primary">€<?php echo $total += 10 ?></strong>
+                    <strong class="text-primary">€<?php echo $total ?></strong>
                 </li>
             </ul>
         </div>
@@ -97,32 +90,6 @@
                         </div>
                     <?php endforeach; ?>
                 </fieldset>
-
-                <div class="row gy-3">
-                    <div class="col-md-6">
-                        <label for="cc-name" class="form-label">Name on card</label>
-                        <input type="text" class="form-control" id="cc-name" required>
-                        <small class="text-muted">Full name as displayed on card</small>
-                        <div class="invalid-feedback">
-                            Name on card is required
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="cc-number" class="form-label">Credit card number</label>
-                        <input type="text" class="form-control" id="cc-number" required>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="cc-expiration" class="form-label">Expiration</label>
-                        <input type="text" class="form-control" id="cc-expiration" required>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="cc-cvv" class="form-label">CVV</label>
-                        <input type="text" class="form-control" id="cc-cvv" required>
-                    </div>
-                </div>
 
                 <hr class="my-4">
 

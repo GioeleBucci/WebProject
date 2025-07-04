@@ -65,8 +65,10 @@ INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `versionType`, `priceVa
 
 INSERT INTO `PAYMENT_METHOD` (`name`) VALUES
 ('Credit Card'),
-('PayPal'),
-('Bank Transfer');
+('Bank Transfer'),
+('Google Pay'),
+('Apple Pay'),
+('PayPal');
 
 --
 -- Dumping data for table `USER`
@@ -106,6 +108,7 @@ INSERT INTO `LISTING` (`articleId`, `sellerId`) VALUES
 --
 -- Dumping data for table `CLIENT`
 --
+
 INSERT INTO `CLIENT` (`userId`, `paymentMethodId`) VALUES
 (1, 1),
 (4, 2),
@@ -115,41 +118,29 @@ INSERT INTO `CLIENT` (`userId`, `paymentMethodId`) VALUES
 -- Dumping data for table `CLIENT_ORDER`
 --
 
--- INSERT INTO `CLIENT_ORDER` (`userId`, `orderTime`, `notes`) VALUES
--- (1, '2025-02-10', 'Please deliver on weekend only'),
--- (4, '2025-02-15', 'Call before delivery, need to remove old furniture'),
--- (5, '2025-03-01', 'Elevator access available, 3rd floor'),
--- (1, '2025-03-15', 'Assembly service requested');
+INSERT INTO `CLIENT_ORDER` (`orderId`, `userId`, `totalExpense`, `notes`, `orderTime`, `delivered`) VALUES
+(1, 1, 1724.80, '', '2025-04-13 14:43', 1),
+(2, 1, 528.70, '', '2025-07-04 20:53', 0);
 
 --
 -- Dumping data for table `ORDER_HAS_ARTICLE`
 --
 
--- INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `amount`) VALUES
--- (1, 1, 1, 1),
--- (1, 2, 1, 1),
--- (2, 4, 1, 1),
--- (2, 5, 1, 1),
--- (3, 6, 1, 1),
--- (3, 7, 1, 6),
--- (4, 8, 1, 1),
--- (4, 9, 1, 1);
+INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `amount`) VALUES
+(1, 1, 1, 1),
+(1, 6, 1, 1),
+(1, 9, 1, 1),
+(1, 9, 2, 1),
+(1, 10, 1, 1),
+(1, 13, 1, 1),
+(1, 14, 1, 1),
+(2, 3, 1, 1),
+(2, 9, 1, 3);
 
 --
--- Dumping data for table `DELIVERY`
+-- Dumping data for table `NOTIFICATION`
 --
 
--- INSERT INTO `DELIVERY` (`orderId`, `departureTime`, `arrivalTime`, `lastPosition`) VALUES
--- (1, '2025-02-12 12:00:00', '2025-02-14 15:00:00', 'Delivered'),
--- (2, '2025-02-17 09:00:00', '2025-02-20 16:00:00', 'Delivered'),
--- (3, '2025-03-03 13:00:00', NULL, 'In Warehouse'),
--- (4, '2025-03-17 07:00:00', NULL, 'Processing');
-
---
--- Dumping data for table `SHOPPING_CART_ITEM`
---
-
--- INSERT INTO `SHOPPING_CART_ITEM` (`userId`, `articleId`, `versionId`, `amount`) VALUES
--- (1, 1, 1, 1),
--- (1, 2, 1, 1),
--- (1, 3, 1, 1);
+INSERT INTO `NOTIFICATION` (`notificationId`, `userId`, `receptionTime`, `content`, `isRead`) VALUES
+(1, 1, '2025-04-13 14:43', 'Your order of €1724.80 has been issued', 1),
+(2, 1, '2025-07-04 20:53', 'Your order of €528.70 has been issued', 1);

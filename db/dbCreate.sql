@@ -75,7 +75,7 @@ create table if not exists CLIENT (
 create table if not exists CLIENT_ORDER (
      orderId int not null AUTO_INCREMENT,
      userId int not null,
-     totalExpense int null,
+     totalExpense decimal(6,2) null,
      notes char(127) null,
      orderTime datetime null,
      delivered boolean default false,

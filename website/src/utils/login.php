@@ -5,7 +5,7 @@ $templateParams["loginError"] = "Please log-in to access this page.";
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     if ($dbh->checkCredentials($_POST["email"], $_POST["password"])) {
         Utils::login($_POST["email"]);
-        $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), "Logged in");
+        $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i"), "Logged in");
         unset($templateParams["loginError"]);
         
         // Redirect to the saved URL if it exists, otherwise go to account page
