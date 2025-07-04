@@ -1,46 +1,29 @@
-<div class="order-card">
-    <div class="card h-100">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-                <div class="flex-grow-1 me-3">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h6 class="card-title mb-0">Order #<?php echo $order["orderId"] ?></h6>
-                        <span class="badge bg-primary">Processing</span>
-                    </div>
-
-                    <div class="row mb-2">
-                        <div class="col-6">
-                            <strong>Total: €<?php echo number_format($order["totalExpense"], 2) ?></strong>
+<div class="card-wrapper">
+    <div class="order-card">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="flex-grow-1 me-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="card-title mb-0">Order #<?php echo $order["orderId"] ?></h6>
+                            <span class="badge bg-primary">Processing</span>
                         </div>
-                        <div class="col-6 text-end">
-                            <small class="text-muted">
-                                <?php echo date('d M Y, H:i', strtotime($order["orderTime"])) ?>
-                            </small>
+    
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <strong>Total: €<?php echo number_format($order["totalExpense"], 2) ?></strong>
+                            </div>
+                            <div class="col-6 text-end">
+                                <small class="text-muted">
+                                    Ordered <?php echo date('j M Y, H:i', strtotime($order["orderTime"])) ?>
+                                </small>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="mb-2">
-                        <small class="text-muted">
-                            <i class="fas fa-box"></i>
-                            <?php echo $order["itemCount"] ?> item<?php echo $order["itemCount"] != 1 ? 's' : '' ?>
-                        </small>
-                    </div>
-
-                    <?php if (!empty($order["notes"])): ?>
-                        <div class="mb-2">
-                            <small class="text-muted">
-                                <strong>Notes:</strong> <?php echo htmlspecialchars($order["notes"]) ?>
-                            </small>
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2 w-80" data-bs-toggle="modal" data-bs-target="#orderModal<?php echo $order["orderId"] ?>">
+                                View Details
+                            </button>
                         </div>
-                    <?php endif; ?>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">
-                            <i class="fas fa-clock"></i> Ordered <?php echo date('j M Y', strtotime($order["orderTime"])) ?>
-                        </small>
-                        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#orderModal<?php echo $order["orderId"] ?>">
-                            View Details
-                        </button>
                     </div>
                 </div>
             </div>
@@ -91,7 +74,21 @@
                 <?php endif; ?>
 
                 <hr>
-                <p class="text-muted">Detailed item information and tracking will be available soon.</p>
+                <h6>Order Items:</h6>
+                <?php foreach ($order["items"] as $item): ?>
+                    <div class="row mb-2">
+                        <div class="col-8">
+                            <strong><?php echo htmlspecialchars($item["articleName"]) ?></strong><br>
+                            <small class="text-muted"><?php echo htmlspecialchars($item["versionType"]) ?></small>
+                        </div>
+                        <div class="col-2 text-center">
+                            <span class="badge bg-light text-dark"><?php echo $item["amount"] ?></span>
+                        </div>
+                        <div class="col-2 text-end">
+                            <small>€<?php echo number_format($item["price"], 2) ?></small>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

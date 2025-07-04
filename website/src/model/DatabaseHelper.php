@@ -224,14 +224,14 @@ class DatabaseHelper
     private function addOrderItems(int $orderId, array $cartItems): bool
     {
         $stmt = $this->db->prepare("INSERT INTO ORDER_HAS_ARTICLE (orderId, articleId, versionId, amount) VALUES (?, ?, ?, ?)");
-        
+
         foreach ($cartItems as $item) {
             $stmt->bind_param("iiii", $orderId, $item['articleId'], $item['versionId'], $item['amount']);
             if (!$stmt->execute()) {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -256,25 +256,56 @@ class DatabaseHelper
 
     public function getAllOrders(int $clientId): array|bool
     {
-        $stmt = $this->db->prepare("SELECT * FROM CLIENT_ORDER WHERE userId=?");
+        // First get all order IDs for the client
+        $stmt = $this->db->prepare("SELECT orderId FROM CLIENT_ORDER WHERE userId = ? ORDER BY orderTime DESC");
         $stmt->bind_param("i", $clientId);
-
+        
         if (!$stmt->execute()) {
             return false;
         }
-
-        return empty($orders = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $orders;
+        
+        $result = $stmt->get_result();
+        if ($result === false) {
+            return false;
+        }
+        
+        $orderIds = $result->fetch_all(MYSQLI_ASSOC);
+        if (empty($orderIds)) {
+            return false;
+        }
+        
+        // Get details for each order and group them properly
+        $allOrders = [];
+        foreach ($orderIds as $orderRow) {
+            $orderDetails = $this->getOrderDetails($orderRow['orderId']);
+            if ($orderDetails !== false) {
+                // Extract order info from first item and group items
+                $orderInfo = [
+                    'orderId' => $orderDetails[0]['orderId'],
+                    'totalExpense' => $orderDetails[0]['totalExpense'],
+                    'orderTime' => $orderDetails[0]['orderTime'],
+                    'notes' => $orderDetails[0]['notes'],
+                    'itemCount' => count($orderDetails),
+                    'items' => array_map(function($item) {
+                        return [
+                            'articleName' => $item['articleName'],
+                            'versionType' => $item['versionType'],
+                            'amount' => $item['amount'],
+                            'price' => $item['price']
+                        ];
+                    }, $orderDetails)
+                ];
+                $allOrders[] = $orderInfo;
+            }
+        }
+        
+        return empty($allOrders) ? false : $allOrders;
     }
 
-    /**
-     * Get order details with articles for a specific order
-     * @param int $orderId The order ID
-     * @return array|bool Returns order details with articles if successful, false otherwise
-     */
-    public function getOrderDetails(int $orderId): array|bool
+    private function getOrderDetails(int $orderId): array|bool
     {
         $stmt = $this->db->prepare(
-            "SELECT o.*, a.name as articleName, a.image, av.versionType, oha.amount, 
+            "SELECT o.*, a.name as articleName, av.versionType, oha.amount, 
                     (a.basePrice + av.priceVariation) as price
              FROM CLIENT_ORDER o
              JOIN ORDER_HAS_ARTICLE oha ON o.orderId = oha.orderId
@@ -290,32 +321,6 @@ class DatabaseHelper
 
         return empty($orderDetails = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $orderDetails;
     }
-
-    /**
-     * Get order with article count for display
-     * @param int $clientId The client ID
-     * @return array|bool Returns orders with article count if successful, false otherwise
-     */
-    public function getOrdersWithItemCount(int $clientId): array|bool
-    {
-        $stmt = $this->db->prepare(
-            "SELECT o.*, COUNT(oha.articleId) as itemCount
-             FROM CLIENT_ORDER o
-             LEFT JOIN ORDER_HAS_ARTICLE oha ON o.orderId = oha.orderId
-             WHERE o.userId = ?
-             GROUP BY o.orderId
-             ORDER BY o.orderTime DESC"
-        );
-        $stmt->bind_param("i", $clientId);
-
-        if (!$stmt->execute()) {
-            return false;
-        }
-
-        return empty($orders = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $orders;
-    }
-
-
 
     /*
      * Cart methods
@@ -449,15 +454,15 @@ class DatabaseHelper
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
-        
+
         $result = $stmt->get_result()->fetch_assoc();
         if (!$result) {
             return false;
         }
-        
+
         $salt = $result['salt'];
         $hashedPassword = hash('sha512', $password . $salt);
-        
+
         // Compare with stored password
         return $hashedPassword === $result['password'];
     }
@@ -585,13 +590,13 @@ class DatabaseHelper
 
         return $stmt->execute();
     }
-    
+
     public function markNotificationsAsRead(int $userId): bool
     {
         $query = "UPDATE `Kiwi`.`NOTIFICATION` SET isRead = true WHERE userId = ? AND isRead = false";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i', $userId);
-    
+
         return $stmt->execute();
     }
 

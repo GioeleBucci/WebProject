@@ -1,3 +1,3 @@
 <?php
 
-$orders = $dbh->getOrdersWithItemCount($_SESSION["userId"]);
+$orders = $dbh->getAllOrders($_SESSION["userId"]);
