@@ -83,3 +83,7 @@ main {
 .card:hover .product-name {
     text-decoration: underline;
 }
+
+.modal-backdrop {
+    zoom: 1.5 !important;
+}

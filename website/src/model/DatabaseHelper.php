@@ -237,6 +237,55 @@ class DatabaseHelper
         return empty($orders = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $orders;
     }
 
+    /**
+     * Get order details with articles for a specific order
+     * @param int $orderId The order ID
+     * @return array|bool Returns order details with articles if successful, false otherwise
+     */
+    public function getOrderDetails(int $orderId): array|bool
+    {
+        $stmt = $this->db->prepare(
+            "SELECT o.*, a.name as articleName, a.image, av.versionType, oha.amount, 
+                    (a.basePrice + av.priceVariation) as price
+             FROM CLIENT_ORDER o
+             JOIN ORDER_HAS_ARTICLE oha ON o.orderId = oha.orderId
+             JOIN ARTICLE a ON oha.articleId = a.articleId
+             JOIN ARTICLE_VERSION av ON oha.articleId = av.articleId AND oha.versionId = av.versionId
+             WHERE o.orderId = ?"
+        );
+        $stmt->bind_param("i", $orderId);
+
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        return empty($orderDetails = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $orderDetails;
+    }
+
+    /**
+     * Get order with article count for display
+     * @param int $clientId The client ID
+     * @return array|bool Returns orders with article count if successful, false otherwise
+     */
+    public function getOrdersWithItemCount(int $clientId): array|bool
+    {
+        $stmt = $this->db->prepare(
+            "SELECT o.*, COUNT(oha.articleId) as itemCount
+             FROM CLIENT_ORDER o
+             LEFT JOIN ORDER_HAS_ARTICLE oha ON o.orderId = oha.orderId
+             WHERE o.userId = ?
+             GROUP BY o.orderId
+             ORDER BY o.orderTime DESC"
+        );
+        $stmt->bind_param("i", $clientId);
+
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        return empty($orders = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $orders;
+    }
+
 
 
     /*
