@@ -2,11 +2,12 @@
 
 <?php $templateParams["title"] = "Notifications" ?>
 
-<?php if ($notificationsAmount != 0): ?>
-    <div class="container">
-        <div class="text-center mb-4">
-            <span class="page-title-text">Notifications</span>
-        </div>
+<div class="container">
+    <div class="text-center">
+        <span class="page-title-text">Notifications</span>
+    </div>
+    <?php if ($notificationsAmount != 0): ?>
+
 
         <div class="row g-3">
             <?php foreach ($sections[$_GET["sectionNumber"]] as $notification): ?>
@@ -29,12 +30,7 @@
         <?php endif; ?>
 
         <?php $dbh->markNotificationsAsRead($_SESSION["userId"]) ?>
-    </div>
+</div>
 <?php else: ?>
-    <div class="container mt-2 mt-md-4">
-        <div class="text-center">
-            <h2 class="page-title-text">Notifications</h2>
-            <p class="lead mt-4">You have no notifications at the moment.</p>
-        </div>
-    </div>
+        <p class="text-center lead mt-4">You have no notifications at the moment.</p>
 <?php endif; ?>

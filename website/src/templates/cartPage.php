@@ -14,7 +14,7 @@
                     <?php require("components/cartItem.php") ?>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p class="lead mt-4">Nothing here! Come back once you added something to your cart.</p>
+                <p class="text-center lead mt-4">Nothing here! Come back once you added something to your cart.</p>
             <?php endif; ?>
         </div>
 
