@@ -5,7 +5,11 @@ if (isset($_SESSION["userId"])) {
 }
 if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm_password"])) {
     if (strcmp($_POST["password"], $_POST["confirm_password"]) == 0) {
-        $register = $dbh->addUser($_POST["email"], $_POST["password"], $_POST["name"]);
+        // hash the password
+        $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+        $hashed_password = hash('sha512', $_POST["password"] . $random_salt);
+        // create a new user in the database
+        $register = $dbh->addUser($_POST["email"], $hashed_password, $random_salt, $_POST["name"]);
         if ($register["result"] == true) {
             Utils::login($_POST["email"]);
             //EXTRA: print actual login date and time

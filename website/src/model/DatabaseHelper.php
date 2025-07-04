@@ -341,16 +341,16 @@ class DatabaseHelper
      * @return array Returns the result of the query if successful,
      * and an empty string otherwise.
      */
-    public function addUser(string $email, string $password, string $name): array
+    public function addUser(string $email, string $hashedPassword, string $salt, string $name): array
     {
         $alrExists = $this->getUserId($email);
         if ($alrExists !== false) {
             $result["errCode"] = "ALR_EXIST";
             $result["result"] = false;
         } else {
-            $query = "INSERT INTO `Kiwi`.`USER` (email, password, name) VALUES (?, ?, ?)";
+            $query = "INSERT INTO `Kiwi`.`USER` (email, password, salt, name) VALUES (?, ?, ?, ?)";
             $stmt = $this->db->prepare($query);
-            $stmt->bind_param('sss', $email, $password, $name);
+            $stmt->bind_param('ssss', $email, $hashedPassword, $salt, $name);
             $check = $stmt->execute();
             if ($check === true) {
                 $result["result"] = true;
@@ -367,12 +367,21 @@ class DatabaseHelper
 
     public function checkCredentials(string $email, string $password): bool
     {
-        $query = "SELECT userId FROM `Kiwi`.`USER` WHERE email = ? AND password = ?";
+        $query = "SELECT password, salt FROM `Kiwi`.`USER` WHERE email = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss', $email, $password);
+        $stmt->bind_param('s', $email);
         $stmt->execute();
-
-        return !empty($stmt->get_result()->fetch_assoc());
+        
+        $result = $stmt->get_result()->fetch_assoc();
+        if (!$result) {
+            return false;
+        }
+        
+        $salt = $result['salt'];
+        $hashedPassword = hash('sha512', $password . $salt);
+        
+        // Compare with stored password
+        return $hashedPassword === $result['password'];
     }
 
     public function getUserType(int $userId): string

@@ -25,7 +25,9 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <button type="submit" class="btn btn-primary mt-1 mb-4">Apply Filters</button>
+                <div class="d-flex justify-content-center justify-content-md-start">
+                    <button type="submit" class="btn btn-primary mt-2 mb-4">Apply Filters</button>
+                </div>
             </form>
         </div>
 
