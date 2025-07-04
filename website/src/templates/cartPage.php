@@ -25,19 +25,19 @@
 
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal</span>
-                        <span id="cart-subtotal">€<?php echo $subtotal ?></span>
+                        <span id="cart-subtotal">€<?php echo number_format($subtotal, 2) ?></span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-2">
                         <span>Shipping</span>
-                        <span>€10</span>
+                        <span>€10.00</span>
                     </div>
 
                     <hr>
 
                     <div class="d-flex justify-content-between mb-3">
                         <strong>Total</strong>
-                        <strong id="cart-total">€<?php echo ($subtotal + 10) ?></strong>
+                        <strong id="cart-total">€<?php echo number_format(($subtotal + 10), 2) ?></strong>
                     </div>
 
                     <a href=<?php echo Links::CHECKOUT ?> class="btn btn-success w-100">Proceed to Checkout</a>
@@ -86,7 +86,7 @@
                 // Schedule update to database
                 updateTimeout = setTimeout(() => {
                     updateCartItemQuantity(articleId, versionId, quantity);
-                }, 500);
+                }, 200);
             }
 
             function updateCartItemQuantity(articleId, versionId, quantity) {
@@ -116,8 +116,8 @@
                         if (data.success) {
                             // Update the subtotal and total in the summary
                             if (data.subtotal !== null) {
-                                document.getElementById('cart-subtotal').textContent = '€' + data.subtotal.toFixed(2);
-                                document.getElementById('cart-total').textContent = '€' + data.total.toFixed(2);
+                                document.getElementById('cart-subtotal').textContent = '€' + parseFloat(data.subtotal).toFixed(2);
+                                document.getElementById('cart-total').textContent = '€' + parseFloat(data.total).toFixed(2);
                             }
                         } else {
                             console.error('Failed to update cart:', data.message || 'Unknown error');

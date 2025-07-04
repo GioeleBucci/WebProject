@@ -11,7 +11,7 @@
         <small class="text-muted"><?php echo $article['details'] ?></small>
     </div>
     <div class="col-6 col-md-2 text-end mt-2 mt-md-0">
-        <strong class="item-price" data-unit-price="<?php echo $article['price'] ?>">€<?php echo $article['price'] * $article['amount'] ?></strong>
+        <strong class="item-price" data-unit-price="<?php echo $article['price'] ?>">€<?php echo number_format($article['price'] * $article['amount'], 2) ?></strong>
     </div>
     <div class="col-3 col-md-2 text-end mt-2 mt-md-0">
         <label for="quantity-<?php echo $article['articleId'] ?>-<?php echo $article['versionId'] ?>" class="visually-hidden">Quantity for <?php echo htmlspecialchars($article['name']); ?></label>
