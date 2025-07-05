@@ -1,17 +1,14 @@
 <?php
 
-// require_once '../config/settings.php';
-// require_once 'model/pages.php';
-// require_once '../src/model/DatabaseHelper.php';
-// require_once '../src/utils/utils.php';
+require_once '../src/model/DatabaseHelper.php';
 
 class Utils
 {
     private function __construct() {}
-    
+
     public const CLIENT = "client";
     public const SELLER = "seller";
-    
+
     /**
      * Redirects the user to a specified page.
      *
@@ -21,13 +18,12 @@ class Utils
     {
         if ($dest === "Refresh:0") {
             $to = $dest;
-        }
-        else {
+        } else {
             $to = "Location: " . Settings::BASE_PATH . $dest;
         }
         header($to, true, $statusCode);
     }
-    
+
     /** 
      * Logs in a user by setting the correspondent user ID in the session.
      * 
@@ -71,6 +67,14 @@ class Utils
             $requestPath = str_replace(Settings::BASE_PATH, '', $requestUri);
             $_SESSION['redirect_after_login'] = $requestPath;
             self::redirect(Links::LOGIN);
+        }
+    }
+
+    public static function addNotification(string $message): void
+    {
+        if (self::isUserLoggedIn()) {
+            $dbh = DatabaseHelper::getInstance();
+            $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i"), $message);
         }
     }
 }

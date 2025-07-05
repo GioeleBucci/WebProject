@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $newEmail = $_POST["new_email"];
         if ($dbh->updateUserEmail($_SESSION["userId"], $newEmail)) {
             $_SESSION["account_success"] = "Email updated successfully!";
+            Utils::addNotification("Your account's email has been updated to $newEmail");
         } else {
             $_SESSION["account_error"] = "Email couldn't be updated.";
         }
@@ -36,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["update_password"]) && !empty($_POST["old_password"]) && !empty($_POST["new_password"]) && !empty($_POST["confirm_password"])) {
         if ($dbh->updateUserPassword($_SESSION["userId"], $_POST["old_password"], $_POST["new_password"])) {
             $_SESSION["account_success"] = "Password updated successfully!";
+            Utils::addNotification("Your account's password has been updated");
         } else {
             $_SESSION["account_error"] = "Password couldn't be updated.";
         }
@@ -46,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["update_phone"]) && !empty($_POST["new_phone"])) {
         if ($dbh->updateUserPhoneNumber($_SESSION["userId"], $_POST["new_phone"])) {
             $_SESSION["account_success"] = "Phone number updated successfully!";
+            Utils::addNotification("Your account's phone number has been updated to " . $_POST["new_phone"]);
         } else {
             $_SESSION["account_error"] = "Phone number couldn't be updated.";
         }
@@ -56,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["update_address"]) && !empty($_POST["new_address"])) {
         if ($dbh->updateUserAddress($_SESSION["userId"], $_POST["new_address"])) {
             $_SESSION["account_success"] = "Address updated successfully!";
+            Utils::addNotification("Your account's address has been updated to " . $_POST["new_address"]);
         } else {
             $_SESSION["account_error"] = "Address couldn't be updated.";
         }
