@@ -17,11 +17,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="priceVariation" class="form-label">Additional price (optional)</label>
-                            <input type="number" step="0.01" class="form-control" id="priceVariation" name="priceVariation">
+                            <input type="number" step="0.01" min="0" class="form-control" id="priceVariation" name="priceVariation">
                         </div>
                         <div class="mb-4">
                             <label for="amount" class="form-label">Number of elements in stock</label>
-                            <input type="number" class="form-control" id="amount" name="amount" required>
+                            <input type="number" class="form-control" id="amount" name="amount" min="0" required>
                         </div>
                         <button type="submit" id="confirm" name="confirm" class="btn btn-primary w-100">Add</button>
                     </form>
