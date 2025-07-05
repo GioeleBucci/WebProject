@@ -77,4 +77,17 @@ class Utils
             $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), $message);
         }
     }
+
+    public static function isSeller(): bool
+    {
+        return isset($_SESSION["isSeller"]) && $_SESSION["isSeller"] === true;
+    }
+
+    public static function denySellerAccess(): void
+    {
+        if (self::isSeller()) {
+            Utils::redirect(Links::NOT_FOUND_404);
+            die();
+        }
+    }
 }

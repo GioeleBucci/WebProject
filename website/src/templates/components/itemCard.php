@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <?php if (Utils::isUserLoggedIn()): ?>
+        <?php if (Utils::isUserLoggedIn() && !Utils::isSeller()): ?>
             <div class="card-body pt-0">
                 <button type="button" class="btn btn-outline-danger wishlist-btn" 
                         data-article-id="<?php echo $article['articleId']; ?>"

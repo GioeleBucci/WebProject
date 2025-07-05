@@ -88,11 +88,13 @@
                 </div>
             </div>
 
-            <div class="mt-3 text-center">
-                <a href="<?php echo Links::ORDERS ?>" class="btn btn-primary" aria-label="Your orders">
-                    <span class="bi bi-bag" aria-hidden="true"></span> <strong>View Your Orders</strong>
-                </a>
-            </div>
+            <?php if (!Utils::isSeller()): ?>
+                <div class="mt-3 text-center">
+                    <a href="<?php echo Links::ORDERS ?>" class="btn btn-primary" aria-label="Your orders">
+                        <span class="bi bi-bag" aria-hidden="true"></span> <strong>View Your Orders</strong>
+                    </a>
+                </div>
+            <?php endif; ?>
 
             <div class="mt-4 text-center">
                 <form method="post">

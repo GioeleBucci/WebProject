@@ -1,6 +1,9 @@
 <?php $templateParams["title"] = "Your Wishlist" ?>
 
 <?php
+
+Utils::denySellerAccess();
+
 // Check if user is logged in
 if (!Utils::isUserLoggedIn()) {
     // Store the current page URL in session before redirecting

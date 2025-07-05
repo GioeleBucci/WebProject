@@ -18,6 +18,7 @@ class Links
     public const NEW_VERSION = 'new-version';
     public const EDIT_ARTICLE = 'edit-article';
     public const WISHLIST = 'wishlist';
+    public const NOT_FOUND_404 = 'not-found';
     public const PRIVACY_POLICY = 'privacy-policy';
     public const TERMS_OF_SERVICE = 'terms-of-service';
     public const COOKIE_POLICY = 'cookie-policy';

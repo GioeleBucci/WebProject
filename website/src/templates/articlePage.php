@@ -39,41 +39,40 @@
             <h2 class="text-primary mt-3" id="article-price"><small>€</small><?php echo ($article["basePrice"]); ?></h2>
             <?php if (Utils::isUserLoggedIn()): ?>
                 <div class="mt-4 mt-md-3 d-flex flex-column flex-md-row gap-2 align-items-center align-items-md-start">
-                    <button type="button" class="btn btn-danger d-md-none wishlist-btn d-flex w-100 w-md-auto justify-content-center"
-                        data-article-id="<?php echo $article['articleId']; ?>"
-                        onclick="toggleWishlist.call(this)">
-                        <?php
-                        $isInWishlist = isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId']);
-                        ?>
-                        <span class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?> me-1" aria-hidden="true"></span>
-                        <span class="wishlist-text">
-                            <?php echo $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
-                        </span>
-                    </button>
-                    <button type="button" class="btn btn-outline-danger d-none d-md-flex wishlist-btn w-100 w-md-auto justify-content-center"
-                        data-article-id="<?php echo $article['articleId']; ?>"
-                        onclick="toggleWishlist.call(this)">
-                        <?php
-                        $isInWishlist = isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId']);
-                        ?>
-                        <span class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?> me-1" aria-hidden="true"></span>
-                        <span class="wishlist-text">
-                            <?php echo $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
-                        </span>
-                    </button>
-
-                    <form method="post" class="d-inline-block w-100 w-md-auto">
-                        <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
-                        <input type="hidden" name="addArticle" id="addArticle" value="">
-                        <button type="submit" class="btn btn-primary d-md-none add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
-                            <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
+                    <?php if (!Utils::isSeller()): ?>
+                        <button type="button" class="btn btn-danger d-md-none wishlist-btn d-flex w-100 w-md-auto justify-content-center"
+                            data-article-id="<?php echo $article['articleId']; ?>"
+                            onclick="toggleWishlist.call(this)">
+                            <?php
+                            $isInWishlist = isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId']);
+                            ?>
+                            <span class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?> me-1" aria-hidden="true"></span>
+                            <span class="wishlist-text">
+                                <?php echo $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
+                            </span>
                         </button>
-                        <button type="submit" class="btn btn-outline-primary d-none d-md-block add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
-                            <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
+                        <button type="button" class="btn btn-outline-danger d-none d-md-flex wishlist-btn w-100 w-md-auto justify-content-center"
+                            data-article-id="<?php echo $article['articleId']; ?>"
+                            onclick="toggleWishlist.call(this)">
+                            <?php
+                            $isInWishlist = isset($_SESSION['userId']) && $dbh->isInWishlist($_SESSION['userId'], $article['articleId']);
+                            ?>
+                            <span class="bi bi-heart<?php echo $isInWishlist ? '-fill' : ''; ?> me-1" aria-hidden="true"></span>
+                            <span class="wishlist-text">
+                                <?php echo $isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'; ?>
+                            </span>
                         </button>
-                    </form>
-
-                    <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
+                        <form method="post" class="d-inline-block w-100 w-md-auto">
+                            <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
+                            <input type="hidden" name="addArticle" id="addArticle" value="">
+                            <button type="submit" class="btn btn-primary d-md-none add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
+                                <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary d-none d-md-block add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
+                                <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
+                            </button>
+                        </form>
+                    <?php else: ?>
                         <a href="edit-article?articleId=<?= $articleId ?>" class="btn btn-secondary d-md-none w-100 w-md-auto">
                             <span class="bi bi-pencil me-1" aria-hidden="true"></span> Edit Article
                         </a>

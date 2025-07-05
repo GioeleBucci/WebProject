@@ -1,6 +1,7 @@
 <?php
 
-//Utils::requireLoggedUser();
+Utils::denySellerAccess();
+
 if (!Utils::isUserLoggedIn()) {
     // Store the current page URL in session before redirecting
     $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

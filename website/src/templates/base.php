@@ -38,20 +38,21 @@
                         </a>
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">
-                            <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
-                                <a href="<?php echo Links::LISTING ?>" class="icon" aria-label="Your Listings">
-                                    <span class="bi bi-tag fs-5 mx-2" aria-hidden="true"></span>
-                                </a>
-                            <?php endif; ?>
                             <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon" aria-label="Notifications">
                                 <span class="bi bi-bell fs-5 mx-2 <?php echo ($unreadCount > 0) ? 'notification-badge' : ''; ?>" aria-hidden="true"></span>
                             </a>
-                            <a href="<?php echo Links::WISHLIST ?>" class="icon" aria-label="Wishlist">
-                                <span class="bi bi-heart fs-5 mx-2" aria-hidden="true"></span>
-                            </a>
-                            <a href="<?php echo Links::CART ?>" class="icon" aria-label="Shopping Cart">
-                                <span class="bi bi-cart fs-5 mx-2" aria-hidden="true"></span>
-                            </a>
+                            <?php if (Utils::isSeller()): ?>
+                                <a href="<?php echo Links::LISTING ?>" class="icon" aria-label="Your Listings">
+                                    <span class="bi bi-tag fs-5 mx-2" aria-hidden="true"></span>
+                                </a>
+                            <?php else: ?>
+                                <a href="<?php echo Links::WISHLIST ?>" class="icon" aria-label="Wishlist">
+                                    <span class="bi bi-heart fs-5 mx-2" aria-hidden="true"></span>
+                                </a>
+                                <a href="<?php echo Links::CART ?>" class="icon" aria-label="Shopping Cart">
+                                    <span class="bi bi-cart fs-5 mx-2" aria-hidden="true"></span>
+                                </a>
+                            <?php endif; ?>
                             <a href="<?php echo Links::ACCOUNT ?>" class="icon" aria-label="Account">
                                 <span class="bi bi-person fs-5 mx-2" aria-hidden="true"></span>
                             </a>
@@ -69,20 +70,21 @@
                     </div>
                     <!-- Icons (desktop) -->
                     <div class="d-none d-md-block mt-3">
-                        <?php if (($_SESSION["isSeller"] ?? false) === true): ?>
-                            <a href="<?php echo Links::LISTING ?>" class="icon" aria-label="Your Listings">
-                                <span class="bi bi-tag fs-4 mx-2" aria-hidden="true"></span>
-                            </a>
-                        <?php endif; ?>
                         <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon" aria-label="Notifications">
                             <span class="bi bi-bell fs-4 mx-2 <?php echo ($unreadCount > 0) ? 'notification-badge' : ''; ?>" aria-hidden="true"></span>
                         </a>
-                        <a href="<?php echo Links::WISHLIST ?>" class="icon" aria-label="Wishlist">
-                            <span class="bi bi-heart fs-4 mx-2" aria-hidden="true"></span>
-                        </a>
-                        <a href="<?php echo Links::CART ?>" class="icon" aria-label="Shopping Cart">
-                            <span class="bi bi-cart fs-4 mx-2" aria-hidden="true"></span>
-                        </a>
+                        <?php if (Utils::isSeller()): ?>
+                            <a href="<?php echo Links::LISTING ?>" class="icon" aria-label="Your Listings">
+                                <span class="bi bi-tag fs-4 mx-2" aria-hidden="true"></span>
+                            </a>
+                        <?php else: ?>
+                            <a href="<?php echo Links::WISHLIST ?>" class="icon" aria-label="Wishlist">
+                                <span class="bi bi-heart fs-4 mx-2" aria-hidden="true"></span>
+                            </a>
+                            <a href="<?php echo Links::CART ?>" class="icon" aria-label="Shopping Cart">
+                                <span class="bi bi-cart fs-4 mx-2" aria-hidden="true"></span>
+                            </a>
+                        <?php endif; ?>
                         <a href="<?php echo Links::ACCOUNT ?>" class="icon" aria-label="Account">
                             <span class="bi bi-person fs-4 mx-2" aria-hidden="true"></span>
                         </a>
