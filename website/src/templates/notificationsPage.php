@@ -22,15 +22,14 @@
                 <ul class="pagination justify-content-center">
                     <?php foreach (array_keys($sections) as $sectionNumber): ?>
                         <li class="page-item <?php echo ($_GET["sectionNumber"] == $sectionNumber) ? 'active' : ''; ?>">
-                            <a class="page-link" href="?sectionNumber=<?php echo $sectionNumber; ?>"><?php echo $sectionNumber; ?></a>
+                            <a class="page-link" href="notifications?sectionNumber=<?php echo $sectionNumber; ?>"><?php echo $sectionNumber; ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
             </nav>
         <?php endif; ?>
 
-        <?php $dbh->markNotificationsAsRead($_SESSION["userId"]) ?>
-</div>
-<?php else: ?>
+    <?php else: ?>
         <p class="text-center lead mt-4">You have no notifications at the moment.</p>
-<?php endif; ?>
+    <?php endif; ?>
+</div>

@@ -74,7 +74,7 @@ class Utils
     {
         if (self::isUserLoggedIn()) {
             $dbh = DatabaseHelper::getInstance();
-            $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i"), $message);
+            $dbh->addNotification($_SESSION["userId"], date("Y-m-d H:i:s"), $message);
         }
     }
 }

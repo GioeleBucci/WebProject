@@ -87,3 +87,30 @@ main {
 .modal-backdrop {
     zoom: 1.5 !important;
 }
+
+/* Notification badge styling */
+.notification-badge {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-badge::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    background-color: #dc3545;
+    border-radius: 50%;
+    border: 2px solid white;
+    z-index: 1;
+}
+
+/* Adjust positioning for different screen sizes */
+@media (max-width: 720px) {
+    .notification-badge::after {
+        width: 6px;
+        height: 6px;
+    }
+}

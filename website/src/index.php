@@ -30,6 +30,10 @@ $routes = [
 
 if (array_key_exists($requestPath, $routes)) {
     $templateParams["page"] = $routes[$requestPath];
+    // Special handling for notifications page - mark notifications as read before rendering
+    if ($requestPath === Links::NOTIFICATIONS && Utils::isUserLoggedIn()) {
+        $dbh->markNotificationsAsRead($_SESSION["userId"]);
+    }
 } else {
     http_response_code(404);
     $templateParams["page"] = Pages::NOT_FOUND_404; 

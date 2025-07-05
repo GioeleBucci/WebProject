@@ -601,6 +601,20 @@ class DatabaseHelper
         return $stmt->execute();
     }
 
+    /**
+     * Returns the count of unread notifications for a user
+     * @return int Number of unread notifications
+     */
+    public function getUnreadNotificationCount(int $userId): int
+    {
+        $query = "SELECT COUNT(*) FROM NOTIFICATION WHERE userId = ? AND isRead = false";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+
+        return ($result = $stmt->get_result()) === false ? 0 : $result->fetch_column();
+    }
+
 
 
     /*

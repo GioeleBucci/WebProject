@@ -17,6 +17,14 @@
 </head>
 
 <body>
+    <?php
+    // Get unread notification count for logged-in users
+    $unreadCount = 0;
+    if (isset($_SESSION["userId"])) {
+        $dbh = DatabaseHelper::getInstance();
+        $unreadCount = $dbh->getUnreadNotificationCount($_SESSION["userId"]);
+    }
+    ?>
     <div class="page-wrapper">
         <header>
             <div class="container-fluid px-3 px-md-5 mt-4 mb-1 mb-md-4">
@@ -36,7 +44,7 @@
                                 </a>
                             <?php endif; ?>
                             <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon" aria-label="Notifications">
-                                <span class="bi bi-bell fs-5 mx-2" aria-hidden="true"></span>
+                                <span class="bi bi-bell fs-5 mx-2 <?php echo ($unreadCount > 0) ? 'notification-badge' : ''; ?>" aria-hidden="true"></span>
                             </a>
                             <a href="<?php echo Links::WISHLIST ?>" class="icon" aria-label="Wishlist">
                                 <span class="bi bi-heart fs-5 mx-2" aria-hidden="true"></span>
@@ -67,7 +75,7 @@
                             </a>
                         <?php endif; ?>
                         <a href="<?php echo Links::NOTIFICATIONS ?>" class="icon" aria-label="Notifications">
-                            <span class="bi bi-bell fs-4 mx-2" aria-hidden="true"></span>
+                            <span class="bi bi-bell fs-4 mx-2 <?php echo ($unreadCount > 0) ? 'notification-badge' : ''; ?>" aria-hidden="true"></span>
                         </a>
                         <a href="<?php echo Links::WISHLIST ?>" class="icon" aria-label="Wishlist">
                             <span class="bi bi-heart fs-4 mx-2" aria-hidden="true"></span>

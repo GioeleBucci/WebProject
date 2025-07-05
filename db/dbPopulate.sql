@@ -142,5 +142,12 @@ INSERT INTO `ORDER_HAS_ARTICLE` (`orderId`, `articleId`, `versionId`, `amount`) 
 --
 
 INSERT INTO `NOTIFICATION` (`notificationId`, `userId`, `receptionTime`, `content`, `isRead`) VALUES
-(1, 1, '2025-04-13 14:43', 'Your order of €1724.80 has been issued', 1),
-(2, 1, '2025-07-04 20:53', 'Your order of €528.70 has been issued', 1);
+(1, 1, '2025-03-01 13:05:00', 'Registered to the website', 1),
+(2, 1, '2025-04-04 14:24:00', 'Logged in', 1),
+(3, 1, '2025-04-13 14:43:00', 'Your order of €1724.80 has been issued', 1),
+(4, 1, '2025-06-04 20:43:00', 'Logged in', 1),
+(5, 1, '2025-06-04 20:53:00', 'Your order of €528.70 has been issued', 1),
+(6, 1, '2025-07-05 13:08:00', 'Your account\'s phone number has been updated to 555-123-4567', 1),
+(7, 1, '2025-07-05 13:08:00', 'Your account\'s address has been updated to 123 Oak St, Furnitureville, US', 1),
+(8, 1, '2025-07-05 13:09:00', 'Logged in', 1),
+(9, 1, '2025-07-05 13:09:00', 'Your account\'s email has been updated to user@example.com', 1);
