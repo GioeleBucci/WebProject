@@ -38,11 +38,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="weight" class="form-label">Weight</label>
-                            <input type="text" class="form-control" id="weight" name="weight" required>
+                            <input type="number" step="0.01" class="form-control" id="weight" name="weight" required>
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Price</label>
-                            <input type="text" class="form-control" id="price" name="price" required>
+                            <input type="number" step="0.01" class="form-control" id="price" name="price" required>
                         </div>
                         <div class="mb-3">
                             <label for="size" class="form-label">Size</label>
@@ -50,7 +50,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="amount" class="form-label">Stock amount</label>
-                            <input type="text" class="form-control" id="amount" name="amount" required>
+                            <input type="number" class="form-control" id="amount" name="amount" required>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>

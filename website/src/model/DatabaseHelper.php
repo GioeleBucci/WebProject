@@ -42,6 +42,15 @@ class DatabaseHelper
     /*
      * Category methods
     */
+    public function getCategoryName(): string
+    {
+        $result = $this->db->query("SELECT name FROM CATEGORY");
+        if ($result === false) {
+            return '';
+        }
+        $row = $result->fetch_assoc();
+        return $row ? $row['name'] : '';
+    }
 
     public function getCategoryNames(): array
     {

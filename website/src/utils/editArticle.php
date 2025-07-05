@@ -41,5 +41,6 @@ if (isset($_POST["edit"])) {
 		$templateParams["insertionError"] = "Error during article update";
 	} else {
 		$article = $dbh->getArticle($_GET["articleId"]);
+		Utils::redirect(Links::ARTICLE . "?id=" . $article["articleId"] . "&updated=success");
 	}
 }

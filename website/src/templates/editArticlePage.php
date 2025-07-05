@@ -55,7 +55,7 @@
                                 <select class="form-select" id="categoryId" name="categoryId">
                                     <?php foreach ($dbh->getAllCategories() as $category): ?>
 										<?php $isSelected = "";
-											if ($category["categoryId"] === $article["categoryId"]) {
+											if ($category["categoryId"] == $article["categoryId"]) {
 												$isSelected = "selected";
 											} ?>
                                         <option value="<?php echo $category["categoryId"]; ?>" <?= $isSelected ?>><?php echo $category["name"] ?></option>

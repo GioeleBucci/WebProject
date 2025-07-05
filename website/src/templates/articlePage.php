@@ -3,6 +3,12 @@
 <?php $templateParams["title"] = implode(" ", [$article["name"], $article["details"]]) ?>
 
 <div class="container mt-0">
+    <?php if (isset($templateParams["successMessage"])): ?>
+        <div class="alert alert-success alert-dismissible fade show text-center mt-3" role="alert">
+            <?php echo htmlspecialchars($templateParams["successMessage"]); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
     <div class="row">
         <div class="col-md-6">
             <div class="image-fluid">
@@ -17,6 +23,7 @@
             <p class="text-muted mb-1">Size: <?php echo ($article["size"]); ?></p>
             <p class="text-muted mb-1">Material: <?php echo ($article["material"]); ?></p>
             <p class="text-muted mb-1">Weight: <?php echo ($article["weight"]); ?> kg</p>
+            <p class="text-muted mb-1">Category: <?php echo ($dbh->getCategoryName($article["categoryId"])); ?></p>
             <?php if (isset($article["longDescription"])) : ?>
                 <div class="description-box mt-3 p-3 border rounded bg-light">
                     <p class="text-muted my-0"><?php echo nl2br($article["longDescription"]); ?></p>

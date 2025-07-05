@@ -7,13 +7,15 @@
     <div class="text-center mb-4">
         <span class="page-title-text">Your Account</span>
         <?php if (!empty($_SESSION["account_success"])): ?>
-            <div class="alert alert-success mt-3" role="alert">
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 <?php echo htmlspecialchars($_SESSION["account_success"]); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
         <?php if (!empty($_SESSION["account_error"])): ?>
-            <div class="alert alert-danger mt-3" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                 <?php echo htmlspecialchars($_SESSION["account_error"]); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
     </div>
