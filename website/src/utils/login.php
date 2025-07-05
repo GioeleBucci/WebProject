@@ -14,7 +14,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
             unset($_SESSION['redirect_after_login']);
             Utils::redirect($redirectURL);
         } else {
-            Utils::redirect(Links::ACCOUNT);
+            Utils::isSeller() ? Utils::redirect(Links::LISTING) : Utils::redirect(Links::ACCOUNT);
         }
     } else {
         $templateParams["loginError"] = "Wrong email or password!";

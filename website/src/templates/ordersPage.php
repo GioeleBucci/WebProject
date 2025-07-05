@@ -1,3 +1,4 @@
+<?php Utils::denySellerAccess(); ?>
 <?php require "utils/loadOrders.php" ?>
 
 <?php $templateParams["title"] = "Your orders" ?>

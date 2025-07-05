@@ -1,3 +1,4 @@
+<?php Utils::denyClientAccess(); ?>
 <?php require 'utils/addVersion.php' ?>
 
 <?php $templateParams["title"] = "New version for " . $article["name"] ?>

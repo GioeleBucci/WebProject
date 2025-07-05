@@ -90,4 +90,12 @@ class Utils
             die();
         }
     }
+
+    public static function denyClientAccess(): void
+    {
+        if (!self::isSeller()) {
+            Utils::redirect(Links::NOT_FOUND_404);
+            die();
+        }
+    }
 }

@@ -1,3 +1,4 @@
+<?php Utils::denyClientAccess(); ?>
 <?php $templateParams["title"] = "Your Listings" ?>
 
 <div class="container">

@@ -1,3 +1,4 @@
+<?php Utils::denySellerAccess(); ?>
 <?php require "utils/checkout.php" ?>
 
 <?php $templateParams["title"] = "Checkout" ?>
