@@ -259,21 +259,21 @@ class DatabaseHelper
         // First get all order IDs for the client
         $stmt = $this->db->prepare("SELECT orderId FROM CLIENT_ORDER WHERE userId = ? ORDER BY orderTime DESC");
         $stmt->bind_param("i", $clientId);
-        
+
         if (!$stmt->execute()) {
             return false;
         }
-        
+
         $result = $stmt->get_result();
         if ($result === false) {
             return false;
         }
-        
+
         $orderIds = $result->fetch_all(MYSQLI_ASSOC);
         if (empty($orderIds)) {
             return false;
         }
-        
+
         // Get details for each order and group them properly
         $allOrders = [];
         foreach ($orderIds as $orderRow) {
@@ -281,7 +281,7 @@ class DatabaseHelper
             if ($orderDetails !== false) {
                 // Calculate total item count by summing all amounts
                 $totalItemCount = array_sum(array_column($orderDetails, 'amount'));
-                
+
                 // Extract order info from first item and group items
                 $orderInfo = [
                     'orderId' => $orderDetails[0]['orderId'],
@@ -290,7 +290,7 @@ class DatabaseHelper
                     'notes' => $orderDetails[0]['notes'],
                     'delivered' => $orderDetails[0]['delivered'],
                     'itemCount' => $totalItemCount,
-                    'items' => array_map(function($item) {
+                    'items' => array_map(function ($item) {
                         return [
                             'articleName' => $item['articleName'],
                             'versionType' => $item['versionType'],
@@ -302,7 +302,7 @@ class DatabaseHelper
                 $allOrders[] = $orderInfo;
             }
         }
-        
+
         return empty($allOrders) ? false : $allOrders;
     }
 
@@ -518,18 +518,15 @@ class DatabaseHelper
      */
     public function updateUserPassword(int $userId, string $oldPassword, string $newPassword): bool
     {
-        // Check if the old password matches
-        $stmt = $this->db->prepare("SELECT userId FROM USER WHERE userId = ? AND password = ?");
-        $stmt->bind_param("is", $userId, $oldPassword);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows === 0) {
+        if (!$this->checkCredentials($this->getUserInfo($userId)['email'], $oldPassword)) {
             return false; // Old password does not match
         }
-        // Update the password
-        $stmt = $this->db->prepare("UPDATE USER SET password = ? WHERE userId = ?");
-        $stmt->bind_param("si", $newPassword, $userId);
-
+        // Generate new salt and hash the password
+        $salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+        $hashedPassword = hash('sha512', $newPassword . $salt);
+        
+        $stmt = $this->db->prepare("UPDATE USER SET password = ?, salt = ? WHERE userId = ?");
+        $stmt->bind_param("ssi", $hashedPassword, $salt, $userId);
         return $stmt->execute();
     }
 

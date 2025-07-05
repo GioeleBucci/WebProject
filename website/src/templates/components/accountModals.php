@@ -145,6 +145,21 @@
         const newPasswordField = document.getElementById('new_password');
         const confirmPasswordField = document.getElementById('confirm_password');
         const errorElement = document.getElementById('password-error');
+        const updateButton = passwordModal.querySelector('button[name="update_password"]');
+
+        // Function to manage button state
+        function updateButtonState() {
+            const hasError = !errorElement.classList.contains('d-none');
+            const hasValues = oldPasswordField.value && newPasswordField.value && confirmPasswordField.value;
+            
+            if (hasError || !hasValues) {
+                updateButton.disabled = true;
+                updateButton.classList.add('disabled');
+            } else {
+                updateButton.disabled = false;
+                updateButton.classList.remove('disabled');
+            }
+        }
 
         // Clear validation errors when modal is opened
         passwordModal.addEventListener('show.bs.modal', function() {
@@ -153,6 +168,7 @@
             confirmPasswordField.value = '';
             errorElement.classList.add('d-none');
             errorElement.classList.remove('d-block');
+            updateButtonState();
         });
 
         // Validate on input changes
@@ -172,9 +188,12 @@
                 errorElement.classList.add('d-none');
                 errorElement.classList.remove('d-block');
             }
+            
+            updateButtonState();
         }
 
         newPasswordField.addEventListener('input', validatePasswords);
         confirmPasswordField.addEventListener('input', validatePasswords);
+        oldPasswordField.addEventListener('input', updateButtonState);
     });
 </script>

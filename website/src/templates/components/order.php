@@ -1,4 +1,4 @@
-<div class="card-wrapper">
+<div class="card-wrapper mb-4">
     <div class="order-card">
         <div class="card h-100">
             <div class="card-body">
