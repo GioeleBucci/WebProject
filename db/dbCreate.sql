@@ -1,37 +1,6 @@
 create schema if not exists kiwi;
 use kiwi;
 
-create table if not exists CATEGORY (
-     categoryId int not null AUTO_INCREMENT,
-     name char(31) null,
-     primary key (categoryId)
-);
-
-create table if not exists ARTICLE (
-     articleId int not null AUTO_INCREMENT,
-     name char(31) null,
-     details text null,
-     longDescription text null,
-     material char(63) null,
-     weight decimal(6,2) null,
-     basePrice decimal(6,2) null,
-     size char(31) null,
-     categoryId int not null,
-     image char(255) null,
-     primary key (articleId),
-     constraint FK_ArticleCategory foreign key (categoryId) references CATEGORY(categoryId)
-);
-
-create table if not exists ARTICLE_VERSION (
-     articleId int not null,
-     versionId int not null,
-     versionType char(63) null,
-     priceVariation decimal(6,2) default 0,
-     stockAmount int default 0,
-     primary key (articleId, versionId),
-     constraint FK_Article foreign key (articleId) references ARTICLE(articleId)
-);
-
 create table if not exists PAYMENT_METHOD (
      paymentMethodId int not null AUTO_INCREMENT,
      name char(31) null,
@@ -57,19 +26,45 @@ create table if not exists SELLER (
      constraint FK_SellerKey foreign key (userId) references USER(userId)
 );
 
-create table if not exists LISTING (
-     articleId int not null,
-     sellerId int not null,
-     primary key (articleId),
-     constraint FK_ArticleId foreign key (articleId) references ARTICLE(articleId)
-);
-
 create table if not exists CLIENT (
      userId int not null,
      paymentMethodId int not null,
      primary key (userId),
      constraint FK_CustomerKey foreign key (userId) references USER(userId),
      constraint FK_CustomerPaymentMethod foreign key (paymentMethodId) references PAYMENT_METHOD(paymentMethodId)  
+);
+
+create table if not exists CATEGORY (
+     categoryId int not null AUTO_INCREMENT,
+     name char(31) null,
+     primary key (categoryId)
+);
+
+create table if not exists ARTICLE (
+     articleId int not null AUTO_INCREMENT,
+     sellerId int not null,
+     name char(31) null,
+     details text null,
+     longDescription text null,
+     material char(63) null,
+     weight decimal(6,2) null,
+     basePrice decimal(6,2) null,
+     size char(31) null,
+     categoryId int not null,
+     image char(255) null,
+     primary key (articleId),
+     constraint FK_ArticleProvider foreign key (sellerId) references SELLER(userId),
+     constraint FK_ArticleCategory foreign key (categoryId) references CATEGORY(categoryId)
+);
+
+create table if not exists ARTICLE_VERSION (
+     articleId int not null,
+     versionId int not null,
+     versionType char(63) null,
+     priceVariation decimal(6,2) default 0,
+     stockAmount int default 0,
+     primary key (articleId, versionId),
+     constraint FK_Article foreign key (articleId) references ARTICLE(articleId)
 );
 
 create table if not exists CLIENT_ORDER (

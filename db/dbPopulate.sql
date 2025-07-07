@@ -1,65 +1,6 @@
 use kiwi;
 
 --
--- Dumping data for table `CATEGORY`
---
-
-INSERT INTO `CATEGORY` (`name`) VALUES
-('Living Room'),
-('Bedroom'),
-('Dining Room'),
-('Office'),
-('Outdoor'),
-('Kitchen'),
-('Bathroom');
-
---
--- Dumping data for table `ARTICLE`
---
-
-INSERT INTO `ARTICLE` (`name`, `details`, `material`, `weight`, `basePrice`, `size`, `categoryId`, `image`, `longDescription`) VALUES
-('FUKREJIV', '3-seater sofa', 'Fabric', 85.00, 499, '240x160x80 cm', 1, 'sofa.png', 'A comfortable 3-seater sofa with durable fabric upholstery, perfect for relaxing in your living room. Its modern design and sturdy construction make it a great addition to any home.'),
-('MÅEYE', 'Round glass coffee table', 'Glass/Metal', 250.00, 79, '90x90x45 cm', 1, 'coffeeTable.png', 'A sleek round coffee table with a tempered glass top and sturdy metal frame, ideal for modern spaces. Its minimalist design complements a variety of interior styles.'),
-('KOBNE', 'Tall bookshelf with 5 shelves', 'Oak', 40.00, 199, '180x80x30 cm', 1, 'bookshelf.png', 'A tall oak bookshelf with five spacious shelves, perfect for organizing books and decor items. Its elegant finish adds a touch of sophistication to any room.'),
-('LUUYFO', 'Queen size bed frame', 'Walnut', 70.00, 99.90, '160x200 cm', 2, 'bedFrame.png', 'A sturdy queen-size bed frame made of walnut wood, offering both durability and elegance. Its timeless design ensures it blends seamlessly with any bedroom decor.'),
-('EDIVPÅSÖ', 'Six-drawer dresser', 'Cherry Wood', 65.00, 299, '120x50x80 cm', 2, 'drawer.png', 'A stylish six-drawer dresser crafted from cherry wood, providing ample storage for your bedroom. Its smooth finish and classic design make it a standout piece.'),
-('HORJÅ', 'Expandable dining table', 'Maple', 55.00, 129, '180x90x75 cm', 3, 'tableExpandable.png', 'A versatile dining table made of maple wood, expandable to accommodate more guests with ease. Its robust construction and elegant design make it perfect for family gatherings.'),
-('KEPSÖ', 'Upholstered dining chair', 'Oak/Fabric', 80.00, 49.90, '45x55x95 cm', 3, 'chair.png', 'A comfortable dining chair with oak legs and fabric upholstery, perfect for any dining room. Its ergonomic design ensures long-lasting comfort during meals.'),
-('TÖDHIAFJI', 'Office desk with drawers', 'Mahogany', 6.00, 159, '160x80x75 cm', 4, 'desk.png', 'A spacious office desk with built-in drawers, crafted from mahogany for a professional look. Its ample workspace and storage options make it ideal for productivity.'),
-('PUPYIDRÅ', 'Ergonomic office chair', 'Mesh/Metal', 15.00, 109.90, '65x65x120 cm', 4, 'chairOffice.png', 'An ergonomic office chair with breathable mesh and adjustable features for all-day comfort. Its sleek design and sturdy build make it a must-have for any workspace.'),
-('LEPNA', 'Outdoor table with 2 chairs', 'Aluminum', 15.50, 79, '100x100 cm', 5, 'tableOutdoor.png', 'A durable outdoor table set with two aluminum chairs, perfect for enjoying meals in your garden or patio. Its weather-resistant materials ensure long-lasting use in any outdoor setting.'),
-('VEDVÅ', 'Kitchen cabinet with doors and drawer', 'Wood', 50.00, 249, '120x80x90 cm', 6, 'cabinet.png', 'This kitchen unit make it easy to create a practical kitchen catered to your very needs. Can also be fitted with a sink and faucet.'),
-('HELIMVI', 'Stainless steel range hood', 'Stainless Steel', 20.00, 199, '90x50x30 cm', 6, 'rangeHood.png', 'A sleek stainless steel range hood with powerful ventilation, ideal for keeping your kitchen fresh and odor-free.'),
-('LEJLIN', 'Shower enclosure with sliding doors', 'Glass/Aluminum', 70.00, 499, '120x80x200 cm', 7, 'shower.png', 'A modern shower enclosure with tempered glass and smooth sliding doors, perfect for any bathroom renovation.'),
-('UBTUSFAM', 'Bathroom vanity with sink', 'Wood/Stainless Steel', 40.00, 299, '80x50x85 cm', 7, 'sink.png', 'A stylish bathroom vanity with a stainless steel sink and wooden cabinet, functional and elegant.');
-
-INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `versionType`, `priceVariation`, `stockAmount`) VALUES
-(1, 1, 'Gray Fabric', 0, 5),
-(1, 2, 'Blue Fabric', 0, 3),
-(1, 3, 'Beige Fabric', 0, 7),
-(2, 1, 'Clear Glass', 0, 10),
-(2, 2, 'Smoked Glass', 5, 6),
-(3, 1, 'Natural Finish', 0, 8),
-(3, 2, 'Dark Finish', 0, 4),
-(4, 1, 'Natural Finish', 0, 3),
-(4, 2, 'Dark Finish', 0, 5),
-(5, 1, 'White', 0, 4),
-(5, 2, 'Cherry Finish', 7.90, 2),
-(6, 1, 'Natural Finish', 0, 3),
-(6, 2, 'Espresso Finish', 9.90, 2),
-(7, 1, 'Gray Fabric', 0, 12),
-(7, 2, 'Beige Fabric', 0, 8),
-(8, 1, 'Natural Finish', 0, 2),
-(8, 2, 'Dark Finish', 0, 3),
-(9, 1, 'Black', 0, 7),
-(9, 2, 'Gray', 0, 5),
-(10, 1, 'Natural Finish', 0, 2),
-(11, 1, 'Natural Finish', 0, 2),
-(12, 1, 'Natural Finish', 0, 2),
-(13, 1, 'Natural Finish', 0, 2),
-(14, 1, 'Natural Finish', 0, 2);
-
---
 -- Dumping data for table `PAYMENT_METHOD`
 --
 
@@ -90,22 +31,6 @@ INSERT INTO `SELLER` (`userId`, `deliveredOrders`) VALUES
 (3, 205);
 
 --
--- Dumping data for table `LISTING`
---
-
-INSERT INTO `LISTING` (`articleId`, `sellerId`) VALUES
-(1, 2),
-(2, 2),
-(3, 2),
-(4, 2),
-(5, 2),
-(6, 3),
-(7, 3),
-(8, 3),
-(9, 3),
-(10, 3);
-
---
 -- Dumping data for table `CLIENT`
 --
 
@@ -113,6 +38,65 @@ INSERT INTO `CLIENT` (`userId`, `paymentMethodId`) VALUES
 (1, 1),
 (4, 2),
 (5, 3);
+
+--
+-- Dumping data for table `CATEGORY`
+--
+
+INSERT INTO `CATEGORY` (`name`) VALUES
+('Living Room'),
+('Bedroom'),
+('Dining Room'),
+('Office'),
+('Outdoor'),
+('Kitchen'),
+('Bathroom');
+
+--
+-- Dumping data for table `ARTICLE`
+--
+
+INSERT INTO `ARTICLE` (`sellerId`, `name`, `details`, `material`, `weight`, `basePrice`, `size`, `categoryId`, `image`, `longDescription`) VALUES
+(2, 'FUKREJIV', '3-seater sofa', 'Fabric', 85.00, 499, '240x160x80 cm', 1, 'sofa.png', 'A comfortable 3-seater sofa with durable fabric upholstery, perfect for relaxing in your living room. Its modern design and sturdy construction make it a great addition to any home.'),
+(2, 'MÅEYE', 'Round glass coffee table', 'Glass/Metal', 250.00, 79, '90x90x45 cm', 1, 'coffeeTable.png', 'A sleek round coffee table with a tempered glass top and sturdy metal frame, ideal for modern spaces. Its minimalist design complements a variety of interior styles.'),
+(2, 'KOBNE', 'Tall bookshelf with 5 shelves', 'Oak', 40.00, 199, '180x80x30 cm', 1, 'bookshelf.png', 'A tall oak bookshelf with five spacious shelves, perfect for organizing books and decor items. Its elegant finish adds a touch of sophistication to any room.'),
+(2, 'LUUYFO', 'Queen size bed frame', 'Walnut', 70.00, 99.90, '160x200 cm', 2, 'bedFrame.png', 'A sturdy queen-size bed frame made of walnut wood, offering both durability and elegance. Its timeless design ensures it blends seamlessly with any bedroom decor.'),
+(2, 'EDIVPÅSÖ', 'Six-drawer dresser', 'Cherry Wood', 65.00, 299, '120x50x80 cm', 2, 'drawer.png', 'A stylish six-drawer dresser crafted from cherry wood, providing ample storage for your bedroom. Its smooth finish and classic design make it a standout piece.'),
+(2, 'HORJÅ', 'Expandable dining table', 'Maple', 55.00, 129, '180x90x75 cm', 3, 'tableExpandable.png', 'A versatile dining table made of maple wood, expandable to accommodate more guests with ease. Its robust construction and elegant design make it perfect for family gatherings.'),
+(2, 'KEPSÖ', 'Upholstered dining chair', 'Oak/Fabric', 80.00, 49.90, '45x55x95 cm', 3, 'chair.png', 'A comfortable dining chair with oak legs and fabric upholstery, perfect for any dining room. Its ergonomic design ensures long-lasting comfort during meals.'),
+(3, 'TÖDHIAFJI', 'Office desk with drawers', 'Mahogany', 6.00, 159, '160x80x75 cm', 4, 'desk.png', 'A spacious office desk with built-in drawers, crafted from mahogany for a professional look. Its ample workspace and storage options make it ideal for productivity.'),
+(3, 'PUPYIDRÅ', 'Ergonomic office chair', 'Mesh/Metal', 15.00, 109.90, '65x65x120 cm', 4, 'chairOffice.png', 'An ergonomic office chair with breathable mesh and adjustable features for all-day comfort. Its sleek design and sturdy build make it a must-have for any workspace.'),
+(3, 'LEPNA', 'Outdoor table with 2 chairs', 'Aluminum', 15.50, 79, '100x100 cm', 5, 'tableOutdoor.png', 'A durable outdoor table set with two aluminum chairs, perfect for enjoying meals in your garden or patio. Its weather-resistant materials ensure long-lasting use in any outdoor setting.'),
+(3, 'VEDVÅ', 'Kitchen cabinet with doors and drawer', 'Wood', 50.00, 249, '120x80x90 cm', 6, 'cabinet.png', 'This kitchen unit make it easy to create a practical kitchen catered to your very needs. Can also be fitted with a sink and faucet.'),
+(3, 'HELIMVI', 'Stainless steel range hood', 'Stainless Steel', 20.00, 199, '90x50x30 cm', 6, 'rangeHood.png', 'A sleek stainless steel range hood with powerful ventilation, ideal for keeping your kitchen fresh and odor-free.'),
+(3, 'LEJLIN', 'Shower enclosure with sliding doors', 'Glass/Aluminum', 70.00, 499, '120x80x200 cm', 7, 'shower.png', 'A modern shower enclosure with tempered glass and smooth sliding doors, perfect for any bathroom renovation.'),
+(3, 'UBTUSFAM', 'Bathroom vanity with sink', 'Wood/Stainless Steel', 40.00, 299, '80x50x85 cm', 7, 'sink.png', 'A stylish bathroom vanity with a stainless steel sink and wooden cabinet, functional and elegant.');
+
+INSERT INTO `ARTICLE_VERSION` (`articleId`, `versionId`, `versionType`, `priceVariation`, `stockAmount`) VALUES
+(1, 1, 'Gray Fabric', 0, 5),
+(1, 2, 'Blue Fabric', 0, 3),
+(1, 3, 'Beige Fabric', 0, 7),
+(2, 1, 'Clear Glass', 0, 10),
+(2, 2, 'Smoked Glass', 5, 6),
+(3, 1, 'Natural Finish', 0, 8),
+(3, 2, 'Dark Finish', 0, 4),
+(4, 1, 'Natural Finish', 0, 3),
+(4, 2, 'Dark Finish', 0, 5),
+(5, 1, 'White', 0, 4),
+(5, 2, 'Cherry Finish', 7.90, 2),
+(6, 1, 'Natural Finish', 0, 3),
+(6, 2, 'Espresso Finish', 9.90, 2),
+(7, 1, 'Gray Fabric', 0, 12),
+(7, 2, 'Beige Fabric', 0, 8),
+(8, 1, 'Natural Finish', 0, 2),
+(8, 2, 'Dark Finish', 0, 3),
+(9, 1, 'Black', 0, 7),
+(9, 2, 'Gray', 0, 5),
+(10, 1, 'Natural Finish', 0, 2),
+(11, 1, 'Natural Finish', 0, 2),
+(12, 1, 'Natural Finish', 0, 2),
+(13, 1, 'Natural Finish', 0, 2),
+(14, 1, 'Natural Finish', 0, 2);
 
 --
 -- Dumping data for table `CLIENT_ORDER`
