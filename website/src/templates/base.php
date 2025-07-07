@@ -42,7 +42,7 @@
                                 <span class="bi bi-bell fs-5 mx-2 <?php echo ($unreadCount > 0) ? 'notification-badge' : ''; ?>" aria-hidden="true"></span>
                             </a>
                             <?php if (Utils::isSeller()): ?>
-                                <a href="<?php echo Links::LISTING ?>" class="icon" aria-label="Your Listings">
+                                <a href="<?php echo Links::LISTING ?>" class="icon" aria-label="Your listing">
                                     <span class="bi bi-tag fs-5 mx-2" aria-hidden="true"></span>
                                 </a>
                             <?php else: ?>
