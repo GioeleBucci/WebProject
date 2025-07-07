@@ -78,13 +78,12 @@ class DatabaseHelper
     public function addArticle(int $sellerId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image): bool
     {
         $stmt = $this->db->prepare(
-            "INSERT INTO ARTICLE (name, details, longDescription, material, weight, basePrice, size, categoryId, image)
+            "INSERT INTO ARTICLE (sellerId, name, details, longDescription, material, weight, basePrice, size, categoryId, image)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-        $stmt->bind_param("ssssddsis", $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
-        $result = $stmt->execute();
+        $stmt->bind_param("issssddsis", $sellerId, $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
 
-        return $result && $this->insertIntoListing($this->getLatestArticleId(), $sellerId);
+        return $stmt->execute();
     }
 
     public function updateArticle(int $articleId, string $name, string $details, string $description, string $material, float $weight, float $price, string $size, int $categoryId, string $image): bool
@@ -185,38 +184,6 @@ class DatabaseHelper
         }
 
         return empty($versions = $result->fetch_all(MYSQLI_ASSOC)) ? false : $versions;
-    }
-
-
-
-    /*
-     * Listing methods 
-    */
-
-    private function insertIntoListing(int $articleId, int $sellerId): bool
-    {
-        $stmt = $this->db->prepare("INSERT INTO LISTING VALUES (?, ?)");
-        $stmt->bind_param("ii", $articleId, $sellerId);
-
-        return $stmt->execute();
-    }
-
-    public function getListing(int $sellerId): array|bool
-    {
-        $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE articleId IN (SELECT articleId from LISTING WHERE sellerId = ?)");
-        $stmt->bind_param("i", $sellerId);
-
-        if (!$stmt->execute()) {
-            return false;
-        }
-
-        $result = $stmt->get_result();
-
-        if ($result === false) {
-            return false;
-        }
-
-        return empty($listing = $result->fetch_all(MYSQLI_ASSOC)) ? false : $listing;
     }
 
 
@@ -334,6 +301,8 @@ class DatabaseHelper
 
         return empty($orderDetails = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $orderDetails;
     }
+
+
 
     /*
      * Cart methods
@@ -566,6 +535,30 @@ class DatabaseHelper
 
 
     /*
+     * Seller methods
+    */
+
+    public function getListing(int $sellerId): array|bool
+    {
+        $stmt = $this->db->prepare("SELECT * FROM ARTICLE WHERE sellerId = ?");
+        $stmt->bind_param("i", $sellerId);
+
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result === false) {
+            return false;
+        }
+
+        return empty($listing = $result->fetch_all(MYSQLI_ASSOC)) ? false : $listing;
+    }
+
+
+
+    /*
      * Notification methods
     */
 
@@ -685,7 +678,11 @@ class DatabaseHelper
         return array_column($result->fetch_all(MYSQLI_ASSOC), 'name');
     }
 
-    /*** Wishlist functions ***/
+
+
+    /*
+     * Wishlist methods
+    */
 
     /**
      * Checks if an article is in the user's wishlist
