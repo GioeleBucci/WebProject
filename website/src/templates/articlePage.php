@@ -2,12 +2,13 @@
 
 <?php $templateParams["title"] = implode(" ", [$article["name"], $article["details"]]) ?>
 
-<div class="container mt-0">
+<div class="container">
     <?php if (isset($templateParams["successMessage"])): ?>
         <div class="alert alert-success alert-dismissible fade show text-center mt-3" role="alert">
             <?php echo htmlspecialchars($templateParams["successMessage"]); ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        <?php unset($templateParams["successMessage"]); ?>  
     <?php endif; ?>
     <div class="row">
         <div class="col-md-6">

@@ -29,6 +29,8 @@ if (isset($_POST["add"])) {
 	}
 
 	if (!$dbh->addArticle($_SESSION["userId"], $_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName) || !$dbh->addVersion(-1, $_POST["type"], 0, $_POST["amount"])) {
-		$templateParams["insertionError"] = "Error during image elaboration";
+		$templateParams["insertionError"] = "Error during article insertion";
+	} else {
+		Utils::redirect(Links::LISTING . "?articleAdded=success");
 	}
 }

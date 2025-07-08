@@ -1,7 +1,21 @@
 <?php Utils::denyClientAccess(); ?>
 <?php $templateParams["title"] = "Your Listing" ?>
 
+<?php
+// Check for success message after article addition
+if (isset($_GET["articleAdded"]) && $_GET["articleAdded"] === "success") {
+	$templateParams["successMessage"] = "Article added successfully!";
+}
+?>
+
 <div class="container">
+	<?php if (isset($templateParams["successMessage"])): ?>
+		<div class="alert alert-success alert-dismissible fade show text-center mt-3" role="alert">
+			<?php echo htmlspecialchars($templateParams["successMessage"]); ?>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		<?php unset($templateParams["successMessage"]); ?>
+	<?php endif; ?>
 	<div class="text-center mb-4">
 		<span class="page-title-text">Your Listing</span>
 	</div>
