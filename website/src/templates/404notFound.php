@@ -6,3 +6,8 @@
     </p>
     <a href="<?php echo Links::HOME ?>" class="btn btn-primary">Back to Homepage</a>
 </div>
+
+<?php
+http_response_code(404);
+die();
+?>

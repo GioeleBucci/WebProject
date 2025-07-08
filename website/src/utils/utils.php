@@ -86,16 +86,21 @@ class Utils
     public static function denySellerAccess(): void
     {
         if (self::isSeller()) {
-            Utils::redirect(Links::NOT_FOUND_404);
-            die();
+            self::redirect(Links::FORBIDDEN_403);
         }
     }
 
     public static function denyClientAccess(): void
     {
         if (!self::isSeller()) {
-            Utils::redirect(Links::NOT_FOUND_404);
-            die();
+            self::redirect(Links::FORBIDDEN_403);
+        }
+    }
+
+    public static function allowOnlySellerWithId(int $sellerId): void
+    {
+        if (!(self::isUserLoggedIn() && $_SESSION["userId"] == $sellerId)) {
+            self::redirect(Links::FORBIDDEN_403);
         }
     }
 }

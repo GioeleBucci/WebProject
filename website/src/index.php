@@ -25,7 +25,8 @@ $routes = [
     Links::NEW_VERSION => Pages::NEW_VERSION,
     Links::PRIVACY_POLICY => Pages::PRIVACY_POLICY,
     Links::TERMS_OF_SERVICE => Pages::TERMS_OF_SERVICE,
-    Links::COOKIE_POLICY => Pages::COOKIE_POLICY
+    Links::COOKIE_POLICY => Pages::COOKIE_POLICY,
+    Links::FORBIDDEN_403 => Pages::FORBIDDEN_403,
 ];
 
 if (array_key_exists($requestPath, $routes)) {

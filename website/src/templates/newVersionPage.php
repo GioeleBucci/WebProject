@@ -1,4 +1,4 @@
-<?php Utils::denyClientAccess(); ?>
+<?php Utils::allowOnlySellerWithId(DatabaseHelper::getInstance()->getArticleSeller($_GET['articleId'])["sellerId"]); ?>
 <?php require 'utils/addVersion.php' ?>
 
 <?php $templateParams["title"] = "New version for " . $article["name"] ?>

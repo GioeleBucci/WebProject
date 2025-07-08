@@ -24,6 +24,8 @@
             <p class="text-muted mb-1">Material: <?php echo ($article["material"]); ?></p>
             <p class="text-muted mb-1">Weight: <?php echo ($article["weight"]); ?> kg</p>
             <p class="text-muted mb-1">Category: <?php echo ($dbh->getCategoryName($article["categoryId"])); ?></p>
+            <?php $articleSeller = $dbh->getArticleSeller($article["articleId"]) ?>
+            <p class="text-muted mb-1">Seller: <?php echo htmlspecialchars(isset($_SESSION["userId"]) && $articleSeller["sellerId"] == $_SESSION["userId"] ? "You" : $articleSeller["name"]); ?></p>
             <?php if (isset($article["longDescription"])) : ?>
                 <div class="description-box mt-3 p-3 border rounded bg-light">
                     <p class="text-muted my-0"><?php echo nl2br($article["longDescription"]); ?></p>
@@ -79,7 +81,7 @@
                                 <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
                             </button>
                         </form>
-                    <?php else: ?>
+                    <?php elseif (isset($_SESSION["userId"]) && $articleSeller["sellerId"] == $_SESSION["userId"]): ?>
                         <a href="edit-article?articleId=<?= $articleId ?>" class="btn btn-secondary d-md-none w-100 w-md-auto">
                             <span class="bi bi-pencil me-1" aria-hidden="true"></span> Edit Article
                         </a>

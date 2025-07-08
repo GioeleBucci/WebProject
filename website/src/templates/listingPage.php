@@ -1,9 +1,9 @@
 <?php Utils::denyClientAccess(); ?>
-<?php $templateParams["title"] = "Your listing" ?>
+<?php $templateParams["title"] = "Your Listing" ?>
 
 <div class="container">
 	<div class="text-center mb-4">
-		<span class="page-title-text">Your listing</span>
+		<span class="page-title-text">Your Listing</span>
 	</div>
 	<div class="row mt-3 g-3">
 		<?php foreach ($dbh->getListing($_SESSION["userId"]) as $article): ?>

@@ -79,7 +79,7 @@ class DatabaseHelper
     {
         $stmt = $this->db->prepare(
             "INSERT INTO ARTICLE (sellerId, name, details, longDescription, material, weight, basePrice, size, categoryId, image)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
         $stmt->bind_param("issssddsis", $sellerId, $name, $details, $description, $material, $weight, $price, $size, $categoryId, $image);
 
@@ -123,6 +123,29 @@ class DatabaseHelper
         return empty($articles = $stmt->get_result()->fetch_all(MYSQLI_ASSOC)) ? false : $articles;
     }
 
+    public function getArticleSeller(int $articleId): array|bool
+    {
+        $stmt = $this->db->prepare(
+            "SELECT u.userId as sellerId, u.name 
+            FROM ARTICLE a
+            JOIN SELLER s ON a.sellerId = s.userId
+            JOIN USER u ON s.userId = u.userId
+            WHERE a.articleId = ?"
+        );
+        $stmt->bind_param("i", $articleId);
+
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        $result = $stmt->get_result();
+        if ($result === false) {
+            return false;
+        }
+
+        $row = $result->fetch_assoc();
+        return $row ? $row : false;
+    }
 
 
     /*
