@@ -75,10 +75,10 @@
                         <form method="post" class="d-inline-block w-100 w-md-auto">
                             <input type="hidden" name="selectedVersion" id="selectedVersion" value="">
                             <input type="hidden" name="addArticle" id="addArticle" value="">
-                            <button type="submit" class="btn btn-primary d-md-none add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
+                            <button type="submit" class="btn btn-primary d-md-none add-to-cart-btn w-100">
                                 <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
                             </button>
-                            <button type="submit" class="btn btn-outline-primary d-none d-md-block add-to-cart-btn w-100" onclick="changeAddToCartIcon.call(this)">
+                            <button type="submit" class="btn btn-outline-primary d-none d-md-block add-to-cart-btn w-100">
                                 <span class="bi bi-cart-plus-fill" aria-hidden="true"></span> Add to Cart
                             </button>
                         </form>

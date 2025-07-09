@@ -20,6 +20,7 @@ if (isset($_GET["updated"]) && $_GET["updated"] === "success") {
 if (isset($_POST["addArticle"])) {
     $added = $dbh->addToCart($_SESSION["userId"], $articleId, $_POST["selectedVersion"]);
     unset($_POST["addArticle"]);
+    $templateParams["successMessage"] = "Article added to cart!";
 }
 
 $articleVersions = $dbh->getAllVersions($articleId);

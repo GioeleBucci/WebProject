@@ -31,6 +31,9 @@ if (isset($_POST["add"])) {
 	if (!$dbh->addArticle($_SESSION["userId"], $_POST["name"], $_POST["details"], $_POST["description"], $_POST["material"], $_POST["weight"], $_POST["price"], $_POST["size"], $_POST["categoryId"], $fileName) || !$dbh->addVersion(-1, $_POST["type"], 0, $_POST["amount"])) {
 		$templateParams["insertionError"] = "Error during article insertion";
 	} else {
+		Utils::addNotification(
+			"New article \"{$_POST["name"]}\" successfully added"
+		);
 		Utils::redirect(Links::LISTING . "?articleAdded=success");
 	}
 }

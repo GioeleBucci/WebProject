@@ -134,4 +134,9 @@ INSERT INTO `NOTIFICATION` (`notificationId`, `userId`, `receptionTime`, `conten
 (6, 1, '2025-07-05 13:08:00', 'Your account\'s phone number has been updated to 555-123-4567', 1),
 (7, 1, '2025-07-05 13:08:00', 'Your account\'s address has been updated to 123 Oak St, Furnitureville, US', 1),
 (8, 1, '2025-07-05 13:09:00', 'Logged in', 1),
-(9, 1, '2025-07-05 13:09:00', 'Your account\'s email has been updated to user@example.com', 1);
+(9, 1, '2025-07-05 13:09:00', 'Your account\'s email has been updated to user@example.com', 1),
+(10, 2, '2023-03-02 21:48:14', 'Registered to the website', 1),
+(11, 2, '2024-05-09 08:50:11', 'Your account\'s phone number has been updated to 555-333-4444', 1),
+(12, 2, '2025-05-09 08:51:21', 'Your account\'s address has been updated to 200 Retail Blvd, Shopville, US', 1),
+(14, 2, '2025-06-09 11:53:49', '\"Dark Finish\" version for article \"LUUYFO\" added successfully', 1),
+(15, 2, '2025-06-09 13:56:19', 'New article \"HELIMVI\" successfully added', 1);
