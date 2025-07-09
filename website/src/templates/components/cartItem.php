@@ -26,9 +26,9 @@
             style="max-width: 80px; margin: 0 auto;">
     </div>
     <form method="post" class="col-3 col-md-1 text-end mt-2 mt-md-0">
-        <input type="hidden" id="removeItem" name="removeItem" >
-        <input type="hidden" id="articleId" name="articleId" value=<?php echo $article["articleId"] ?>>
-        <input type="hidden" id="versionId" name="versionId" value=<?php echo $article["versionId"] ?>>
+        <input type="hidden" id="removeItem-<?php echo $article['articleId'] ?>-<?php echo $article['versionId'] ?>" name="removeItem" >
+        <input type="hidden" id="articleId-<?php echo $article['articleId'] ?>-<?php echo $article['versionId'] ?>" name="articleId" value=<?php echo $article["articleId"] ?>>
+        <input type="hidden" id="versionId-<?php echo $article['articleId'] ?>-<?php echo $article['versionId'] ?>" name="versionId" value=<?php echo $article["versionId"] ?>>
         <button type="submit" class="btn btn-link text-danger p-0" title="Remove item" aria-label="Remove <?php echo htmlspecialchars($article['name']); ?> from cart" style="margin-right: -10px;">
             <span class="bi bi-x fs-4 mx-2" aria-hidden="true"></span>
         </button>
