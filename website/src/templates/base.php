@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="<?php echo Settings::BASE_PATH; ?>">
-    <link rel="icon" href="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" type="image/png">
+    <link rel="icon" href="<?php echo Settings::UPLOAD_DIR . 'logo.jpg'; ?>" type="image/png">
     <title><?php echo "Kiwi" . (isset($templateParams["title"]) ? " - " . $templateParams["title"] : "") ?></title>
 
     <!-- Bootstrap CSS -->
@@ -33,8 +33,8 @@
                     <!-- Logo -->
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="<?php echo Links::HOME ?>">
-                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img d-block d-md-none" style="height: 40px;">
-                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.png'; ?>" alt="Logo" class="img d-none d-md-block" style="height: 60px;">
+                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.jpg'; ?>" alt="Logo" class="img d-block d-md-none" style="height: 40px;">
+                            <img src="<?php echo Settings::UPLOAD_DIR . 'logo.jpg'; ?>" alt="Logo" class="img d-none d-md-block" style="height: 60px;">
                         </a>
                         <!-- Icons (mobile) -->
                         <div class="d-md-none">

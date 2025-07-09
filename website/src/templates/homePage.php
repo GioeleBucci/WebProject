@@ -34,7 +34,7 @@
         <div class="carousel-inner">
             <?php foreach ($images as $index => $image): ?>
 
-                <?php $path = Settings::UPLOAD_DIR . "categories/" . $image . ".png"; ?>
+                <?php $path = Settings::UPLOAD_DIR . "categories/" . $image . ".jpg"; ?>
 
                 <div class="carousel-item <?php echo ($index === 0) ? "active" : "" ?>">
                     <?php
