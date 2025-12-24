@@ -29,7 +29,7 @@ A small e-commerce website inspired by IKEA, built with standard web technologie
 
 ## Setup (local)
 In order to create and populate the database used by the website the two following queries must be run beforehand:
-   1. [db/dbCreate.sql](../db/dbCreate.sql)
-   2. [db/dbPopulate.sql](../db/dbPopulate.sql)
+   1. [db/dbCreate.sql](db/dbCreate.sql)
+   2. [db/dbPopulate.sql](db/dbPopulate.sql)
 
 Then the app can be served by a local web server so that it is accessible at: `http://localhost/WebProject/website/src/`
